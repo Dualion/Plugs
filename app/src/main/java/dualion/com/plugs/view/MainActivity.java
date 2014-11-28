@@ -2,8 +2,10 @@ package dualion.com.plugs.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,12 +32,18 @@ public class MainActivity extends Activity {
     CustomGrid adapter;
     GridView grid;
 
+    String url;
+    String user;
+    String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RestPlug restProduct = new RestPlug();
+        loadPref();
+
+        RestPlug restProduct = new RestPlug(url);
         plugService = restProduct.getService();
         plugService.getAllPlugs(new Callback<PlugsList>() {
             @Override
@@ -52,9 +60,15 @@ public class MainActivity extends Activity {
                             @Override
                             public void success(PlugsList plugsList, Response response) {
                                 Toast.makeText(MainActivity.this,"Successful: "+ response.getUrl(), Toast.LENGTH_SHORT).show();
-                                adapter = new CustomGrid(MainActivity.this, (ArrayList<Plug>) plugsList.getPlugs());
-                                grid=(GridView)findViewById(R.id.grid);
-                                grid.setAdapter(adapter);
+                                //adapter = new CustomGrid(MainActivity.this, (ArrayList<Plug>) plugsList.getPlugs());
+                                //grid=(GridView)findViewById(R.id.grid);
+                                //grid.setAdapter(adapter);
+                                if (plugsList.getPlugs().size() > 0) {
+                                    Plug plug = plugsList.getPlugs().get(0);
+                                    int position = Integer.valueOf(plug.getId())-1;
+                                    adapter.setItem(position, plug);
+                                    grid.setAdapter(adapter);
+                                }
                             }
 
                             @Override
@@ -91,7 +105,7 @@ public class MainActivity extends Activity {
         //noinspection SimplifiableIfStatement
         switch (id){
             case R.id.action_settings:
-                Intent i = new Intent(this, UserSettingActivity.class);
+                Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
                 return true;
             case R.id.action_refresh:
@@ -102,4 +116,14 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void loadPref(){
+        SharedPreferences mySettings = PreferenceManager.getDefaultSharedPreferences(this);
+
+        url = mySettings.getString("prefUrlApi", "");
+        user = mySettings.getString("prefUser", "");
+        password = mySettings.getString("prefPass", "");
+
+    }
+
 }

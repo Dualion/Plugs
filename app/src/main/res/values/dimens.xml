@@ -4,4 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="sizeNormal">16sp</dimen>
     <dimen name="sizeBig">32sp</dimen>
+    <dimen name="title">17dp</dimen>
+    <dimen name="price">15dp</dimen>
+    <dimen name="description">13dp</dimen>
 </resources>

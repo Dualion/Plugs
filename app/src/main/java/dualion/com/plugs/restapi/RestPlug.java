@@ -9,18 +9,17 @@ import retrofit.converter.GsonConverter;
 
 public class RestPlug {
 
-    private static final String BASE_URL = "http://lluiscanals.noip.me:8082";
     private PlugService service;
     Gson gson;
 
-    public RestPlug()
+    public RestPlug(String url)
     {
         gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(BASE_URL)
+                .setEndpoint(url)
                 .setConverter(new GsonConverter(gson))
                 .build();
 

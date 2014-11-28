@@ -7,6 +7,11 @@
     <string name="action_refresh">Refresh</string>
     <string name="pref_user_profile">User Profile</string>
     <string name="pref_url_api">URL Api</string>
-    <string name="pref_url_api_summary">https://</string>
+    <string name="pref_url_api_summary">The api url. Ej: http://..... </string>
+    <string name="pref_user">User name</string>
+    <string name="pref_user_summary">The user name, necessary for Api connection.</string>
+    <string name="pref_password">Password</string>
+    <string name="pref_password_summary">The user password, necessary for api connection</string>
+    <string name="fail">Fail</string>
 
 </resources>
