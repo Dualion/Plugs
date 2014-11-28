@@ -1,6 +1,7 @@
 package dualion.com.plugs.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Menu;
@@ -90,6 +91,8 @@ public class MainActivity extends Activity {
         //noinspection SimplifiableIfStatement
         switch (id){
             case R.id.action_settings:
+                Intent i = new Intent(this, UserSettingActivity.class);
+                startActivity(i);
                 return true;
             case R.id.action_refresh:
                 finish();

@@ -5,5 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="plug">plug</string>
     <string name="action_refresh">Refresh</string>
+    <string name="pref_user_profile">User Profile</string>
+    <string name="pref_url_api">URL Api</string>
+    <string name="pref_url_api_summary">https://</string>
 
 </resources>
