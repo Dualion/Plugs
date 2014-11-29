@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp" >
+    android:padding="8dp"
+    android:longClickable="false">
 
-    <!-- Product id (pid) - will be HIDDEN - used to pass to other activity -->
+    <!-- Pin id (pid) - will be HIDDEN - used to pass to other activity -->
     <TextView
         android:id="@+id/pid"
         android:layout_width="fill_parent"
@@ -16,37 +17,43 @@
         android:id="@+id/thumbnail"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="8dp"
-        android:contentDescription="@string/fail" />
+        android:contentDescription="@string/fail"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toLeftOf="@+id/thumbnail"
         android:textSize="@dimen/title"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="@string/Name" />
 
     <TextView
-        android:id="@+id/price"
+        android:id="@+id/component"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
         android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textSize="@dimen/price" />
+        android:layout_toLeftOf="@+id/thumbnail"
+        android:textSize="@dimen/price"
+        android:gravity="center"
+        android:text="@string/component" />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/pin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/price"
+        android:layout_below="@id/component"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textColor="@color/description"
+        android:layout_toLeftOf="@+id/thumbnail"
+        android:textColor="@color/pin"
         android:textSize="@dimen/description"
-        android:lines="1" />
+        android:gravity="center"
+        android:text="@string/Pin" />
 
 </RelativeLayout>

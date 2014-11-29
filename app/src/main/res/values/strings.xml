@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Plugs</string>
+    <string name="app_name">Power Strip</string>
     <string name="action_settings">Settings</string>
     <string name="plug">plug</string>
     <string name="action_refresh">Refresh</string>
@@ -13,5 +13,8 @@
     <string name="pref_password">Password</string>
     <string name="pref_password_summary">The user password, necessary for api connection</string>
     <string name="fail">Fail</string>
+    <string name="Name">Name</string>
+    <string name="component">Component</string>
+    <string name="Pin">Pin</string>
 
 </resources>

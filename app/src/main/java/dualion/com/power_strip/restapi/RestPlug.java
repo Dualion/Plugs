@@ -1,9 +1,8 @@
-package dualion.com.plugs.restapi;
+package dualion.com.power_strip.restapi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import dualion.com.plugs.model.Plug;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 

@@ -1,6 +1,6 @@
-package dualion.com.plugs.restapi;
+package dualion.com.power_strip.restapi;
 
-import dualion.com.plugs.model.PlugsList;
+import dualion.com.power_strip.model.PlugsList;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Headers;

@@ -1,4 +1,4 @@
-package dualion.com.plugs.model;
+package dualion.com.power_strip.model;
 
 import com.google.gson.annotations.Expose;
 import java.util.ArrayList;

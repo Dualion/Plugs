@@ -1,6 +1,8 @@
-package dualion.com.plugs.adapter;
+package dualion.com.power_strip.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
-import dualion.com.plugs.R;
-import dualion.com.plugs.model.Plug;
+import dualion.com.power_strip.R;
+import dualion.com.power_strip.model.Plug;
 
 public class CustomGrid extends BaseAdapter {
 
@@ -18,15 +20,11 @@ public class CustomGrid extends BaseAdapter {
     private Context context;
 
     // View lookup cache
-    /*private static class ViewHolder {
-        TextView grid_text;
-    }*/
-
     private static class ViewHolder {
         TextView pid;
         TextView name;
-        TextView price;
-        TextView description;
+        TextView component;
+        TextView pin;
         ImageView img;
     }
 
@@ -47,6 +45,12 @@ public class CustomGrid extends BaseAdapter {
 
     public void setItem(int position, Plug plug){
         plugs.set(position, plug);
+        notifyDataSetChanged();
+    }
+
+    public void setComponent(int position, String component){
+        plugs.get(position).setComponent(component);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -57,7 +61,7 @@ public class CustomGrid extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Plug product = (Plug) this.getItem(position);
+        Plug plug = this.getItem(position);
 
         ViewHolder viewHolder; // view lookup cache stored in tag
         if (inflater == null)
@@ -65,22 +69,23 @@ public class CustomGrid extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.grid_single, null);
             viewHolder = new ViewHolder();
-            //viewHolder.grid_text = (TextView) convertView.findViewById(R.id.grid_text);
+            viewHolder.component = (TextView) convertView.findViewById(R.id.component);
             viewHolder.img = (ImageView) convertView.findViewById(R.id.thumbnail);
             viewHolder.name = (TextView) convertView.findViewById(R.id.name);
-            viewHolder.description = (TextView) convertView.findViewById(R.id.description);
+            viewHolder.pin = (TextView) convertView.findViewById(R.id.pin);
             viewHolder.pid = (TextView) convertView.findViewById(R.id.pid);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        String outPlug = plugs.get(position).getId() + ":" + plugs.get(position).getPinState();
+        viewHolder.pid.setText(plug.getPinId());
+        viewHolder.name.setText("Plug: " + plug.getId());
+        viewHolder.pin.setText("Pin: " + plug.getPinId());
 
-        viewHolder.name.setText("Plug: " + plugs.get(position).getId());
-        viewHolder.description.setText( "State: " + plugs.get(position).getPinState());
-        //viewHolder.price.setText(product.getPrice());
-        //viewHolder.description.setText(plugs.get(position).getPinState());
+        SharedPreferences mySettings = PreferenceManager.getDefaultSharedPreferences(context);
+        plug.setComponent((mySettings.getString(plug.getPinId(), "-")));
+        viewHolder.component.setText(plug.getComponent());
 
         if (plugs.get(position).getPinState().compareToIgnoreCase("false") == 0){
             viewHolder.img.setImageResource(R.drawable.plugoff);
@@ -88,19 +93,7 @@ public class CustomGrid extends BaseAdapter {
             viewHolder.img.setImageResource(R.drawable.plugon);
         }
 
-
-        // Populate the data into the template view using the data object
-//        viewHolder.grid_text.setText(outPlug);
-//
-//        if (plugs.get(position).getPinState().compareToIgnoreCase("false") == 0){
-//            viewHolder.grid_text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plugoff, 0, 0, 0);
-//        } else {
-//            viewHolder.grid_text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plugon, 0, 0, 0);
-//        }
-
         // Return the completed view to render on screen
         return convertView;
-
-
     }
 }

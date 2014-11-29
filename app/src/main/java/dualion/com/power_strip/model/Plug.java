@@ -1,4 +1,4 @@
-package dualion.com.plugs.model;
+package dualion.com.power_strip.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -19,12 +19,13 @@ public class Plug {
     @Expose
     private String pinState;
 
-    public String getHour() {
-        return hour;
-    }
+    private String component;
 
     Plug(){}
 
+    public String getHour() {
+        return hour;
+    }
     public void setHour(String hour) {
         this.hour = hour;
     }
@@ -32,7 +33,6 @@ public class Plug {
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -40,7 +40,6 @@ public class Plug {
     public String getPinId() {
         return pinId;
     }
-
     public void setPinId(String pinId) {
         this.pinId = pinId;
     }
@@ -48,9 +47,15 @@ public class Plug {
     public String getPinState() {
         return pinState;
     }
-
     public void setPinState(String pinState) {
         this.pinState = pinState;
     }
 
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
+    }
 }
