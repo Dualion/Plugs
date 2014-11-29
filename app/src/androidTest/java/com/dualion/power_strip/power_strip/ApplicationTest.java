@@ -1,4 +1,4 @@
-package dualion.com.power_strip;
+package com.dualion.power_strip.power_strip;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

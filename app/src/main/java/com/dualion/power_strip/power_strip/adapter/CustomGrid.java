@@ -1,4 +1,4 @@
-package dualion.com.power_strip.adapter;
+package com.dualion.power_strip.power_strip.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
-import dualion.com.power_strip.R;
-import dualion.com.power_strip.model.Plug;
+import com.dualion.power_strip.power_strip.R;
+import com.dualion.power_strip.power_strip.model.Plug;
 
 public class CustomGrid extends BaseAdapter {
 

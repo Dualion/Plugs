@@ -1,4 +1,4 @@
-package dualion.com.power_strip.restapi;
+package com.dualion.power_strip.power_strip.restapi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

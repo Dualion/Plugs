@@ -1,4 +1,4 @@
-package dualion.com.power_strip.view;
+package com.dualion.power_strip.power_strip.view;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -18,12 +18,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import dualion.com.power_strip.R;
-import dualion.com.power_strip.adapter.CustomGrid;
-import dualion.com.power_strip.model.Plug;
-import dualion.com.power_strip.model.PlugsList;
-import dualion.com.power_strip.restapi.PlugService;
-import dualion.com.power_strip.restapi.RestPlug;
+import com.dualion.power_strip.power_strip.R;
+import com.dualion.power_strip.power_strip.adapter.CustomGrid;
+import com.dualion.power_strip.power_strip.model.Plug;
+import com.dualion.power_strip.power_strip.model.PlugsList;
+import com.dualion.power_strip.power_strip.restapi.PlugService;
+import com.dualion.power_strip.power_strip.restapi.RestPlug;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -148,7 +148,7 @@ public class MainActivity extends ListActivity {
     private void loadPref() {
         SharedPreferences mySettings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        url = mySettings.getString("prefUrlApi", "");
+        url = mySettings.getString("prefUrlApi", "http://127.0.0.1");
         user = mySettings.getString("prefUser", "");
         password = mySettings.getString("prefPass", "");
     }
