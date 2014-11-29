@@ -44,7 +44,7 @@ public class MainActivity extends ListActivity {
         setContentView(R.layout.activity_main);
         loadPref();
 
-        RestPlug restProduct = new RestPlug(url);
+        RestPlug restProduct = new RestPlug(url, user, password);
         plugService = restProduct.getService();
         plugService.getAllPlugs(new Callback<PlugsList>() {
             @Override

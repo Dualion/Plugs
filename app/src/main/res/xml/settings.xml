@@ -6,17 +6,19 @@
             android:title="@string/pref_url_api"
             android:summary="@string/pref_url_api_summary"
             android:persistent="true"
-            android:key="prefUrlApi"/>
+            android:key="prefUrlApi"
+            android:inputType="textUri" />
         <EditTextPreference
             android:title="@string/pref_user"
             android:summary="@string/pref_user_summary"
             android:persistent="true"
-            android:key="prefUser"/>
+            android:key="prefUser" />
         <EditTextPreference
             android:title="@string/pref_password"
             android:summary="@string/pref_password_summary"
             android:persistent="true"
-            android:key="prefPass"/>
+            android:key="prefPass"
+            android:inputType="textPassword" />
     </PreferenceCategory>
 
 </PreferenceScreen>
