@@ -20,7 +20,8 @@
         android:contentDescription="@string/fail"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:clickable="true" />
 
     <TextView
         android:id="@+id/name"

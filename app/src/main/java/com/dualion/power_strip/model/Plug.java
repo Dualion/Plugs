@@ -1,4 +1,4 @@
-package com.dualion.power_strip.power_strip.model;
+package com.dualion.power_strip.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

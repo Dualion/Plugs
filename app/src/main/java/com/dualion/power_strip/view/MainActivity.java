@@ -1,4 +1,4 @@
-package com.dualion.power_strip.power_strip.view;
+package com.dualion.power_strip.view;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -11,19 +11,18 @@ import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import com.dualion.power_strip.power_strip.R;
-import com.dualion.power_strip.power_strip.adapter.CustomGrid;
-import com.dualion.power_strip.power_strip.model.Plug;
-import com.dualion.power_strip.power_strip.model.PlugsList;
-import com.dualion.power_strip.power_strip.restapi.PlugService;
-import com.dualion.power_strip.power_strip.restapi.RestPlug;
+import com.dualion.power_strip.R;
+import com.dualion.power_strip.adapter.CustomGrid;
+import com.dualion.power_strip.model.Plug;
+import com.dualion.power_strip.model.PlugsList;
+import com.dualion.power_strip.restapi.PlugService;
+import com.dualion.power_strip.restapi.RestPlug;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -31,8 +30,8 @@ import retrofit.client.Response;
 
 public class MainActivity extends ListActivity {
 
-    PlugService plugService;
     CustomGrid adapter;
+    SharedPreferences mySettings;
 
     String url;
     String user;
@@ -45,12 +44,12 @@ public class MainActivity extends ListActivity {
         loadPref();
 
         RestPlug restProduct = new RestPlug(url, user, password);
-        plugService = restProduct.getService();
+        final PlugService plugService = restProduct.getService();
         plugService.getAllPlugs(new Callback<PlugsList>() {
             @Override
             public void success(PlugsList plugsList, Response response) {
 
-            adapter = new CustomGrid(MainActivity.this, (ArrayList<Plug>) plugsList.getPlugs());
+            adapter = new CustomGrid(MainActivity.this, (ArrayList<Plug>) plugsList.getPlugs(), plugService);
             setListAdapter(adapter);
         }
             @Override
@@ -59,7 +58,7 @@ public class MainActivity extends ListActivity {
             }
         });
 
-        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        /*getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, final View view, final int position, long arg3) {
@@ -78,7 +77,6 @@ public class MainActivity extends ListActivity {
                                 SharedPreferences mySettings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                                 mySettings.edit().putString(plug.getPinId(), value.toString()).apply();
                                 adapter.setComponent(position, value.toString());
-                                //adapter.notifyDataSetChanged();
                             }
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -90,10 +88,37 @@ public class MainActivity extends ListActivity {
                 return true;
             }
 
-        });
+        });*/
     }
 
     @Override
+    protected void onListItemClick(ListView l, View v, final int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        // Set an EditText view to get user input
+        final EditText input = new EditText(MainActivity.this);
+        input.setText(adapter.getItem(position).getComponent());
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Status")
+                .setMessage("Component")
+                .setView(input)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Editable value = input.getText();
+                        Plug plug = adapter.getItem(position);
+                        Toast.makeText(MainActivity.this, plug.getPinId() + ": " + value, Toast.LENGTH_SHORT).show();
+                        mySettings.edit().putString(plug.getPinId(), value.toString()).apply();
+                        adapter.setComponent(position, value.toString());
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Do nothing.
+                Toast.makeText(MainActivity.this, "Nothing", Toast.LENGTH_SHORT).show();
+            }
+        }).show();
+
+    }
+
+    /*@Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
@@ -114,7 +139,7 @@ public class MainActivity extends ListActivity {
                 Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -137,8 +162,11 @@ public class MainActivity extends ListActivity {
                 startActivity(i);
                 return true;
             case R.id.action_refresh:
-                finish();
                 startActivity(getIntent());
+                finish();
+                break;
+            case R.id.action_quit:
+                finish();
                 break;
         }
 
@@ -146,11 +174,11 @@ public class MainActivity extends ListActivity {
     }
 
     private void loadPref() {
-        SharedPreferences mySettings = PreferenceManager.getDefaultSharedPreferences(this);
+        mySettings = PreferenceManager.getDefaultSharedPreferences(this);
 
         url = mySettings.getString("prefUrlApi", "http://127.0.0.1");
         user = mySettings.getString("prefUser", "");
-        password = mySettings.getString("prefPass", "");
+        password = mySettings.getString("prefCurrentPass", "");
     }
 
 }

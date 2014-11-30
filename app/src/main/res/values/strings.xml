@@ -26,14 +26,16 @@
     <!-- Login Activity -->
     <string name="prompt_user">Username</string>
     <string name="prompt_password">Password (Optional)</string>
+    <string name="prompt_urlApi">URL API</string>
     <string name="action_sign_in_short">Sign In</string>
     <string name="action_sign_in">Sign In</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_invalid_password">The password is not correct.</string>
     <string name="error_invalid_username">The username is not valid</string>
-    <string name="prompt_urlApi">URL API</string>
     <string name="error_invalid_url">The URL is not valid.</string>
     <string name="error_incorrect_data">Data is incorrect</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="prompt_savePass">Save password</string>
+    <string name="action_quit">Quit</string>
 
 </resources>

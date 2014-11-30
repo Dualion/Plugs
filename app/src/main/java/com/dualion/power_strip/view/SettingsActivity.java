@@ -1,10 +1,10 @@
-package com.dualion.power_strip.power_strip.view;
+package com.dualion.power_strip.view;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
-import com.dualion.power_strip.power_strip.R;
+import com.dualion.power_strip.R;
 
 public class SettingsActivity extends Activity  {
 
