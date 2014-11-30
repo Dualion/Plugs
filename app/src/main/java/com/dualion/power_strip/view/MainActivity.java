@@ -57,38 +57,6 @@ public class MainActivity extends ListActivity {
                 Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        /*getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, final View view, final int position, long arg3) {
-
-                // Set an EditText view to get user input
-                final EditText input = new EditText(MainActivity.this);
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Status")
-                        .setMessage("Component")
-                        .setView(input)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                Editable value = input.getText();
-                                Plug plug = adapter.getItem(position);
-                                Toast.makeText(MainActivity.this, plug.getPinId() + ": " + value, Toast.LENGTH_SHORT).show();
-                                SharedPreferences mySettings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                                mySettings.edit().putString(plug.getPinId(), value.toString()).apply();
-                                adapter.setComponent(position, value.toString());
-                            }
-                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Do nothing.
-                        Toast.makeText(MainActivity.this, "Nothing", Toast.LENGTH_SHORT).show();
-                    }
-                }).show();
-
-                return true;
-            }
-
-        });*/
     }
 
     @Override
@@ -96,10 +64,11 @@ public class MainActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
         // Set an EditText view to get user input
         final EditText input = new EditText(MainActivity.this);
+        input.setHint("Component");
         input.setText(adapter.getItem(position).getComponent());
         new AlertDialog.Builder(MainActivity.this)
-                .setTitle("Status")
-                .setMessage("Component")
+                .setTitle("Info Component")
+                //.setMessage("Component")
                 .setView(input)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -117,29 +86,6 @@ public class MainActivity extends ListActivity {
         }).show();
 
     }
-
-    /*@Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-        plugService.setPlug(position + 1, new Callback<PlugsList>() {
-            @Override
-            public void success(PlugsList plugsList, Response response) {
-                Toast.makeText(MainActivity.this, "Successful: " + response.getUrl(), Toast.LENGTH_SHORT).show();
-
-                if (plugsList.getPlugs().size() > 0) {
-                    Plug plug = plugsList.getPlugs().get(0);
-                    int position = Integer.valueOf(plug.getId()) - 1;
-                    adapter.setItem(position, plug);
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

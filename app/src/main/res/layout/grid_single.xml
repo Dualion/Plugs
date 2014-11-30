@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:longClickable="false">
+    android:padding="8dp" >
 
     <!-- Pin id (pid) - will be HIDDEN - used to pass to other activity -->
     <TextView
@@ -13,7 +12,7 @@
         android:visibility="gone" />
 
     <!-- Img -->
-    <ImageButton
+    <ImageView
         android:id="@+id/thumbnail"
         android:layout_width="80dp"
         android:layout_height="80dp"

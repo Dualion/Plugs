@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class CustomGrid extends BaseAdapter {
         TextView name;
         TextView component;
         TextView pin;
-        ImageButton img;
+        ImageView img;
     }
 
     public CustomGrid(Context c, ArrayList<Plug> plugs, PlugService plugService) {
@@ -81,7 +82,7 @@ public class CustomGrid extends BaseAdapter {
             convertView = inflater.inflate(R.layout.grid_single, null);
             viewHolder = new ViewHolder();
             viewHolder.component = (TextView) convertView.findViewById(R.id.component);
-            viewHolder.img = (ImageButton) convertView.findViewById(R.id.thumbnail);
+            viewHolder.img = (ImageView) convertView.findViewById(R.id.thumbnail);
             viewHolder.name = (TextView) convertView.findViewById(R.id.name);
             viewHolder.pin = (TextView) convertView.findViewById(R.id.pin);
             viewHolder.pid = (TextView) convertView.findViewById(R.id.pid);
@@ -99,10 +100,8 @@ public class CustomGrid extends BaseAdapter {
         viewHolder.component.setText(plug.getComponent());
 
         if (plugs.get(position).getPinState().compareToIgnoreCase("false") == 0) {
-            //viewHolder.img.setImageResource(R.drawable.plugoff);
             viewHolder.img.setBackgroundResource(R.drawable.plugoffbuttons);
         } else {
-            //viewHolder.img.setImageResource(R.drawable.plugon);
             viewHolder.img.setBackgroundResource(R.drawable.plugonbuttons);
         }
 
@@ -113,7 +112,7 @@ public class CustomGrid extends BaseAdapter {
                         plugService.setPlug(position + 1, new Callback<PlugsList>() {
                             @Override
                             public void success(PlugsList plugsList, Response response) {
-                                Toast.makeText(context, "Successful: " + response.getUrl(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(context, "Successful: " + response.getUrl(), Toast.LENGTH_SHORT).show();
 
                                 if (plugsList.getPlugs().size() > 0) {
                                     Plug plug = plugsList.getPlugs().get(0);
