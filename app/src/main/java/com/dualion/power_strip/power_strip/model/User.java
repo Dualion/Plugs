@@ -31,4 +31,15 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean isUsernameValid(){
+        if (username.isEmpty() || username.length() < 3)
+            return false;
+        return true;
+    }
+
+    public boolean isPasswordValid() {
+        return true;
+    }
+
 }

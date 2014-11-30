@@ -33,7 +33,6 @@ public class RestPlug {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setRequestInterceptor(requestInterceptor)
                 .setEndpoint(url)
-                //.setClient(new OkClient()) // The default client didn't handle well responses like 401
                 .setConverter(new GsonConverter(gson))
                 .build();
 
