@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -13,11 +14,13 @@ import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.model.PlugsList;
@@ -154,6 +157,8 @@ public class LoginActivity extends Activity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
+            InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(userView.getWindowToken(), 0);
             login(urlApi, user);
         }
     }
@@ -222,14 +227,20 @@ public class LoginActivity extends Activity {
                 startActivityForResult(myIntent, 0);
 
             }
+
             @Override
             public void failure(RetrofitError retrofitError) {
                 showProgress(false);
-                if (retrofitError.getResponse().getStatus() == 403){
-                    passwordView.setError(getString(R.string.error_incorrect_password));
-                    passwordView.requestFocus();
-                } else {
-                    urlApiView.setError(getString(R.string.error_incorrect_data));
+                try {
+                    if (retrofitError.getResponse().getStatus() == 403) {
+                        passwordView.setError(getString(R.string.error_incorrect_password));
+                        passwordView.requestFocus();
+                    } else {
+                        urlApiView.setError(getString(R.string.error_incorrect_data));
+                    }
+                } catch(Exception ex)
+                {
+                    urlApiView.setError(getString(R.string.error_invalid_url));
                 }
             }
         });
