@@ -127,6 +127,11 @@ public class MainActivity extends ListActivity {
                 finish();
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
+            case R.id.action_calendar:
+                Intent i2 = new Intent(this, DatesActivity.class);
+                startActivity(i2);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                break;
             case R.id.action_logout:
                 mySettings.edit().putString("prefCurrentPass", "").apply();
                 startActivityForResult(new Intent(this, LoginActivity.class), 0);

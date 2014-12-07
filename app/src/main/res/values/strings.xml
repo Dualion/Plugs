@@ -38,4 +38,11 @@
     <string name="action_quit">Quit</string>
     <string name="action_logout">Logout</string>
 
+    <!-- Dates activity-->
+    <string name="select">Select</string>
+    <string name="selectdate">Select Date</string>
+    <string name="tab_date">Date</string>
+    <string name="tab_time">Time</string>
+    <string name="action_dates">Dates</string>
+
 </resources>

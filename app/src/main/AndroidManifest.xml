@@ -27,6 +27,10 @@
             android:name="com.dualion.power_strip.view.SettingsActivity"
             android:label="@string/action_settings" >
         </activity>
+        <activity
+            android:name="com.dualion.power_strip.view.DatesActivity"
+            android:label="@string/action_dates" >
+        </activity>
     </application>
 
 </manifest>
