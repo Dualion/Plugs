@@ -12,8 +12,7 @@ import retrofit.converter.GsonConverter;
 
 public class RestPlug {
 
-    private PlugService service;
-    Gson gson;
+    private final PlugService service;
 
     public RestPlug(String url, String username, String password)
     {
@@ -23,7 +22,7 @@ public class RestPlug {
         ApiRequestInterceptor requestInterceptor = new ApiRequestInterceptor();
         requestInterceptor.setUser(user);
 
-        gson = new GsonBuilder()
+        Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 

@@ -33,9 +33,7 @@ public class User {
     }
 
     public boolean isUsernameValid(){
-        if (username.isEmpty() || username.length() < 3)
-            return false;
-        return true;
+        return !(username.isEmpty() || username.length() < 3);
     }
 
     public boolean isPasswordValid() {

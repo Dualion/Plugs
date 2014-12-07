@@ -7,7 +7,7 @@ import java.util.List;
 public class PlugsList {
 
     @Expose
-    private List<Plug> plugs = new ArrayList<Plug>();
+    private List<Plug> plugs = new ArrayList<>();
 
     public List<Plug> getPlugs() {
         return plugs;

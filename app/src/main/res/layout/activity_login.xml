@@ -23,7 +23,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_urlApi"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:inputType="textUri" />
 
             <AutoCompleteTextView
                 android:id="@+id/user"

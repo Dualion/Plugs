@@ -4,7 +4,6 @@
     <string name="app_name">Power Strip</string>
 
     <!-- General -->
-    <string name="plug">plug</string>
     <string name="fail">Fail</string>
     <string name="Name">Name</string>
     <string name="component">Component</string>
@@ -37,5 +36,6 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="prompt_savePass">Save password</string>
     <string name="action_quit">Quit</string>
+    <string name="action_logout">Logout</string>
 
 </resources>

@@ -6,8 +6,11 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +30,9 @@ public class CustomGrid extends BaseAdapter {
 
     private LayoutInflater inflater;
     private final ArrayList<Plug> plugs;
-    private Context context;
-    private PlugService plugService;
+    private final Context context;
+    private final PlugService plugService;
+    private int lastPosition;
 
     // View lookup cache
     private static class ViewHolder {
@@ -40,9 +44,10 @@ public class CustomGrid extends BaseAdapter {
     }
 
     public CustomGrid(Context c, ArrayList<Plug> plugs, PlugService plugService) {
-        context = c;
+        this.context = c;
         this.plugs = plugs;
         this.plugService = plugService;
+        this.lastPosition = -1;
     }
 
     @Override
@@ -55,7 +60,7 @@ public class CustomGrid extends BaseAdapter {
         return plugs.get(position);
     }
 
-    public void setItem(int position, Plug plug) {
+    void setItem(int position, Plug plug) {
         plugs.set(position, plug);
         notifyDataSetChanged();
     }
@@ -112,8 +117,6 @@ public class CustomGrid extends BaseAdapter {
                         plugService.setPlug(position + 1, new Callback<PlugsList>() {
                             @Override
                             public void success(PlugsList plugsList, Response response) {
-                                //Toast.makeText(context, "Successful: " + response.getUrl(), Toast.LENGTH_SHORT).show();
-
                                 if (plugsList.getPlugs().size() > 0) {
                                     Plug plug = plugsList.getPlugs().get(0);
                                     int position = Integer.valueOf(plug.getId()) - 1;
@@ -129,6 +132,21 @@ public class CustomGrid extends BaseAdapter {
                     }
                 });
 
+        // This tells the view where to start based on the direction of the scroll.
+        // If the last position to be loaded is <= the current position, we want
+        // the views to start below their ending point (500f further down).
+        // Otherwise, we start above the ending point.
+        /*float initialTranslation = (lastPosition <= position ? 500f : -500f);
+
+        convertView.setTranslationY(initialTranslation);
+        convertView.animate()
+                .setInterpolator(new DecelerateInterpolator(1.0f))
+                .translationY(0f)
+                .setDuration(300l)
+                .setListener(null);
+
+        // Keep track of the last position we loaded
+        lastPosition = position;*/
 
         // Return the completed view to render on screen
         return convertView;

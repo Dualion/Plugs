@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Patterns;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -20,7 +22,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.model.PlugsList;
@@ -41,7 +42,7 @@ public class LoginActivity extends Activity {
     private CheckBox savePass;
     private View progressView;
     private View loginFormView;
-    SharedPreferences mySettings;
+    private SharedPreferences mySettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +115,31 @@ public class LoginActivity extends Activity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.login_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id) {
+            case R.id.action_quit:
+                finish();
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void attemptLogin() {
         // Reset errors.
         userView.setError(null);
@@ -167,7 +193,7 @@ public class LoginActivity extends Activity {
      * Shows the progress UI and hides the login form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show) {
+    void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
@@ -211,7 +237,6 @@ public class LoginActivity extends Activity {
                 mySettings.edit().putString("prefUrlApi", urlApi).apply();
                 mySettings.edit().putString("prefUser", user.getUsername()).apply();
 
-
                 if (savePass.isChecked()) {
                     mySettings.edit().putString("prefPass", user.getPassword()).apply();
                     mySettings.edit().putString("prefCurrentPass", user.getPassword()).apply();
@@ -220,12 +245,10 @@ public class LoginActivity extends Activity {
                     mySettings.edit().putString("prefCurrentPass", user.getPassword()).apply();
                 }
 
-                showProgress(false);
-
-                finish();
                 Intent myIntent = new Intent(loginFormView.getContext(), MainActivity.class);
                 startActivityForResult(myIntent, 0);
-
+                finish();
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
 
             @Override
