@@ -96,7 +96,7 @@ public class CustomGrid extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.pid.setText(plug.getPinId());
+        viewHolder.pid.setText(plug.getId());
         viewHolder.name.setText("Plug: " + plug.getId());
         viewHolder.pin.setText("Pin: " + plug.getPinId());
 

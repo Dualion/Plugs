@@ -1,32 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:onClick="selectDate" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:gravity="center_horizontal"
+    android:orientation="vertical" android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".DatesActivity" >
+
+    <TextView
+        android:id="@+id/titleDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="plugs"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/initDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="@string/prompt_initDate"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:inputType="datetime"
+        android:layout_below="@+id/titleDate"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="56dp"
-        android:ems="10"
-        android:inputType="datetime" >
-        <requestFocus />
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/ButtonInitDate"
+        android:layout_toStartOf="@+id/ButtonInitDate">
     </EditText>
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/ButtonInitDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/initDate"
-        android:layout_toRightOf="@+id/initDate"
-        android:contentDescription="@string/selectdate"
+        android:contentDescription="@string/prompt_selectDate"
         android:cropToPadding="true"
-        android:onClick="selectDate"
-        android:src="@drawable/date" />
+        android:onClick="selectInitDate"
+        android:src="@drawable/date"
+        android:layout_alignBottom="@+id/initDate"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:id="@+id/endDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_endDate"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:inputType="datetime"
+        android:layout_below="@+id/ButtonInitDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/initDate"
+        android:layout_alignEnd="@+id/initDate" />
+
+    <ImageButton
+        android:id="@+id/ButtonEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/prompt_selectDate"
+        android:cropToPadding="true"
+        android:onClick="selectEndDate"
+        android:src="@drawable/date"
+        android:layout_alignBottom="@+id/endDate"
+        android:layout_toRightOf="@+id/endDate"
+        android:layout_toEndOf="@+id/endDate" />
 
 </RelativeLayout>

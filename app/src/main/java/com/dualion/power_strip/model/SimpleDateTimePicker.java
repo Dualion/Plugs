@@ -25,16 +25,16 @@ public class SimpleDateTimePicker {
                                  FragmentManager fragmentManager) {
 
         // Find if there are any DialogFragments from the FragmentManager
-        FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
-        Fragment mDateTimeDialogFrag = fragmentManager.findFragmentByTag(
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment dateTimeDialogFrag = fragmentManager.findFragmentByTag(
                 DateTimePicker.TAG_FRAG_DATE_TIME
         );
 
         // Remove it if found
-        if(mDateTimeDialogFrag != null) {
-            mFragmentTransaction.remove(mDateTimeDialogFrag);
+        if(dateTimeDialogFrag != null) {
+            fragmentTransaction.remove(dateTimeDialogFrag);
         }
-        mFragmentTransaction.addToBackStack(null);
+        fragmentTransaction.addToBackStack(null);
 
         this.dialogTitle = dialogTitle;
         this.initDate = initDate;
@@ -66,9 +66,9 @@ public class SimpleDateTimePicker {
     public void show() {
 
         // Create new DateTimePicker
-        DateTimePicker mDateTimePicker = DateTimePicker.newInstance(dialogTitle, initDate);
-        mDateTimePicker.setOnDateTimeSetListener(onDateTimeSetListener);
-        mDateTimePicker.show(fragmentManager, DateTimePicker.TAG_FRAG_DATE_TIME);
+        DateTimePicker dateTimePicker = DateTimePicker.newInstance(dialogTitle, initDate);
+        dateTimePicker.setOnDateTimeSetListener(onDateTimeSetListener);
+        dateTimePicker.show(fragmentManager, DateTimePicker.TAG_FRAG_DATE_TIME);
 
     }
 

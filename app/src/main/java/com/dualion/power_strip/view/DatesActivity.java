@@ -1,6 +1,6 @@
 package com.dualion.power_strip.view;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.dualion.power_strip.R;
@@ -10,13 +10,19 @@ import com.dualion.power_strip.model.SimpleDateTimePicker;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Date;
 
-public class DatesActivity extends FragmentActivity implements DateTimePicker.OnDateTimeSetListener{
+public class DatesActivity extends FragmentActivity /*implements DateTimePicker.OnDateTimeSetListener*/{
 
-    private SimpleDateTimePicker simpleDateTimePicker;
+    private SimpleDateTimePicker initDateTimePicker;
+    private SimpleDateTimePicker endDateTimePicker;
     private EditText initDate;
+    private EditText endDate;
+    private TextView titleDate;
+
+    private String pid;
 
 
     @Override
@@ -24,30 +30,55 @@ public class DatesActivity extends FragmentActivity implements DateTimePicker.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dates);
 
-        initDate = (EditText) findViewById(R.id.initDate);
+        // getting product details from intent
+        Intent i = getIntent();
 
-        // Create a SimpleDateTimePicker and Show it
-        simpleDateTimePicker = SimpleDateTimePicker.make(
-                "Set Date & Time Title",
+        // getting product id (pid) from intent
+        pid = i.getStringExtra("pid");
+
+        initDate = (EditText) findViewById(R.id.initDate);
+        endDate = (EditText) findViewById(R.id.endDate);
+        titleDate = (TextView) findViewById(R.id.titleDate);
+
+        titleDate.setText(getString(R.string.plug) + ": " + pid);
+
+        // Create a initDateTimePicker
+        initDateTimePicker = SimpleDateTimePicker.make(
+                getString(R.string.prompt_initDate),
                 new Date(),
-                this,
+                new DateTimePicker.OnDateTimeSetListener() {
+                    @Override
+                    public void DateTimeSet(Date date) {
+                        DateTime dateTime = new DateTime(date);
+                        initDate.setText(dateTime.getDateString());
+                        initDate.requestFocus();
+                    }
+                },
+                getSupportFragmentManager()
+        );
+
+        endDateTimePicker = SimpleDateTimePicker.make(
+                getString(R.string.prompt_endDate),
+                new Date(),
+                new DateTimePicker.OnDateTimeSetListener() {
+                    @Override
+                    public void DateTimeSet(Date date) {
+                        DateTime dateTime = new DateTime(date);
+                        endDate.setText(dateTime.getDateString());
+                        endDate.requestFocus();
+                    }
+                },
                 getSupportFragmentManager()
         );
 
     }
 
-    public void selectDate(View view) {
-        simpleDateTimePicker.show();
+    public void selectInitDate(View view) {
+        initDateTimePicker.show();
     }
 
-    @Override
-    public void DateTimeSet(Date date) {
-
-        // This is the DateTime class we created earlier to handle the conversion
-        // of Date to String Format of Date String Format to Date object
-        DateTime dateTime = new DateTime(date);
-        initDate.setText(dateTime.getDateString());
-
+    public void selectEndDate(View view) {
+        endDateTimePicker.show();
     }
 
 }

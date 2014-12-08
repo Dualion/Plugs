@@ -24,6 +24,7 @@ public class DateTimePicker extends DialogFragment {
     private static final String KEY_INIT_DATE = "initDate";
     private static final String TAG_DATE = "date";
     private static final String TAG_TIME = "time";
+
     private Context context;
     private ButtonClickListener buttonClickListener;
     private OnDateTimeSetListener onDateTimeSetListener;
@@ -49,35 +50,44 @@ public class DateTimePicker extends DialogFragment {
      * @return Instance of the DateTimePicker DialogFragment
      */
     public static DateTimePicker newInstance(CharSequence dialogTitle, Date initDate) {
+
         // Create a new instance of DateTimePicker
-        DateTimePicker mDateTimePicker = new DateTimePicker();
+        DateTimePicker dateTimePicker = new DateTimePicker();
+
         // Setup the constructor parameters as arguments
-        Bundle mBundle = new Bundle();
-        mBundle.putCharSequence(KEY_DIALOG_TITLE, dialogTitle);
-        mBundle.putSerializable(KEY_INIT_DATE, initDate);
-        mDateTimePicker.setArguments(mBundle);
+        Bundle bundle = new Bundle();
+        bundle.putCharSequence(KEY_DIALOG_TITLE, dialogTitle);
+        bundle.putSerializable(KEY_INIT_DATE, initDate);
+        dateTimePicker.setArguments(bundle);
+
         // Return instance with arguments
-        return mDateTimePicker;
+        return dateTimePicker;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         // Retrieve Argument passed to the constructor
         argument = getArguments();
+
         // Use an AlertDialog Builder to initially create the Dialog
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
         // Setup the Dialog
-        mBuilder.setTitle(argument.getCharSequence(KEY_DIALOG_TITLE));
-        mBuilder.setNegativeButton(android.R.string.no, buttonClickListener);
-        mBuilder.setPositiveButton(android.R.string.yes, buttonClickListener);
+        builder.setTitle(argument.getCharSequence(KEY_DIALOG_TITLE));
+        builder.setNegativeButton(android.R.string.no, buttonClickListener);
+        builder.setPositiveButton(android.R.string.yes, buttonClickListener);
+
         // Create the Alert Dialog
-        AlertDialog mDialog = mBuilder.create();
+        AlertDialog alertDialog = builder.create();
+
         // Set the View to the Dialog
-        mDialog.setView(
-                createDateTimeView(mDialog.getLayoutInflater())
+        alertDialog.setView(
+                createDateTimeView(alertDialog.getLayoutInflater())
         );
+
         // Return the Dialog created
-        return mDialog;
+        return alertDialog;
     }
 
     /**
@@ -88,36 +98,36 @@ public class DateTimePicker extends DialogFragment {
     private View createDateTimeView(LayoutInflater layoutInflater) {
 
         // Inflate the XML Layout using the inflater from the created Dialog
-        View mView = layoutInflater.inflate(R.layout.date_time_picker,null);
+        View view = layoutInflater.inflate(R.layout.date_time_picker,null);
 
         // Extract the TabHost
-        TabHost mTabHost = (TabHost) mView.findViewById(R.id.tab_host);
-        mTabHost.setup();
+        TabHost tabHost = (TabHost) view.findViewById(R.id.tab_host);
+        tabHost.setup();
 
         // Create Date Tab and add to TabHost
-        TabHost.TabSpec mDateTab = mTabHost.newTabSpec(TAG_DATE);
-        mDateTab.setIndicator(getString(R.string.tab_date));
-        mDateTab.setContent(R.id.date_content);
-        mTabHost.addTab(mDateTab);
+        TabHost.TabSpec dateTab = tabHost.newTabSpec(TAG_DATE);
+        dateTab.setIndicator(getString(R.string.tab_date));
+        dateTab.setContent(R.id.date_content);
+        tabHost.addTab(dateTab);
 
         // Create Time Tab and add to TabHost
-        TabHost.TabSpec mTimeTab = mTabHost.newTabSpec(TAG_TIME);
-        mTimeTab.setIndicator(getString(R.string.tab_time));
-        mTimeTab.setContent(R.id.time_content);
-        mTabHost.addTab(mTimeTab);
+        TabHost.TabSpec timeTab = tabHost.newTabSpec(TAG_TIME);
+        timeTab.setIndicator(getString(R.string.tab_time));
+        timeTab.setContent(R.id.time_content);
+        tabHost.addTab(timeTab);
 
         // Retrieve Date from Arguments sent to the Dialog
-        DateTime mDateTime = new DateTime((Date) argument.getSerializable(KEY_INIT_DATE));
+        DateTime dateTime = new DateTime((Date) argument.getSerializable(KEY_INIT_DATE));
 
         // Initialize Date and Time Pickers
-        datePicker = (DatePicker) mView.findViewById(R.id.date_picker);
-        timePicker = (TimePicker) mView.findViewById(R.id.time_picker);
-        datePicker.init(mDateTime.getYear(), mDateTime.getMonthOfYear(),
-                mDateTime.getDayOfMonth(), null);
-        timePicker.setCurrentHour(mDateTime.getHourOfDay());
-        timePicker.setCurrentMinute(mDateTime.getMinuteOfHour());
+        datePicker = (DatePicker) view.findViewById(R.id.date_picker);
+        timePicker = (TimePicker) view.findViewById(R.id.time_picker);
+        datePicker.init(dateTime.getYear(), dateTime.getMonthOfYear(),
+                dateTime.getDayOfMonth(), null);
+        timePicker.setCurrentHour(dateTime.getHourOfDay());
+        timePicker.setCurrentMinute(dateTime.getMinuteOfHour());
 
-        return mView;
+        return view;
     }
 
     /**
@@ -130,20 +140,22 @@ public class DateTimePicker extends DialogFragment {
     }
 
     private class ButtonClickListener implements DialogInterface.OnClickListener {
+
         @Override
         public void onClick(DialogInterface dialogInterface, int result) {
             // Determine if the user selected Ok
             if(DialogInterface.BUTTON_POSITIVE == result) {
-                DateTime mDateTime = new DateTime(
+                DateTime dateTime = new DateTime(
                         datePicker.getYear(),
                         datePicker.getMonth(),
                         datePicker.getDayOfMonth(),
                         timePicker.getCurrentHour(),
                         timePicker.getCurrentMinute()
                 );
-                onDateTimeSetListener.DateTimeSet(mDateTime.getDate());
+                onDateTimeSetListener.DateTimeSet(dateTime.getDate());
             }
         }
+
     }
 
     /**

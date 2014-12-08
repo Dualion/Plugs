@@ -12,11 +12,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -71,11 +73,62 @@ public class MainActivity extends ListActivity {
             }
         });
 
+        mainView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                final int position = getSelectedItemPosition();
+
+                // Set an EditText view to get user input
+                final EditText input = new EditText(MainActivity.this);
+                input.setHint("Component");
+                input.setText(adapter.getItem(position).getComponent());
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Info Component")
+                                //.setMessage("Component")
+                        .setView(input)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                Editable value = input.getText();
+                                Plug plug = adapter.getItem(position);
+                                Toast.makeText(MainActivity.this, plug.getPinId() + ": " + value, Toast.LENGTH_SHORT).show();
+                                mySettings.edit().putString(plug.getPinId(), value.toString()).apply();
+                                adapter.setComponent(position, value.toString());
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Do nothing.
+                        Toast.makeText(MainActivity.this, "Nothing", Toast.LENGTH_SHORT).show();
+                    }
+                }).show();
+
+                return true;
+            }
+        });
     }
+
 
     @Override
     protected void onListItemClick(ListView l, View v, final int position, long id) {
         super.onListItemClick(l, v, position, id);
+
+        // getting values from selected ListItem
+        String pid = String.valueOf(adapter.getItem(position).getId());
+
+        // Starting new intent
+        Intent in = new Intent(getApplicationContext(), DatesActivity.class);
+
+        // sending pid to next activity
+        in.putExtra("pid", pid);
+
+        // starting new activity and expecting some response back
+        startActivityForResult(in, 100);
+    }
+
+    /*@Override
+    protected void onListItemClick(ListView l, View v, final int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
         // Set an EditText view to get user input
         final EditText input = new EditText(MainActivity.this);
         input.setHint("Component");
@@ -99,7 +152,7 @@ public class MainActivity extends ListActivity {
             }
         }).show();
 
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
