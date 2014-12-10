@@ -1,15 +1,9 @@
 package com.dualion.power_strip.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,7 +23,7 @@ import retrofit.client.Response;
 public class CustomGrid extends BaseAdapter {
 
     private LayoutInflater inflater;
-    private final ArrayList<Plug> plugs;
+    private ArrayList<Plug> plugs;
     private final Context context;
     private final PlugService plugService;
     private int lastPosition;
@@ -70,6 +64,12 @@ public class CustomGrid extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void setPlugs(ArrayList<Plug> plugs) {
+        this.plugs = plugs;
+        notifyDataSetChanged();
+    }
+
+
     @Override
     public long getItemId(int position) {
         return Long.parseLong(plugs.get(position).getId());
@@ -99,9 +99,6 @@ public class CustomGrid extends BaseAdapter {
         viewHolder.pid.setText(plug.getId());
         viewHolder.name.setText("Plug: " + plug.getId());
         viewHolder.pin.setText("Pin: " + plug.getPinId());
-
-        SharedPreferences mySettings = PreferenceManager.getDefaultSharedPreferences(context);
-        plug.setComponent((mySettings.getString(plug.getPinId(), "-")));
         viewHolder.component.setText(plug.getComponent());
 
         if (plugs.get(position).getPinState().compareToIgnoreCase("false") == 0) {
@@ -114,7 +111,7 @@ public class CustomGrid extends BaseAdapter {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        plugService.setPlug(position + 1, new Callback<PlugsList>() {
+                        plugService.toggleStatePlugFromId(position + 1, new Callback<PlugsList>() {
                             @Override
                             public void success(PlugsList plugsList, Response response) {
                                 if (plugsList.getPlugs().size() > 0) {

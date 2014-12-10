@@ -19,6 +19,8 @@ public class Plug {
     @Expose
     private String pinState;
 
+    @SerializedName("pin_name")
+    @Expose
     private String component;
 
     Plug(){}

@@ -9,9 +9,6 @@
     <item android:id="@+id/action_refresh" android:title="@string/action_refresh"
         android:orderInCategory="100" plugs:showAsAction="never" />
 
-    <item android:id="@+id/action_calendar" android:title="Calendar"
-        android:orderInCategory="100" plugs:showAsAction="never" />
-
     <item android:id="@+id/action_logout" android:title="@string/action_logout"
         android:orderInCategory="100" plugs:showAsAction="never" />
 

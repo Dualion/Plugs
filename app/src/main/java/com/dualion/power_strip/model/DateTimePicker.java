@@ -126,6 +126,7 @@ public class DateTimePicker extends DialogFragment {
                 dateTime.getDayOfMonth(), null);
         timePicker.setCurrentHour(dateTime.getHourOfDay());
         timePicker.setCurrentMinute(dateTime.getMinuteOfHour());
+        timePicker.setIs24HourView(true);
 
         return view;
     }

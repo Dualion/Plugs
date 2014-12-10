@@ -10,15 +10,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -42,8 +44,12 @@ public class MainActivity extends ListActivity {
     private String url;
     private String user;
     private String password;
+
     private View progressView;
-    private View mainView;
+    private ListView mainView;
+    private SwipeRefreshLayout swipeRefreshWidget;
+
+    PlugService plugService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +60,13 @@ public class MainActivity extends ListActivity {
 
         mainView = getListView();
         progressView = findViewById(R.id.main_progress);
+        swipeRefreshWidget = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_widget);
+        swipeRefreshWidget.setColorSchemeColors(R.color.dualion);
 
         showProgress(true);
 
         RestPlug restProduct = new RestPlug(url, user, password);
-        final PlugService plugService = restProduct.getService();
+        plugService = restProduct.getService();
         plugService.getAllPlugs(new Callback<PlugsList>() {
             @Override
             public void success(PlugsList plugsList, Response response) {
@@ -66,6 +74,7 @@ public class MainActivity extends ListActivity {
                 setListAdapter(adapter);
                 showProgress(false);
             }
+
             @Override
             public void failure(RetrofitError retrofitError) {
                 Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
@@ -73,40 +82,68 @@ public class MainActivity extends ListActivity {
             }
         });
 
-        mainView.setOnLongClickListener(new View.OnLongClickListener() {
+        mainView.setLongClickable(true);
+        mainView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-
-                final int position = getSelectedItemPosition();
-
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 // Set an EditText view to get user input
                 final EditText input = new EditText(MainActivity.this);
                 input.setHint("Component");
                 input.setText(adapter.getItem(position).getComponent());
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Info Component")
-                                //.setMessage("Component")
                         .setView(input)
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Editable value = input.getText();
-                                Plug plug = adapter.getItem(position);
-                                Toast.makeText(MainActivity.this, plug.getPinId() + ": " + value, Toast.LENGTH_SHORT).show();
-                                mySettings.edit().putString(plug.getPinId(), value.toString()).apply();
-                                adapter.setComponent(position, value.toString());
+                                PutComponent(position, value.toString());
                             }
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // Do nothing.
-                        Toast.makeText(MainActivity.this, "Nothing", Toast.LENGTH_SHORT).show();
                     }
                 }).show();
 
                 return true;
             }
         });
-    }
 
+        mainView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                boolean enable = false;
+                if(mainView != null && mainView.getChildCount() > 0){
+                    // check if the first item of the list is visible
+                    boolean firstItemVisible = mainView.getFirstVisiblePosition() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = mainView.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                swipeRefreshWidget.setEnabled(enable);
+            }
+        });
+
+        swipeRefreshWidget.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshWidget.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refresh();
+                        swipeRefreshWidget.setRefreshing(false);
+                    }
+                }, 3000);
+            }
+        });
+    }
 
     @Override
     protected void onListItemClick(ListView l, View v, final int position, long id) {
@@ -176,14 +213,8 @@ public class MainActivity extends ListActivity {
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 return true;
             case R.id.action_refresh:
-                startActivity(getIntent());
-                finish();
-                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                break;
-            case R.id.action_calendar:
-                Intent i2 = new Intent(this, DatesActivity.class);
-                startActivity(i2);
-                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                swipeRefreshWidget.setRefreshing(true);
+                refresh();
                 break;
             case R.id.action_logout:
                 mySettings.edit().putString("prefCurrentPass", "").apply();
@@ -200,12 +231,43 @@ public class MainActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
+    private void refresh() {
+        plugService.getAllPlugs(new Callback<PlugsList>() {
+            @Override
+            public void success(PlugsList plugsList, Response response) {
+                adapter.setPlugs((ArrayList<Plug>) plugsList.getPlugs());
+                swipeRefreshWidget.setRefreshing(false);
+            }
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
+                swipeRefreshWidget.setRefreshing(false);
+            }
+        });
+    }
+
     private void loadPref() {
         mySettings = PreferenceManager.getDefaultSharedPreferences(this);
 
         url = mySettings.getString("prefUrlApi", "http://127.0.0.1");
         user = mySettings.getString("prefUser", "");
         password = mySettings.getString("prefCurrentPass", "");
+    }
+
+    private void PutComponent(final int id, final String componentName) {
+        plugService.SetComponentPlugFromId(id+1, componentName, new Callback<PlugsList>() {
+            @Override
+            public void success(PlugsList plugsList, Response response) {
+                adapter.setComponent(id, componentName);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Toast.makeText(getBaseContext(), "Fail write component name", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -243,5 +305,4 @@ public class MainActivity extends ListActivity {
             mainView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-
 }
