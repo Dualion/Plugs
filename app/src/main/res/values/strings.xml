@@ -24,7 +24,7 @@
 
     <!-- Login Activity -->
     <string name="prompt_user">Username</string>
-    <string name="prompt_password">Password (Optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="prompt_urlApi">URL API</string>
     <string name="action_sign_in_short">Sign In</string>
     <string name="action_sign_in">Sign In</string>
@@ -47,5 +47,8 @@
     <string name="prompt_initDate">Initial date</string>
     <string name="prompt_endDate">End date</string>
     <string name="plug">Plug</string>
+    <string name="Send">Send</string>
+    <string name="Dualion">Dualion</string>
+    <string name="WrongDate">Wrong date</string>
 
 </resources>

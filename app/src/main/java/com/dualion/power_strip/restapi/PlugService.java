@@ -2,6 +2,7 @@ package com.dualion.power_strip.restapi;
 
 import com.dualion.power_strip.model.PlugsList;
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.PUT;
@@ -26,5 +27,8 @@ public interface PlugService {
     // "/api/v1.0/pins/{id}/{pin_name}"
     @PUT("/api/v1.0/pins/{id}/{pin_name}")
     public void SetComponentPlugFromId(@Path("id") Integer id, @Path("pin_name") String component, Callback<PlugsList> callback);
+
+    @PUT("/api/v1.0/pins/{id}/{start}/{stop}/{repeat}")
+    public void SetSchedulerPlugFromId(@Body String body, @Path("id") Integer id, @Path("start") Long start, @Path("stop") Long stop, @Path("repeat") String repeat, Callback<PlugsList> callback);
 
 }

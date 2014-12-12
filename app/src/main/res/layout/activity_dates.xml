@@ -30,7 +30,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/ButtonInitDate"
-        android:layout_toStartOf="@+id/ButtonInitDate">
+        android:layout_toStartOf="@+id/ButtonInitDate"
+        android:editable="false"
+        android:focusable="false"
+        android:onClick="selectInitDate">
     </EditText>
 
     <ImageButton
@@ -43,7 +46,8 @@
         android:src="@drawable/date"
         android:layout_alignBottom="@+id/initDate"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:clickable="true" />
 
     <EditText
         android:id="@+id/endDate"
@@ -57,7 +61,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/initDate"
-        android:layout_alignEnd="@+id/initDate" />
+        android:layout_alignEnd="@+id/initDate"
+        android:onClick="selectEndDate"
+        android:focusable="false"
+        android:editable="false" />
 
     <ImageButton
         android:id="@+id/ButtonEndDate"
@@ -69,6 +76,16 @@
         android:src="@drawable/date"
         android:layout_alignBottom="@+id/endDate"
         android:layout_toRightOf="@+id/endDate"
-        android:layout_toEndOf="@+id/endDate" />
+        android:layout_toEndOf="@+id/endDate"
+        android:clickable="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Send"
+        android:id="@+id/sendDates"
+        android:layout_below="@+id/endDate"
+        android:layout_centerHorizontal="true"
+        android:enabled="false" />
 
 </RelativeLayout>
