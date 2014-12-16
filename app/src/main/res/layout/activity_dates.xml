@@ -12,8 +12,7 @@
         android:id="@+id/titleDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="plugs"
+        android:text="@string/Plugs"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -25,13 +24,12 @@
         android:hint="@string/prompt_initDate"
         android:maxLines="1"
         android:singleLine="true"
-        android:inputType="datetime"
+        android:inputType="none"
         android:layout_below="@+id/titleDate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/ButtonInitDate"
         android:layout_toStartOf="@+id/ButtonInitDate"
-        android:editable="false"
         android:focusable="false"
         android:onClick="selectInitDate">
     </EditText>
@@ -56,15 +54,14 @@
         android:hint="@string/prompt_endDate"
         android:maxLines="1"
         android:singleLine="true"
-        android:inputType="datetime"
+        android:inputType="none"
         android:layout_below="@+id/ButtonInitDate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/initDate"
         android:layout_alignEnd="@+id/initDate"
         android:onClick="selectEndDate"
-        android:focusable="false"
-        android:editable="false" />
+        android:focusable="false" />
 
     <ImageButton
         android:id="@+id/ButtonEndDate"

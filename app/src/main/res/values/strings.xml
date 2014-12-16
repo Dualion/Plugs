@@ -50,5 +50,6 @@
     <string name="Send">Send</string>
     <string name="Dualion">Dualion</string>
     <string name="WrongDate">Wrong date</string>
+    <string name="Plugs">plugs</string>
 
 </resources>

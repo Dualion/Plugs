@@ -30,6 +30,9 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
 
     private SimpleDateTimePicker initDateTimePicker;
     private SimpleDateTimePicker endDateTimePicker;
+
+
+
     PlugService plugService;
 
     private SharedPreferences mySettings;
