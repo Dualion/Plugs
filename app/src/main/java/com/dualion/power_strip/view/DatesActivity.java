@@ -5,10 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.dualion.power_strip.R;
-import com.dualion.power_strip.model.DateTime;
-import com.dualion.power_strip.model.DateTimePicker;
+import com.dualion.power_strip.model.Calendar.DateTime;
+import com.dualion.power_strip.model.Calendar.DateTimePicker;
+import com.dualion.power_strip.model.Calendar.SimpleTimePicker;
+import com.dualion.power_strip.model.Calendar.Time;
+import com.dualion.power_strip.model.Calendar.TimePicker;
 import com.dualion.power_strip.model.PlugsList;
-import com.dualion.power_strip.model.SimpleDateTimePicker;
+import com.dualion.power_strip.model.Calendar.SimpleDateTimePicker;
 import com.dualion.power_strip.restapi.PlugService;
 import com.dualion.power_strip.restapi.RestPlug;
 
@@ -20,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import retrofit.Callback;
@@ -30,9 +34,8 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
 
     private SimpleDateTimePicker initDateTimePicker;
     private SimpleDateTimePicker endDateTimePicker;
-
-
-
+    private SimpleTimePicker initTimePicker;
+    private SimpleTimePicker endTimePicker;
     PlugService plugService;
 
     private SharedPreferences mySettings;
@@ -46,8 +49,8 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
     private EditText initDate;
     private EditText endDate;
 
-    private Long initDateMilli;
-    private Long endDateMilli;
+    private Long initMillis;
+    private Long endMillis;
 
     private String pid;
 
@@ -70,8 +73,90 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
         sendDates = (Button) findViewById(R.id.sendDates);
 
         titleDate.setText(getString(R.string.plug) + ": " + pid);
-        initDateMilli = 0L;
-        endDateMilli = 0L;
+
+        initMillis = 0L;
+        endMillis = 0L;
+
+        //init DateTimePicker
+        initDateTimePicker();
+
+        //init TimePicker
+        initTimePicker();
+
+        // init Restapi
+        final RestPlug restProduct = new RestPlug(url, user, password);
+
+        sendDates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (initMillis >= endMillis) {
+                    sendDates.setError(getString(R.string.WrongDate));
+                    return;
+                } else {
+                    sendDates.setError(null);
+                }
+
+                plugService = restProduct.getService();
+                plugService.SetSchedulerPlugFromId("[Hola:Tonto]", Integer.parseInt(pid), initMillis, endMillis, "undefined", new Callback<PlugsList>() {
+                    @Override
+                    public void success(PlugsList plugsList, Response response) {
+                        Toast.makeText(DatesActivity.this, "OK", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        Toast.makeText(DatesActivity.this, "fail", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+    }
+
+    private void initTimePicker() {
+        Calendar calendar = Calendar.getInstance();
+        initTimePicker = SimpleTimePicker.make(
+                getString(R.string.prompt_initTime),
+                new Time(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE)+1),
+                new TimePicker.OnTimeSetListener() {
+                    @Override
+                    public void TimeSet(Time timeSet) {
+                        Time time = new Time(timeSet);
+                        initDate.setText(time.getTimeString());
+                        initMillis = time.getTimeMillis();
+                        if( initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
+                            sendDates.setEnabled(true);
+                        }else{
+                            sendDates.setEnabled(false);
+                        }
+                    }
+                },
+                getSupportFragmentManager()
+        );
+
+        endTimePicker = SimpleTimePicker.make(
+                getString(R.string.prompt_endTime),
+                new Time(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE)+2),
+                new TimePicker.OnTimeSetListener() {
+                    @Override
+                    public void TimeSet(Time timeSet) {
+                        Time time = new Time(timeSet);
+                        endDate.setText(time.getTimeString());
+                        endMillis = time.getTimeMillis();
+                        if( initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
+                            sendDates.setEnabled(true);
+                        }else{
+                            sendDates.setEnabled(false);
+                        }
+                    }
+                },
+                getSupportFragmentManager()
+        );
+
+
+    }
+
+    private void initDateTimePicker() {
 
         // Create a initDateTimePicker
         initDateTimePicker = SimpleDateTimePicker.make(
@@ -82,8 +167,8 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
                     public void DateTimeSet(Date date) {
                         DateTime dateTime = new DateTime(date);
                         initDate.setText(dateTime.getDateString());
-                        initDateMilli = dateTime.getCalendar().getTimeInMillis();
-                        if( initDateMilli != 0L && endDateMilli != 0L && (initDateMilli < endDateMilli)) {
+                        initMillis = dateTime.getCalendar().getTimeInMillis();
+                        if( initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
                             sendDates.setEnabled(true);
                         }else{
                             sendDates.setEnabled(false);
@@ -101,8 +186,8 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
                     public void DateTimeSet(Date date) {
                         DateTime dateTime = new DateTime(date);
                         endDate.setText(dateTime.getDateString());
-                        endDateMilli = dateTime.getCalendar().getTimeInMillis();
-                        if( initDateMilli != 0L && endDateMilli != 0L && (initDateMilli < endDateMilli)) {
+                        endMillis = dateTime.getCalendar().getTimeInMillis();
+                        if( initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
                             sendDates.setEnabled(true);
                         }else{
                             sendDates.setEnabled(false);
@@ -112,42 +197,16 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
                 getSupportFragmentManager()
         );
 
-        // init Restapi
-        final RestPlug restProduct = new RestPlug(url, user, password);
-
-        sendDates.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (initDateMilli >= endDateMilli) {
-                    sendDates.setError(getString(R.string.WrongDate));
-                    return;
-                } else {
-                    sendDates.setError(null);
-                }
-
-                plugService = restProduct.getService();
-                plugService.SetSchedulerPlugFromId("[Hola:Tonto]", Integer.parseInt(pid), initDateMilli, endDateMilli, "undefined", new Callback<PlugsList>() {
-                    @Override
-                    public void success(PlugsList plugsList, Response response) {
-                        Toast.makeText(DatesActivity.this, "OK", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        Toast.makeText(DatesActivity.this, "fail", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
     }
 
     public void selectInitDate(View view) {
-        initDateTimePicker.show();
+        //initDateTimePicker.show();
+        initTimePicker.show();
     }
 
     public void selectEndDate(View view) {
-        endDateTimePicker.show();
+        //endDateTimePicker.show();
+        endTimePicker.show();
     }
 
     private void loadPref() {

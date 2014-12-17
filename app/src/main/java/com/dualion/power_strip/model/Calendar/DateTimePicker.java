@@ -1,4 +1,4 @@
-package com.dualion.power_strip.model;
+package com.dualion.power_strip.model.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,7 +20,7 @@ import java.util.Date;
 
 public class DateTimePicker extends DialogFragment {
 
-    public static final String TAG_FRAG_DATE_TIME = "fragDateTime";
+    public static final String TAG_FRAG_TIME = "fragTime";
     private static final String KEY_DIALOG_TITLE = "dialogTitle";
     private static final String KEY_INIT_DATE = "initDate";
     private static final String TAG_DATE = "date";

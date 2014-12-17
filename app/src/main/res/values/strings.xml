@@ -46,6 +46,8 @@
     <string name="action_dates">Dates</string>
     <string name="prompt_initDate">Initial date</string>
     <string name="prompt_endDate">End date</string>
+    <string name="prompt_initTime">Initial Time</string>
+    <string name="prompt_endTime">End Time</string>
     <string name="plug">Plug</string>
     <string name="Send">Send</string>
     <string name="Dualion">Dualion</string>

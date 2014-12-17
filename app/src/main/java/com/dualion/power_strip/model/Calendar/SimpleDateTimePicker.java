@@ -1,4 +1,4 @@
-package com.dualion.power_strip.model;
+package com.dualion.power_strip.model.Calendar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,7 +27,7 @@ public class SimpleDateTimePicker {
         // Find if there are any DialogFragments from the FragmentManager
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment dateTimeDialogFrag = fragmentManager.findFragmentByTag(
-                DateTimePicker.TAG_FRAG_DATE_TIME
+                DateTimePicker.TAG_FRAG_TIME
         );
 
         // Remove it if found
@@ -68,7 +68,7 @@ public class SimpleDateTimePicker {
         // Create new DateTimePicker
         DateTimePicker dateTimePicker = DateTimePicker.newInstance(dialogTitle, initDate);
         dateTimePicker.setOnDateTimeSetListener(onDateTimeSetListener);
-        dateTimePicker.show(fragmentManager, DateTimePicker.TAG_FRAG_DATE_TIME);
+        dateTimePicker.show(fragmentManager, DateTimePicker.TAG_FRAG_TIME);
 
     }
 

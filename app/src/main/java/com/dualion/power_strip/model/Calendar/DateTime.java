@@ -1,4 +1,4 @@
-package com.dualion.power_strip.model;
+package com.dualion.power_strip.model.Calendar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

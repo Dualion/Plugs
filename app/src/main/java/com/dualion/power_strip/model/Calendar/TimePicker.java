@@ -1,4 +1,4 @@
-package com.dualion.power_strip.model;
+package com.dualion.power_strip.model.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,14 +8,10 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.DatePicker;
 
 import com.dualion.power_strip.R;
-
-import java.util.Date;
 
 public class TimePicker extends DialogFragment {
 
@@ -24,9 +20,8 @@ public class TimePicker extends DialogFragment {
 
     private Context context;
     private ButtonClickListener buttonClickListener;
-    private OnDateTimeSetListener onDateTimeSetListener;
+    private OnTimeSetListener onTimeSetListener;
     private Bundle argument;
-    private DatePicker datePicker;
     private android.widget.TimePicker timePicker;
 
     // DialogFragment constructor must be empty
@@ -100,26 +95,25 @@ public class TimePicker extends DialogFragment {
 
         // Retrieve Date from Arguments sent to the Dialog
         //DateTime dateTime = new DateTime( DATE_FORMAT, (Date) argument.getSerializable(KEY_INIT_TIME));
+        Time time = new Time((Time) argument.getSerializable(KEY_INIT_TIME));
 
-        // Initialize Date and Time Pickers
-        datePicker = (DatePicker) view.findViewById(R.id.date_picker);
+        // Initialize Time Pickers
         timePicker = (android.widget.TimePicker) view.findViewById(R.id.time_picker);
-        //datePicker.init(dateTime.getYear(), dateTime.getMonthOfYear(),
-        //        dateTime.getDayOfMonth(), null);
-        //timePicker.setCurrentHour(dateTime.getHourOfDay());
-        //timePicker.setCurrentMinute(dateTime.getMinuteOfHour());
-        //timePicker.setIs24HourView(true);
+
+        timePicker.setCurrentHour(time.getHour());
+        timePicker.setCurrentMinute(time.getMinute());
+        timePicker.setIs24HourView(true);
 
         return view;
     }
 
     /**
      * Sets the OnDateTimeSetListener interface
-     * @param onDateTimeSetListener Interface that is used to send the Date and Time
+     * @param onTimeSetListener Interface that is used to send the Date and Time
      *               to the calling object
      */
-    public void setOnDateTimeSetListener(OnDateTimeSetListener onDateTimeSetListener) {
-        this.onDateTimeSetListener = onDateTimeSetListener;
+    public void setOnTimeSetListener(OnTimeSetListener onTimeSetListener) {
+        this.onTimeSetListener = onTimeSetListener;
     }
 
     private class ButtonClickListener implements DialogInterface.OnClickListener {
@@ -128,24 +122,22 @@ public class TimePicker extends DialogFragment {
         public void onClick(DialogInterface dialogInterface, int result) {
             // Determine if the user selected Ok
             if(DialogInterface.BUTTON_POSITIVE == result) {
-                DateTime dateTime = new DateTime(
-                        datePicker.getYear(),
-                        datePicker.getMonth(),
-                        datePicker.getDayOfMonth(),
+                Time time = new Time(
                         timePicker.getCurrentHour(),
                         timePicker.getCurrentMinute()
                 );
-                onDateTimeSetListener.DateTimeSet(dateTime.getDate());
+
+                onTimeSetListener.TimeSet(time);
             }
         }
 
     }
 
     /**
-     * Interface for sending the Date and Time to the calling object
+     * Interface for sending the Time to the calling object
      */
-    public interface OnDateTimeSetListener {
-        public void DateTimeSet(Date date);
+    public interface OnTimeSetListener {
+        public void TimeSet(Time time);
     }
 }
 
