@@ -18,6 +18,7 @@ import com.dualion.power_strip.restapi.RestPlug;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,7 +59,14 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Hide the Title bar of this activity screen
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_dates);
+
+
+
         loadPref();
 
         // getting product details from intent

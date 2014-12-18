@@ -54,6 +54,8 @@ public class Time implements Serializable {
 
     @Override
     public String toString() {
-        return hour + ":" + minute;
+		return String.format("%02d", hour) +
+				":" +
+				String.format("%02d", minute);
     }
 }
