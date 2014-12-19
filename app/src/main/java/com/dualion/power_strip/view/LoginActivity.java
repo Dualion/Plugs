@@ -3,7 +3,6 @@ package com.dualion.power_strip.view;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -23,6 +22,7 @@ import android.widget.TextView;
 
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.data.SharedData;
+import com.dualion.power_strip.model.BaseActivity;
 import com.dualion.power_strip.model.PlugsList;
 import com.dualion.power_strip.model.User;
 import com.dualion.power_strip.restapi.PlugService;
@@ -35,7 +35,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
 
     private AutoCompleteTextView userView;
     private EditText passwordView;

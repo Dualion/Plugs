@@ -3,6 +3,7 @@ package com.dualion.power_strip;
 import android.app.Application;
 
 import com.dualion.power_strip.data.SharedData;
+import com.dualion.power_strip.data.SharedDataModule;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,22 +16,19 @@ public class PowerStripApp extends Application {
 
     private ObjectGraph objectGraph;
 
-    //@Inject
-    //SharedData settings;
-
-	@Override
+    @Override
     public void onCreate() {
         super.onCreate();
 
         objectGraph = ObjectGraph.create(getModules().toArray());
-        objectGraph.inject(this);
-
-        //settings.registerAppEnter();
 
     }
 
     private List<Object> getModules() {
-        return Arrays.<Object>asList(new PowerStripAppModule(this));
+        return Arrays.<Object>asList(new SharedDataModule(this));
     }
-	
+
+    public ObjectGraph getObjectGraph() {
+        return objectGraph;
+    }
 }
