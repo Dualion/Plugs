@@ -2,7 +2,7 @@ package com.dualion.power_strip;
 
 import android.app.Application;
 
-import com.dualion.power_strip.Settings.Preference;
+import com.dualion.power_strip.data.Preference;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,9 +15,9 @@ public class PowerStripApp extends Application {
 
     private ObjectGraph objectGraph;
 
-    @Inject com.dualion.power_strip.Settings.Preference settings;
+    @Inject Preference settings;
 
-    @Override
+	@Override
     public void onCreate() {
         super.onCreate();
 
@@ -31,5 +31,5 @@ public class PowerStripApp extends Application {
     private List<Object> getModules() {
         return Arrays.<Object>asList(new PowerStripAppModule(this));
     }
-
+	
 }

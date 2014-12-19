@@ -3,17 +3,19 @@ package com.dualion.power_strip;
 
 import android.app.Application;
 
-import com.dualion.power_strip.Settings.PreferenceModule;
+import com.dualion.power_strip.data.PreferenceModule;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
 @Module(
+		includes = {
+                PreferenceModule.class
+        },
         injects = {
                 PowerStripApp.class
-        },
-        includes = {
-                PreferenceModule.class
         }
 )
 public class PowerStripAppModule {
@@ -25,6 +27,7 @@ public class PowerStripAppModule {
     }
 
     @Provides
+	@Singleton
     public Application provideApplication() {
         return powerStripApp;
     }

@@ -1,4 +1,4 @@
-package com.dualion.power_strip.Settings;
+package com.dualion.power_strip.data;
 
 import android.app.Application;
 import android.content.SharedPreferences;

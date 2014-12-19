@@ -1,4 +1,4 @@
-package com.dualion.power_strip.Settings;
+package com.dualion.power_strip.data;
 
 import android.app.Application;
 
@@ -8,6 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(
+
         complete = false,
         library = true
 )
