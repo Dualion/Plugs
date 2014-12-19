@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-public class Preference {
+public class SharedData {
 
     private static final String URL_API = "prefUrlApi";
     private static final String USER_API = "prefUser";
@@ -15,7 +15,7 @@ public class Preference {
     private Application app;
     private SharedPreferences mySettings;
 
-    public Preference(Application app) {
+    public SharedData(Application app) {
         this.app = app;
         mySettings = PreferenceManager.getDefaultSharedPreferences(this.app);
     }

@@ -6,10 +6,8 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -24,10 +22,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dualion.power_strip.R;
+import com.dualion.power_strip.data.SharedData;
 import com.dualion.power_strip.model.PlugsList;
 import com.dualion.power_strip.model.User;
 import com.dualion.power_strip.restapi.PlugService;
 import com.dualion.power_strip.restapi.RestPlug;
+
+import javax.inject.Inject;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -42,22 +43,22 @@ public class LoginActivity extends Activity {
     private CheckBox savePass;
     private View progressView;
     private View loginFormView;
-    private SharedPreferences mySettings;
+    //private SharedPreferences mySettings;
 
-    //@Inject
-    //private Preference settings;
+    @Inject
+    SharedData settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-            mySettings = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        //mySettings = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
 
         // Set up the login form.
         urlApiView = (EditText) findViewById(R.id.urlApi);
-        urlApiView.setText(mySettings.getString("prefUrlApi", ""));
-        //urlApiView.setText(settings.getURI());
+        //urlApiView.setText(mySettings.getString("prefUrlApi", ""));
+        urlApiView.setText(settings.getURI());
         urlApiView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -72,7 +73,8 @@ public class LoginActivity extends Activity {
         });
 
         userView = (AutoCompleteTextView) findViewById(R.id.user);
-        userView.setText(mySettings.getString("prefUser", ""));
+        //userView.setText(mySettings.getString("prefUser", ""));
+        userView.setText(settings.getUser());
         userView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -100,7 +102,8 @@ public class LoginActivity extends Activity {
 
         savePass = (CheckBox) findViewById(R.id.savePass);
 
-        String pass = mySettings.getString("prefPass", "");
+        //String pass = mySettings.getString("prefPass", "");
+        String pass = settings.getPass();
         if (!pass.isEmpty()) {
             passwordView.setText(pass);
             savePass.setChecked(true);
@@ -238,15 +241,22 @@ public class LoginActivity extends Activity {
             @Override
             public void success(PlugsList plugsList, Response response) {
 
-                mySettings.edit().putString("prefUrlApi", urlApi).apply();
-                mySettings.edit().putString("prefUser", user.getUsername()).apply();
+
+                //mySettings.edit().putString("prefUrlApi", urlApi).apply();
+                //mySettings.edit().putString("prefUser", user.getUsername()).apply();
+                settings.setURI(urlApi);
+                settings.setUser(user.getUsername());
 
                 if (savePass.isChecked()) {
-                    mySettings.edit().putString("prefPass", user.getPassword()).apply();
-                    mySettings.edit().putString("prefCurrentPass", user.getPassword()).apply();
+                    //mySettings.edit().putString("prefPass", user.getPassword()).apply();
+                    //mySettings.edit().putString("prefCurrentPass", user.getPassword()).apply();
+                    settings.setPass(user.getPassword());
+                    settings.setCurrentPass(user.getPassword());
                 } else {
-                    mySettings.edit().putString("prefPass", "").apply();
-                    mySettings.edit().putString("prefCurrentPass", user.getPassword()).apply();
+                    //mySettings.edit().putString("prefPass", "").apply();
+                    //mySettings.edit().putString("prefCurrentPass", user.getPassword()).apply();
+                    settings.setPass("");
+                    settings.setCurrentPass(user.getPassword());
                 }
 
                 Intent myIntent = new Intent(loginFormView.getContext(), MainActivity.class);

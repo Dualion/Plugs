@@ -8,16 +8,15 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(
-
         complete = false,
         library = true
 )
-public class PreferenceModule {
+public class SharedDataModule {
 
     @Provides
     @Singleton
-    public Preference providePreference(Application app){
-        return new Preference(app);
+    public SharedData providePreference(Application app){
+        return new SharedData(app);
     }
 
 }

@@ -3,7 +3,7 @@ package com.dualion.power_strip;
 
 import android.app.Application;
 
-import com.dualion.power_strip.data.PreferenceModule;
+import com.dualion.power_strip.data.SharedDataModule;
 
 import javax.inject.Singleton;
 
@@ -12,7 +12,7 @@ import dagger.Provides;
 
 @Module(
 		includes = {
-                PreferenceModule.class
+                SharedDataModule.class
         },
         injects = {
                 PowerStripApp.class
