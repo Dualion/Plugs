@@ -44,16 +44,20 @@ public class LoginActivity extends Activity {
     private View loginFormView;
     private SharedPreferences mySettings;
 
+    //@Inject
+    //private Preference settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-        mySettings = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+            mySettings = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
 
         // Set up the login form.
         urlApiView = (EditText) findViewById(R.id.urlApi);
         urlApiView.setText(mySettings.getString("prefUrlApi", ""));
+        //urlApiView.setText(settings.getURI());
         urlApiView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
