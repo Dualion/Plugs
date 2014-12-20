@@ -12,10 +12,10 @@ import com.dualion.power_strip.model.Calendar.Time;
 import com.dualion.power_strip.model.Calendar.TimePicker;
 import com.dualion.power_strip.model.PlugsList;
 import com.dualion.power_strip.model.Calendar.SimpleDateTimePicker;
+import com.dualion.power_strip.model.ui.BaseFragmentActivity;
 import com.dualion.power_strip.restapi.PlugService;
 import com.dualion.power_strip.restapi.RestPlug;
 
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -32,7 +32,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class DatesActivity extends FragmentActivity {
+public class DatesActivity extends BaseFragmentActivity {
 
     private SimpleDateTimePicker initDateTimePicker;
     private SimpleDateTimePicker endDateTimePicker;

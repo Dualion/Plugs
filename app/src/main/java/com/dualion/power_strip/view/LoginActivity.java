@@ -205,20 +205,13 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void success(PlugsList plugsList, Response response) {
 
-
-                //mySettings.edit().putString("prefUrlApi", urlApi).apply();
-                //mySettings.edit().putString("prefUser", user.getUsername()).apply();
                 settings.setURI(urlApi);
                 settings.setUser(user.getUsername());
 
                 if (savePass.isChecked()) {
-                    //mySettings.edit().putString("prefPass", user.getPassword()).apply();
-                    //mySettings.edit().putString("prefCurrentPass", user.getPassword()).apply();
                     settings.setPass(user.getPassword());
                     settings.setCurrentPass(user.getPassword());
                 } else {
-                    //mySettings.edit().putString("prefPass", "").apply();
-                    //mySettings.edit().putString("prefCurrentPass", user.getPassword()).apply();
                     settings.setPass("");
                     settings.setCurrentPass(user.getPassword());
                 }
@@ -248,7 +241,5 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         });
-
     }
-
 }

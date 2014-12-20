@@ -2,13 +2,11 @@ package com.dualion.power_strip;
 
 import android.app.Application;
 
-import com.dualion.power_strip.data.SharedData;
 import com.dualion.power_strip.data.SharedDataModule;
+import com.dualion.power_strip.restapi.RestPlugModule;
 
 import java.util.Arrays;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import dagger.ObjectGraph;
 
@@ -25,7 +23,7 @@ public class PowerStripApp extends Application {
     }
 
     private List<Object> getModules() {
-        return Arrays.<Object>asList(new SharedDataModule(this));
+        return Arrays.<Object>asList(new SharedDataModule(this), new RestPlugModule(this));
     }
 
     public ObjectGraph getObjectGraph() {
