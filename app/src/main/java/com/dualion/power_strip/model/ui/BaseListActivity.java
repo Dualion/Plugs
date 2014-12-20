@@ -1,12 +1,11 @@
-package com.dualion.power_strip.model;
+package com.dualion.power_strip.model.ui;
 
-
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
 
 import com.dualion.power_strip.PowerStripApp;
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseListActivity extends ListActivity {
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {

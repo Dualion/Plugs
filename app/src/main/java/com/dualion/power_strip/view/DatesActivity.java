@@ -1,10 +1,10 @@
 package com.dualion.power_strip.view;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.dualion.power_strip.R;
+import com.dualion.power_strip.data.SharedData;
 import com.dualion.power_strip.model.Calendar.DateTime;
 import com.dualion.power_strip.model.Calendar.DateTimePicker;
 import com.dualion.power_strip.model.Calendar.SimpleTimePicker;
@@ -15,7 +15,6 @@ import com.dualion.power_strip.model.Calendar.SimpleDateTimePicker;
 import com.dualion.power_strip.restapi.PlugService;
 import com.dualion.power_strip.restapi.RestPlug;
 
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
@@ -27,23 +26,19 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class DatesActivity extends FragmentActivity /*implements DateTimePicker.OnDateTimeSetListener*/{
+public class DatesActivity extends FragmentActivity {
 
     private SimpleDateTimePicker initDateTimePicker;
     private SimpleDateTimePicker endDateTimePicker;
     private SimpleTimePicker initTimePicker;
     private SimpleTimePicker endTimePicker;
     PlugService plugService;
-
-    private SharedPreferences mySettings;
-
-    private String url;
-    private String user;
-    private String password;
 
     private TextView titleDate;
     private Button sendDates;
@@ -55,6 +50,9 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
 
     private String pid;
 
+    @Inject
+    SharedData settings;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,12 +60,7 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
 
         // Hide the Title bar of this activity screen
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.activity_dates);
-
-
-
-        loadPref();
 
         // getting product details from intent
         Intent i = getIntent();
@@ -92,7 +85,7 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
         initTimePicker();
 
         // init Restapi
-        final RestPlug restProduct = new RestPlug(url, user, password);
+        final RestPlug restProduct = new RestPlug(settings.getURI(), settings.getUser(), settings.getCurrentPass());
 
         sendDates.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,14 +208,6 @@ public class DatesActivity extends FragmentActivity /*implements DateTimePicker.
     public void selectEndDate(View view) {
         //endDateTimePicker.show();
         endTimePicker.show();
-    }
-
-    private void loadPref() {
-        mySettings = PreferenceManager.getDefaultSharedPreferences(this);
-
-        url = mySettings.getString("prefUrlApi", "http://127.0.0.1");
-        user = mySettings.getString("prefUser", "");
-        password = mySettings.getString("prefCurrentPass", "");
     }
 
 }

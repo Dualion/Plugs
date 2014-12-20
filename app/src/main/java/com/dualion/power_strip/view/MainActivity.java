@@ -1,17 +1,10 @@
 package com.dualion.power_strip.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.view.Menu;
@@ -27,23 +20,27 @@ import java.util.ArrayList;
 
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.adapter.CustomGrid;
+import com.dualion.power_strip.data.SharedData;
 import com.dualion.power_strip.model.Plug;
 import com.dualion.power_strip.model.PlugsList;
+import com.dualion.power_strip.model.ui.BaseListActivity;
 import com.dualion.power_strip.restapi.PlugService;
 import com.dualion.power_strip.restapi.RestPlug;
+
+import javax.inject.Inject;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.dualion.power_strip.utils.ui.showProgress;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends BaseListActivity {
 
     private CustomGrid adapter;
-    private SharedPreferences mySettings;
 
-    private String url;
-    private String user;
-    private String password;
+    @Inject
+    SharedData settings;
 
     private View progressView;
     private ListView mainView;
@@ -55,30 +52,37 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadPref();
-
 
         mainView = getListView();
         progressView = findViewById(R.id.main_progress);
         swipeRefreshWidget = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_widget);
         swipeRefreshWidget.setColorSchemeColors(R.color.dualion);
 
-        showProgress(true);
+        showProgress(mainView,
+                progressView,
+                getResources().getInteger(android.R.integer.config_shortAnimTime),
+                true);
 
-        RestPlug restProduct = new RestPlug(url, user, password);
+        RestPlug restProduct = new RestPlug(settings.getURI(), settings.getUser(), settings.getCurrentPass());
         plugService = restProduct.getService();
         plugService.getAllPlugs(new Callback<PlugsList>() {
             @Override
             public void success(PlugsList plugsList, Response response) {
                 adapter = new CustomGrid(MainActivity.this, (ArrayList<Plug>) plugsList.getPlugs(), plugService);
                 setListAdapter(adapter);
-                showProgress(false);
+                showProgress(mainView,
+                        progressView,
+                        getResources().getInteger(android.R.integer.config_shortAnimTime),
+                        false);
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
                 Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
-                showProgress(false);
+                showProgress(mainView,
+                        progressView,
+                        getResources().getInteger(android.R.integer.config_shortAnimTime),
+                        false);
             }
         });
 
@@ -217,7 +221,8 @@ public class MainActivity extends ListActivity {
                 refresh();
                 break;
             case R.id.action_logout:
-                mySettings.edit().putString("prefCurrentPass", "").apply();
+                //mySettings.edit().putString("prefCurrentPass", "").apply();
+                settings.setCurrentPass("");
                 startActivityForResult(new Intent(this, LoginActivity.class), 0);
                 finish();
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -248,13 +253,13 @@ public class MainActivity extends ListActivity {
         });
     }
 
-    private void loadPref() {
+    /*private void loadPref() {
         mySettings = PreferenceManager.getDefaultSharedPreferences(this);
 
         url = mySettings.getString("prefUrlApi", "http://127.0.0.1");
         user = mySettings.getString("prefUser", "");
         password = mySettings.getString("prefCurrentPass", "");
-    }
+    }*/
 
     private void PutComponent(final int id, final String componentName) {
         plugService.SetComponentPlugFromId(id+1, componentName, new Callback<PlugsList>() {
@@ -270,39 +275,4 @@ public class MainActivity extends ListActivity {
         });
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mainView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mainView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mainView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            progressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mainView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
 }

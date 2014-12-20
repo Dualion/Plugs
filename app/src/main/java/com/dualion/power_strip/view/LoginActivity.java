@@ -1,11 +1,7 @@
 package com.dualion.power_strip.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.KeyEvent;
@@ -22,7 +18,7 @@ import android.widget.TextView;
 
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.data.SharedData;
-import com.dualion.power_strip.model.BaseActivity;
+import com.dualion.power_strip.model.ui.BaseActivity;
 import com.dualion.power_strip.model.PlugsList;
 import com.dualion.power_strip.model.User;
 import com.dualion.power_strip.restapi.PlugService;
@@ -33,6 +29,8 @@ import javax.inject.Inject;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.dualion.power_strip.utils.ui.showProgress;
 
 
 public class LoginActivity extends BaseActivity {
@@ -189,49 +187,15 @@ public class LoginActivity extends BaseActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            showProgress(loginFormView,
+                    progressView,
+                    getResources().getInteger(android.R.integer.config_shortAnimTime),
+                    true);
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(userView.getWindowToken(), 0);
             login(urlApi, user);
         }
     }
-
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            loginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            progressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
 
     private void login(final String urlApi, final User user) {
 
@@ -267,7 +231,10 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                showProgress(false);
+                showProgress(loginFormView,
+                        progressView,
+                        getResources().getInteger(android.R.integer.config_shortAnimTime),
+                        false);
                 try {
                     if (retrofitError.getResponse().getStatus() == 403) {
                         passwordView.setError(getString(R.string.error_incorrect_password));
