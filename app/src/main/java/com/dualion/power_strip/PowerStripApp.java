@@ -19,11 +19,14 @@ public class PowerStripApp extends Application {
         super.onCreate();
 
         objectGraph = ObjectGraph.create(getModules().toArray());
-
     }
 
     private List<Object> getModules() {
-        return Arrays.<Object>asList(new SharedDataModule(this), new RestPlugModule(this));
+        return Arrays.<Object>asList(new SharedDataModule(this));
+    }
+
+    public void plus(Object module){
+        this.objectGraph = objectGraph.plus(module);
     }
 
     public ObjectGraph getObjectGraph() {

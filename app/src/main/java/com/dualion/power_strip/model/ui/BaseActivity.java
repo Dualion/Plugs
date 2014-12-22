@@ -14,4 +14,9 @@ public abstract class BaseActivity extends Activity {
 
         ((PowerStripApp) getApplication()).getObjectGraph().inject(this);
     }
+
+    protected void plusModule(Object module){
+        ((PowerStripApp) getApplication()).plus(module);
+    }
+
 }

@@ -22,16 +22,20 @@ import dagger.Provides;
         complete = false)
 public class RestPlugModule {
 
-    Application app;
+    String url;
+    String username;
+    String password;
 
-    public RestPlugModule(Application app) {
-        this.app = app;
+    public RestPlugModule(String url, String username, String password) {
+        this.url = url;
+        this.username = username;
+        this.password = password;
     }
 
     @Provides
     @Singleton
-    public SharedData provideRestPlug(){
-        return new SharedData(app);
+    public RestPlug provideRestPlug(){
+        return new RestPlug(url, username, password);
     }
 
 }

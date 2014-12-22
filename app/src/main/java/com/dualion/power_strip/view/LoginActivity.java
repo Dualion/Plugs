@@ -216,6 +216,8 @@ public class LoginActivity extends BaseActivity {
                     settings.setCurrentPass(user.getPassword());
                 }
 
+                plusModule(new RestPlug(settings.getURI(), settings.getUser(), settings.getCurrentPass()));
+
                 Intent myIntent = new Intent(loginFormView.getContext(), MainActivity.class);
                 startActivityForResult(myIntent, 0);
                 finish();
