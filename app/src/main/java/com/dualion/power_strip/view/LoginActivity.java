@@ -41,7 +41,6 @@ public class LoginActivity extends BaseActivity {
     private CheckBox savePass;
     private View progressView;
     private View loginFormView;
-    //private SharedPreferences mySettings;
 
     @Inject
     SharedData settings;
@@ -51,11 +50,9 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-        //mySettings = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
 
         // Set up the login form.
         urlApiView = (EditText) findViewById(R.id.urlApi);
-        //urlApiView.setText(mySettings.getString("prefUrlApi", ""));
         urlApiView.setText(settings.getURI());
         urlApiView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -71,7 +68,6 @@ public class LoginActivity extends BaseActivity {
         });
 
         userView = (AutoCompleteTextView) findViewById(R.id.user);
-        //userView.setText(mySettings.getString("prefUser", ""));
         userView.setText(settings.getUser());
         userView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -100,7 +96,6 @@ public class LoginActivity extends BaseActivity {
 
         savePass = (CheckBox) findViewById(R.id.savePass);
 
-        //String pass = mySettings.getString("prefPass", "");
         String pass = settings.getPass();
         if (!pass.isEmpty()) {
             passwordView.setText(pass);
@@ -215,8 +210,6 @@ public class LoginActivity extends BaseActivity {
                     settings.setPass("");
                     settings.setCurrentPass(user.getPassword());
                 }
-
-                plusModule(new RestPlug(settings.getURI(), settings.getUser(), settings.getCurrentPass()));
 
                 Intent myIntent = new Intent(loginFormView.getContext(), MainActivity.class);
                 startActivityForResult(myIntent, 0);

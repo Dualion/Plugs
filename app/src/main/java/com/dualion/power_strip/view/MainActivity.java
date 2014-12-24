@@ -42,9 +42,6 @@ public class MainActivity extends BaseListActivity {
     @Inject
     SharedData settings;
 
-    @Inject
-    RestPlug restProduct;
-
     private View progressView;
     private ListView mainView;
     private SwipeRefreshLayout swipeRefreshWidget;
@@ -66,7 +63,7 @@ public class MainActivity extends BaseListActivity {
                 getResources().getInteger(android.R.integer.config_shortAnimTime),
                 true);
 
-        //RestPlug restProduct = new RestPlug(settings.getURI(), settings.getUser(), settings.getCurrentPass());
+        RestPlug restProduct = new RestPlug(settings.getURI(), settings.getUser(), settings.getCurrentPass());
         plugService = restProduct.getService();
         plugService.getAllPlugs(new Callback<PlugsList>() {
             @Override

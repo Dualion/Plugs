@@ -3,7 +3,6 @@ package com.dualion.power_strip;
 import android.app.Application;
 
 import com.dualion.power_strip.data.SharedDataModule;
-import com.dualion.power_strip.restapi.RestPlugModule;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,10 +22,6 @@ public class PowerStripApp extends Application {
 
     private List<Object> getModules() {
         return Arrays.<Object>asList(new SharedDataModule(this));
-    }
-
-    public void plus(Object module){
-        this.objectGraph = objectGraph.plus(module);
     }
 
     public ObjectGraph getObjectGraph() {

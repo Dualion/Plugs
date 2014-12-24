@@ -11,14 +11,10 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module (injects =
-        {
-                LoginActivity.class,
-                MainActivity.class,
-                DatesActivity.class
-        },
-		library = true,
-        complete = false)
+@Module (   injects = {LoginActivity.class, MainActivity.class, DatesActivity.class},
+            library = true,
+            complete = false
+        )
 
 public class SharedDataModule {
 

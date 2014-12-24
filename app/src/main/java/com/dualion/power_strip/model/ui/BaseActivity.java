@@ -1,6 +1,5 @@
 package com.dualion.power_strip.model.ui;
 
-
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -13,10 +12,6 @@ public abstract class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         ((PowerStripApp) getApplication()).getObjectGraph().inject(this);
-    }
-
-    protected void plusModule(Object module){
-        ((PowerStripApp) getApplication()).plus(module);
     }
 
 }
