@@ -2,4 +2,5 @@
 <resources>
     <color name="pin">#666666</color>
     <color name="dualion">#162A83</color>
+    <color name="dualion_light">#ff5d9cff</color>
 </resources>

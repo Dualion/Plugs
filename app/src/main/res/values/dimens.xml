@@ -11,5 +11,6 @@
     <!-- Activity Dates -->
     <dimen name="title_dates">32sp</dimen>
     <dimen name="text_dates">24sp</dimen>
+    <dimen name="text_day_week">20sp</dimen>
 
 </resources>

@@ -53,5 +53,7 @@
     <string name="Dualion">Dualion</string>
     <string name="WrongDate">Wrong date</string>
     <string name="Plugs">plugs</string>
+    <string name="Diario">Diario</string>
+    <string name="Semanal">Semanal</string>
 
 </resources>
