@@ -33,7 +33,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static com.dualion.power_strip.utils.ui.showProgress;
+import static com.dualion.power_strip.utils.ui.toggleView;
 
 public class MainActivity extends BaseListActivity {
 
@@ -58,7 +58,7 @@ public class MainActivity extends BaseListActivity {
         swipeRefreshWidget = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_widget);
         swipeRefreshWidget.setColorSchemeColors(R.color.dualion);
 
-        showProgress(mainView,
+        toggleView(mainView,
                 progressView,
                 getResources().getInteger(android.R.integer.config_shortAnimTime),
                 true);
@@ -70,7 +70,7 @@ public class MainActivity extends BaseListActivity {
             public void success(PlugsList plugsList, Response response) {
                 adapter = new CustomGrid(MainActivity.this, (ArrayList<Plug>) plugsList.getPlugs(), plugService);
                 setListAdapter(adapter);
-                showProgress(mainView,
+                toggleView(mainView,
                         progressView,
                         getResources().getInteger(android.R.integer.config_shortAnimTime),
                         false);
@@ -79,7 +79,7 @@ public class MainActivity extends BaseListActivity {
             @Override
             public void failure(RetrofitError retrofitError) {
                 Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
-                showProgress(mainView,
+                toggleView(mainView,
                         progressView,
                         getResources().getInteger(android.R.integer.config_shortAnimTime),
                         false);

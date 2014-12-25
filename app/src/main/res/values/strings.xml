@@ -55,5 +55,11 @@
     <string name="Plugs">plugs</string>
     <string name="Diario">Diario</string>
     <string name="Semanal">Semanal</string>
+    <string name="Lun">Lun</string>
+    <string name="Mar">Mar</string>
+    <string name="Mir">Mir</string>
+    <string name="Jue">Jue</string>
+    <string name="Sab">Sab</string>
+    <string name="Dom">Dom</string>
 
 </resources>

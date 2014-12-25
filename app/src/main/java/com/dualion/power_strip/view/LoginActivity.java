@@ -30,7 +30,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static com.dualion.power_strip.utils.ui.showProgress;
+import static com.dualion.power_strip.utils.ui.toggleView;
 
 
 public class LoginActivity extends BaseActivity {
@@ -182,7 +182,7 @@ public class LoginActivity extends BaseActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(loginFormView,
+            toggleView(loginFormView,
                     progressView,
                     getResources().getInteger(android.R.integer.config_shortAnimTime),
                     true);
@@ -219,7 +219,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                showProgress(loginFormView,
+                toggleView(loginFormView,
                         progressView,
                         getResources().getInteger(android.R.integer.config_shortAnimTime),
                         false);

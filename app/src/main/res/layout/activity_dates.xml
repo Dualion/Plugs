@@ -31,10 +31,11 @@
         android:focusable="false"
         android:onClick="selectInitDate"
         android:textSize="@dimen/text_dates"
-        android:layout_below="@+id/FilaDiasSemana"
-        android:layout_toLeftOf="@+id/ButtonEndDate"
-        android:layout_alignLeft="@+id/tablaRepeticion"
-        android:layout_alignStart="@+id/tablaRepeticion" />
+        android:layout_below="@+id/tablaDiasSemana"
+        android:layout_alignLeft="@+id/tablaDiasSemana"
+        android:layout_alignStart="@+id/tablaDiasSemana"
+        android:layout_alignRight="@+id/endDate"
+        android:layout_alignEnd="@+id/endDate" />
 
     <ImageButton
         android:id="@+id/ButtonInitDate"
@@ -110,7 +111,8 @@
                 android:textSize="@dimen/text_dates"
                 android:id="@+id/checkBoxDiario"
                 android:layout_weight="1"
-                android:checked="false"/>
+                android:checked="false"
+                android:clickable="true" />
 
             <CheckBox
                 android:gravity="center"
@@ -118,7 +120,8 @@
                 android:id="@+id/checkBoxSemanal"
                 android:textSize="@dimen/text_dates"
                 android:layout_weight="1"
-                android:checked="false"/>
+                android:checked="false"
+                android:clickable="true" />
 
         </TableRow>
     </TableLayout>
@@ -127,19 +130,16 @@
         android:id="@+id/tablaDiasSemana"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/sendDates">
-
-
-    </TableLayout>
+        android:layout_below="@+id/tablaRepeticion"
+        android:layout_alignLeft="@+id/tablaRepeticion"
+        android:layout_alignStart="@+id/tablaRepeticion">
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/FilaDiasSemana"
-        android:layout_below="@+id/tablaRepeticion"
-        android:layout_alignLeft="@+id/tablaRepeticion"
-        android:layout_alignStart="@+id/tablaRepeticion">
+        >
 
         <com.dualion.power_strip.model.ui.SelectedBox
             android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
             android:button="@null"
             android:layout_margin="3sp"
             android:textSize="@dimen/text_day_week"
-            android:text="Lun" />
+            android:text="@string/Lun" />
 
         <com.dualion.power_strip.model.ui.SelectedBox
             android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
             android:button="@null"
             android:layout_margin="3sp"
             android:textSize="@dimen/text_day_week"
-            android:text="Mar" />
+            android:text="@string/Mar" />
 
         <com.dualion.power_strip.model.ui.SelectedBox
             android:layout_width="wrap_content"
@@ -163,7 +163,7 @@
             android:button="@null"
             android:layout_margin="3sp"
             android:textSize="@dimen/text_day_week"
-            android:text="Mir" />
+            android:text="@string/Mir" />
 
         <com.dualion.power_strip.model.ui.SelectedBox
             android:layout_width="wrap_content"
@@ -171,7 +171,7 @@
             android:button="@null"
             android:layout_margin="3sp"
             android:textSize="@dimen/text_day_week"
-            android:text="Jue" />
+            android:text="@string/Jue" />
 
         <com.dualion.power_strip.model.ui.SelectedBox
             android:layout_width="wrap_content"
@@ -179,7 +179,7 @@
             android:button="@null"
             android:layout_margin="3sp"
             android:textSize="@dimen/text_day_week"
-            android:text="Sab" />
+            android:text="@string/Sab" />
 
         <com.dualion.power_strip.model.ui.SelectedBox
             android:layout_width="wrap_content"
@@ -187,7 +187,9 @@
             android:button="@null"
             android:layout_margin="3sp"
             android:textSize="@dimen/text_day_week"
-            android:text="Dom" />
+            android:text="@string/Dom" />
 
         </TableRow>
+    </TableLayout>
+
 </RelativeLayout>

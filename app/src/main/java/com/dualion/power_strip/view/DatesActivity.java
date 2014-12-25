@@ -19,7 +19,9 @@ import com.dualion.power_strip.restapi.RestPlug;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,27 +34,31 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.dualion.power_strip.utils.ui.showView;
+
 public class DatesActivity extends BaseFragmentActivity {
 
     private SimpleDateTimePicker initDateTimePicker;
     private SimpleDateTimePicker endDateTimePicker;
     private SimpleTimePicker initTimePicker;
     private SimpleTimePicker endTimePicker;
-    PlugService plugService;
 
     private TextView titleDate;
     private Button sendDates;
     private EditText initDate;
     private EditText endDate;
+    private CheckBox checkBoxDiario;
+    private CheckBox checkBoxSemanal;
+    private TableLayout tablaDiasSemana;
 
     private Long initMillis;
     private Long endMillis;
-
     private String pid;
 
     @Inject
     SharedData settings;
 
+    PlugService plugService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,9 @@ public class DatesActivity extends BaseFragmentActivity {
         endDate = (EditText) findViewById(R.id.endDate);
         titleDate = (TextView) findViewById(R.id.titleDate);
         sendDates = (Button) findViewById(R.id.sendDates);
+        checkBoxDiario = (CheckBox) findViewById(R.id.checkBoxDiario);
+        checkBoxSemanal = (CheckBox) findViewById(R.id.checkBoxSemanal);
+        tablaDiasSemana = (TableLayout) findViewById(R.id.tablaDiasSemana);
 
         titleDate.setText(getString(R.string.plug) + ": " + pid);
 
@@ -83,6 +92,9 @@ public class DatesActivity extends BaseFragmentActivity {
 
         //init TimePicker
         initTimePicker();
+
+        //Init SelecteBox
+        initSelectedBox();
 
         // init Restapi
         final RestPlug restProduct = new RestPlug(settings.getURI(), settings.getUser(), settings.getCurrentPass());
@@ -112,6 +124,42 @@ public class DatesActivity extends BaseFragmentActivity {
                 });
             }
         });
+    }
+
+    private void initSelectedBox() {
+
+        checkBoxDiario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = checkBoxDiario.isChecked();
+                if (isChecked) {
+                    checkBoxDiario.setChecked(false);
+                } else {
+                    checkBoxDiario.setChecked(true);
+                    checkBoxSemanal.setChecked(false);
+                    showView(tablaDiasSemana,
+                            getResources().getInteger(android.R.integer.config_shortAnimTime),
+                            false);
+                }
+            }
+        });
+
+        checkBoxSemanal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = checkBoxSemanal.isChecked();
+                if (isChecked) {
+                    checkBoxSemanal.setChecked(false);
+                } else {
+                    checkBoxSemanal.setChecked(true);
+                    showView(tablaDiasSemana,
+                            getResources().getInteger(android.R.integer.config_shortAnimTime),
+                            true);
+                    checkBoxDiario.setChecked(false);
+                }
+            }
+        });
+
     }
 
     private void initTimePicker() {
