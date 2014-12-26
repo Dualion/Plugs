@@ -28,7 +28,11 @@ public interface PlugService {
     @PUT("/api/v1.0/pins/{id}/{pin_name}")
     public void SetComponentPlugFromId(@Path("id") Integer id, @Path("pin_name") String component, Callback<PlugsList> callback);
 
-    @PUT("/api/v1.0/pins/{id}/{start}/{stop}/{repeat}")
-    public void SetSchedulerPlugFromId(@Body String body, @Path("id") Integer id, @Path("start") Long start, @Path("stop") Long stop, @Path("repeat") String repeat, Callback<PlugsList> callback);
+    //@PUT("/api/v1.0/pins/{id}/{start}/{stop}/{repeat}")
+    //public void SetSchedulerPlugFromId(@Body String body, @Path("id") Integer id, @Path("start") Long start, @Path("stop") Long stop, @Path("repeat") String repeat, Callback<PlugsList> callback);
+
+    @PUT("/api/v1.0/pins/scheduler/{id}")
+    public void SetSchedulerPlugFromId(@Body String body, @Path("id") Integer id, Callback<PlugsList> callback);
+
 
 }

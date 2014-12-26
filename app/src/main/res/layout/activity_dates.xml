@@ -110,18 +110,14 @@
                 android:text="@string/Diario"
                 android:textSize="@dimen/text_dates"
                 android:id="@+id/checkBoxDiario"
-                android:layout_weight="1"
-                android:checked="false"
-                android:clickable="true" />
+                android:layout_weight="1" />
 
             <CheckBox
                 android:gravity="center"
                 android:text="@string/Semanal"
                 android:id="@+id/checkBoxSemanal"
                 android:textSize="@dimen/text_dates"
-                android:layout_weight="1"
-                android:checked="false"
-                android:clickable="true" />
+                android:layout_weight="1" />
 
         </TableRow>
     </TableLayout>
@@ -132,14 +128,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tablaRepeticion"
         android:layout_alignLeft="@+id/tablaRepeticion"
-        android:layout_alignStart="@+id/tablaRepeticion">
+        android:layout_alignStart="@+id/tablaRepeticion"
+        android:visibility="gone">
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:id="@+id/FilaDiasSemana"
-        >
+        android:gravity="center" >
 
         <com.dualion.power_strip.model.ui.SelectedBox
             android:layout_width="wrap_content"
@@ -147,7 +142,8 @@
             android:button="@null"
             android:layout_margin="3sp"
             android:textSize="@dimen/text_day_week"
-            android:text="@string/Lun" />
+            android:text="@string/Lun"
+            android:id="@+id/Lunes"/>
 
         <com.dualion.power_strip.model.ui.SelectedBox
             android:layout_width="wrap_content"
@@ -172,6 +168,14 @@
             android:layout_margin="3sp"
             android:textSize="@dimen/text_day_week"
             android:text="@string/Jue" />
+
+        <com.dualion.power_strip.model.ui.SelectedBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_margin="3sp"
+            android:textSize="@dimen/text_day_week"
+            android:text="@string/Vie" />
 
         <com.dualion.power_strip.model.ui.SelectedBox
             android:layout_width="wrap_content"
