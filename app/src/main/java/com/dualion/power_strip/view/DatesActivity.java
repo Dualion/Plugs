@@ -135,13 +135,13 @@ public class DatesActivity extends BaseFragmentActivity implements
             schSemanal.setStart(initDate.getText().toString());
             schSemanal.setStop(endDate.getText().toString());
             SchedulerSemanal.DaysOfWeek repeatOnDays = schSemanal.new DaysOfWeek();
-            repeatOnDays.setMonday(Boolean.toString(((SelectedBox) row.getChildAt(0)).isChecked()));
-            repeatOnDays.setTuesday(Boolean.toString(((SelectedBox) row.getChildAt(1)).isChecked()));
-            repeatOnDays.setWednesday(Boolean.toString(((SelectedBox) row.getChildAt(2)).isChecked()));
-            repeatOnDays.setThursday(Boolean.toString(((SelectedBox) row.getChildAt(3)).isChecked()));
-            repeatOnDays.setFriday(Boolean.toString(((SelectedBox) row.getChildAt(4)).isChecked()));
-            repeatOnDays.setSaturday(Boolean.toString(((SelectedBox) row.getChildAt(5)).isChecked()));
-            repeatOnDays.setSunday(Boolean.toString(((SelectedBox) row.getChildAt(6)).isChecked()));
+            repeatOnDays.setMonday(((SelectedBox) row.getChildAt(0)).isChecked());
+            repeatOnDays.setTuesday(((SelectedBox) row.getChildAt(1)).isChecked());
+            repeatOnDays.setWednesday(((SelectedBox) row.getChildAt(2)).isChecked());
+            repeatOnDays.setThursday(((SelectedBox) row.getChildAt(3)).isChecked());
+            repeatOnDays.setFriday(((SelectedBox) row.getChildAt(4)).isChecked());
+            repeatOnDays.setSaturday(((SelectedBox) row.getChildAt(5)).isChecked());
+            repeatOnDays.setSunday(((SelectedBox) row.getChildAt(6)).isChecked());
             schSemanal.setRepeatOnDays(repeatOnDays);
             service.SetSchedulerSemanalFromId(schSemanal, pid, this);
         } else {
