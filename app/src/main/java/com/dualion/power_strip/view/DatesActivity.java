@@ -5,22 +5,20 @@ import android.os.Bundle;
 
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.data.SharedData;
-import com.dualion.power_strip.model.Calendar.DateTime;
-import com.dualion.power_strip.model.Calendar.DateTimePicker;
-import com.dualion.power_strip.model.Calendar.SimpleTimePicker;
-import com.dualion.power_strip.model.Calendar.Time;
-import com.dualion.power_strip.model.Calendar.TimePicker;
-import com.dualion.power_strip.model.PlugsList;
-import com.dualion.power_strip.model.Calendar.SimpleDateTimePicker;
-import com.dualion.power_strip.model.Scheduler;
-import com.dualion.power_strip.model.SchedulerDiario;
-import com.dualion.power_strip.model.SchedulerSemanal;
+import com.dualion.power_strip.model.calendar.DateTime;
+import com.dualion.power_strip.model.calendar.DateTimePicker;
+import com.dualion.power_strip.model.calendar.SimpleTimePicker;
+import com.dualion.power_strip.model.calendar.Time;
+import com.dualion.power_strip.model.calendar.TimePicker;
+import com.dualion.power_strip.model.plug.PlugsList;
+import com.dualion.power_strip.model.calendar.SimpleDateTimePicker;
+import com.dualion.power_strip.model.scheduler.Scheduler;
+import com.dualion.power_strip.model.scheduler.SchedulerDiario;
+import com.dualion.power_strip.model.scheduler.SchedulerSemanal;
 import com.dualion.power_strip.model.ui.BaseFragmentActivity;
 import com.dualion.power_strip.model.ui.SelectedBox;
 import com.dualion.power_strip.restapi.PlugService;
 import com.dualion.power_strip.restapi.RestPlug;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import android.view.View;
 import android.view.Window;
@@ -34,10 +32,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -46,8 +40,6 @@ import javax.inject.Inject;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
-import retrofit.mime.TypedInput;
 
 import static com.dualion.power_strip.utils.ui.showView;
 
@@ -123,7 +115,6 @@ public class DatesActivity extends BaseFragmentActivity implements
                 } else {
                     sendDates.setError(null);
                 }
-                PlugService plugService = restProduct.getService();
                 callRestApi(restProduct.getService(), Integer.parseInt(pid));
             }
         });
@@ -134,15 +125,10 @@ public class DatesActivity extends BaseFragmentActivity implements
         TableLayout table = tablaDiasSemana;
         TableRow row = (TableRow) table.getChildAt(0);
 
-        Gson gson = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .create();
-
         if (checkBoxDiario.isChecked()) {
             SchedulerDiario schDiario = new SchedulerDiario();
             schDiario.setStart(initDate.getText().toString());
             schDiario.setStop(endDate.getText().toString());
-            //gson.toJson(schDiario, SchedulerDiario.class);
             service.SetSchedulerDiarioFromId(schDiario, pid, this);
         } else if (checkBoxSemanal.isChecked()) {
             SchedulerSemanal schSemanal = new SchedulerSemanal();
@@ -157,50 +143,14 @@ public class DatesActivity extends BaseFragmentActivity implements
             repeatOnDays.setSaturday(Boolean.toString(((SelectedBox) row.getChildAt(5)).isChecked()));
             repeatOnDays.setSunday(Boolean.toString(((SelectedBox) row.getChildAt(6)).isChecked()));
             schSemanal.setRepeatOnDays(repeatOnDays);
-            //gson.toJson(schSemanal, SchedulerSemanal.class);
             service.SetSchedulerSemanalFromId(schSemanal, pid, this);
         } else {
             Scheduler sch = new Scheduler();
             sch.setStart(initMillis);
             sch.setStop(endMillis);
-            //gson.toJson(sch, Scheduler.class);
             service.SetSchedulerFromId(sch, pid, this);
         }
     }
-
-    /*private String generateBody() throws JSONException {
-
-        TableLayout table=tablaDiasSemana;
-        TableRow row = (TableRow)table.getChildAt(0);
-
-        JSONObject json = new JSONObject();
-
-        if (checkBoxDiario.isChecked()) {
-            json.put("stop_at",endDate.getText());
-            json.put("start_at",initDate.getText());
-            json.put("repeat", "Diario");
-        } else if (checkBoxSemanal.isChecked()) {
-            JSONObject repeatOnDays = new JSONObject();
-            repeatOnDays.put("monday", ((SelectedBox) row.getChildAt(0)).isChecked());
-            repeatOnDays.put("tuesday", ((SelectedBox) row.getChildAt(1)).isChecked());
-            repeatOnDays.put("wednesday", ((SelectedBox) row.getChildAt(2)).isChecked());
-            repeatOnDays.put("thursday", ((SelectedBox) row.getChildAt(3)).isChecked());
-            repeatOnDays.put("friday",((SelectedBox) row.getChildAt(4)).isChecked());
-            repeatOnDays.put("saturday",((SelectedBox) row.getChildAt(5)).isChecked());
-            repeatOnDays.put("sunday",((SelectedBox) row.getChildAt(6)).isChecked());
-
-            json.put("repeatOnDays", repeatOnDays);
-            json.put("stop_at",endDate.getText());
-            json.put("start_at",initDate.getText());
-            json.put("repeat", "Semanal");
-        } else {
-            json.put("stop_at",endMillis);
-            json.put("start_at",initMillis);
-            json.put("repeat", "");
-        }
-
-        return json.toString();
-    }*/
 
     private void initTimePicker() {
         Calendar calendar = Calendar.getInstance();

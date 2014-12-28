@@ -1,12 +1,9 @@
 package com.dualion.power_strip.restapi;
 
-import com.dualion.power_strip.model.PlugsList;
-import com.dualion.power_strip.model.Scheduler;
-import com.dualion.power_strip.model.SchedulerDiario;
-import com.dualion.power_strip.model.SchedulerSemanal;
-import com.google.common.net.MediaType;
-
-import org.json.JSONObject;
+import com.dualion.power_strip.model.plug.PlugsList;
+import com.dualion.power_strip.model.scheduler.Scheduler;
+import com.dualion.power_strip.model.scheduler.SchedulerDiario;
+import com.dualion.power_strip.model.scheduler.SchedulerSemanal;
 
 import retrofit.Callback;
 import retrofit.http.Body;

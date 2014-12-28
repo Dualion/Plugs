@@ -1,12 +1,12 @@
-package com.dualion.power_strip.model.Calendar;
+package com.dualion.power_strip.model.calendar;
 
 import java.io.Serializable;
 import java.util.Calendar;
 
 public class Time implements Serializable {
 
-    private int hour;
-    private int minute;
+    private final int hour;
+    private final int minute;
 
     /**
      * Constructor with no parameters which will create DateTime
@@ -26,7 +26,7 @@ public class Time implements Serializable {
         this(hour, 0);
     }
 
-    public Time(Calendar calendar) {
+    private Time(Calendar calendar) {
         hour = calendar.get(Calendar.HOUR);
         minute = calendar.get(Calendar.MINUTE);
     }

@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.adapter.CustomGrid;
 import com.dualion.power_strip.data.SharedData;
-import com.dualion.power_strip.model.Plug;
-import com.dualion.power_strip.model.PlugsList;
+import com.dualion.power_strip.model.plug.Plug;
+import com.dualion.power_strip.model.plug.PlugsList;
 import com.dualion.power_strip.model.ui.BaseListActivity;
 import com.dualion.power_strip.restapi.PlugService;
 import com.dualion.power_strip.restapi.RestPlug;
@@ -46,7 +46,7 @@ public class MainActivity extends BaseListActivity {
     private ListView mainView;
     private SwipeRefreshLayout swipeRefreshWidget;
 
-    PlugService plugService;
+    private PlugService plugService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

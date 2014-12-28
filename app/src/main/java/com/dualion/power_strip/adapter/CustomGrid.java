@@ -12,8 +12,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import com.dualion.power_strip.R;
-import com.dualion.power_strip.model.Plug;
-import com.dualion.power_strip.model.PlugsList;
+import com.dualion.power_strip.model.plug.Plug;
+import com.dualion.power_strip.model.plug.PlugsList;
 import com.dualion.power_strip.restapi.PlugService;
 
 import retrofit.Callback;
@@ -26,7 +26,7 @@ public class CustomGrid extends BaseAdapter {
     private ArrayList<Plug> plugs;
     private final Context context;
     private final PlugService plugService;
-    private int lastPosition;
+    private final int lastPosition;
 
     // View lookup cache
     private static class ViewHolder {

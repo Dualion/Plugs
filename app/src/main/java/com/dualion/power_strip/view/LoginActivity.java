@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.data.SharedData;
 import com.dualion.power_strip.model.ui.BaseActivity;
-import com.dualion.power_strip.model.PlugsList;
+import com.dualion.power_strip.model.plug.PlugsList;
 import com.dualion.power_strip.model.User;
 import com.dualion.power_strip.restapi.PlugService;
 import com.dualion.power_strip.restapi.RestPlug;

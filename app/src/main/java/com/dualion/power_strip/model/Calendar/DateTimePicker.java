@@ -1,4 +1,4 @@
-package com.dualion.power_strip.model.Calendar;
+package com.dualion.power_strip.model.calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;

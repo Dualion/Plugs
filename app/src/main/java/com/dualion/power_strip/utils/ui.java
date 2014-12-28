@@ -2,12 +2,9 @@ package com.dualion.power_strip.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.TimeInterpolator;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 
 public class ui {
 

@@ -1,4 +1,4 @@
-package com.dualion.power_strip.model.Calendar;
+package com.dualion.power_strip.model.calendar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,7 +40,7 @@ public class DateTime {
      * @param dateFormat String DateFormat
      * @param dateString Date in String
      */
-    public DateTime(String dateFormat, String dateString) {
+    private DateTime(String dateFormat, String dateString) {
 
         calendar = Calendar.getInstance();
         SimpleDateFormat mFormat = new SimpleDateFormat(dateFormat);
@@ -77,8 +77,8 @@ public class DateTime {
      * @param minuteOfHour   Minute
      * @param secondOfMinute Second
      */
-    public DateTime(int year, int monthOfYear, int dayOfMonth,
-                    int hourOfDay, int minuteOfHour, int secondOfMinute) {
+    private DateTime(int year, int monthOfYear, int dayOfMonth,
+                     int hourOfDay, int minuteOfHour, int secondOfMinute) {
 
         calendar = Calendar.getInstance();
         calendar.set(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, secondOfMinute);
@@ -124,7 +124,7 @@ public class DateTime {
         return calendar;
     }
 
-    public String getDateString(String dateFormat) {
+    String getDateString(String dateFormat) {
 
         SimpleDateFormat mFormat = new SimpleDateFormat(dateFormat);
         return mFormat.format(date);

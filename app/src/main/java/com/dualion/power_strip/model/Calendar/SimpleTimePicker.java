@@ -1,4 +1,4 @@
-package com.dualion.power_strip.model.Calendar;
+package com.dualion.power_strip.model.calendar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,10 +6,10 @@ import android.support.v4.app.FragmentTransaction;
 
 public class SimpleTimePicker {
 
-    private CharSequence dialogTitle;
-    private Time initTime;
-    private TimePicker.OnTimeSetListener onTimeSetListener;
-    private FragmentManager fragmentManager;
+    private final CharSequence dialogTitle;
+    private final Time initTime;
+    private final TimePicker.OnTimeSetListener onTimeSetListener;
+    private final FragmentManager fragmentManager;
 
     /**
      * Private constructor that can only be access using the make method
@@ -64,7 +64,7 @@ public class SimpleTimePicker {
     public void show() {
 
         // Create new TimePicker
-        TimePicker TimePicker = com.dualion.power_strip.model.Calendar.TimePicker.newInstance(dialogTitle, initTime);
+        TimePicker TimePicker = com.dualion.power_strip.model.calendar.TimePicker.newInstance(dialogTitle, initTime);
         TimePicker.setOnTimeSetListener(onTimeSetListener);
         TimePicker.show(fragmentManager, DateTimePicker.TAG_FRAG_TIME);
 

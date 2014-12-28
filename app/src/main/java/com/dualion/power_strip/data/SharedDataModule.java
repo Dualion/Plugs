@@ -18,7 +18,7 @@ import dagger.Provides;
 
 public class SharedDataModule {
 
-	Application app;
+	private final Application app;
 
 	public SharedDataModule(Application app) {
 		this.app = app;

@@ -12,8 +12,8 @@ public class SharedData {
     private static final String PASS_API = "prefPass";
     private static final String CURRENT_PASS_API = "prefCurrentPass";
 
-    private Application app;
-    private SharedPreferences mySettings;
+    private final Application app;
+    private final SharedPreferences mySettings;
 
     public SharedData(Application app) {
         this.app = app;

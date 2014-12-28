@@ -1,4 +1,4 @@
-package com.dualion.power_strip.model.Calendar;
+package com.dualion.power_strip.model.calendar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,10 +8,10 @@ import java.util.Date;
 
 public class SimpleDateTimePicker {
 
-    private CharSequence dialogTitle;
-    private Date initDate;
-    private DateTimePicker.OnDateTimeSetListener onDateTimeSetListener;
-    private FragmentManager fragmentManager;
+    private final CharSequence dialogTitle;
+    private final Date initDate;
+    private final DateTimePicker.OnDateTimeSetListener onDateTimeSetListener;
+    private final FragmentManager fragmentManager;
 
     /**
      * Private constructor that can only be access using the make method
