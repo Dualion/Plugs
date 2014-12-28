@@ -27,16 +27,17 @@ public class RestPlug {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setRequestInterceptor(requestInterceptor)
                 .setEndpoint(url)
                 .setConverter(new GsonConverter(gson))
+
                 .build();
 
         service = restAdapter.create(PlugService.class);
     }
 
-    public PlugService getService()
-    {
+    public PlugService getService() {
         return service;
     }
 

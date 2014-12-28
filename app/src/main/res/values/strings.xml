@@ -46,9 +46,21 @@
     <string name="action_dates">Dates</string>
     <string name="prompt_initDate">Initial date</string>
     <string name="prompt_endDate">End date</string>
+    <string name="prompt_initTime">Initial Time</string>
+    <string name="prompt_endTime">End Time</string>
     <string name="plug">Plug</string>
     <string name="Send">Send</string>
     <string name="Dualion">Dualion</string>
     <string name="WrongDate">Wrong date</string>
+    <string name="Plugs">plugs</string>
+    <string name="Diario">Diario</string>
+    <string name="Semanal">Semanal</string>
+    <string name="Lun">L</string>
+    <string name="Mar">M</string>
+    <string name="Mir">X</string>
+    <string name="Jue">J</string>
+    <string name="Vie">V</string>
+    <string name="Sab">S</string>
+    <string name="Dom">D</string>
 
 </resources>

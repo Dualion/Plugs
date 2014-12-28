@@ -1,6 +1,5 @@
-package com.dualion.power_strip.model;
+package com.dualion.power_strip.model.Calendar;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,9 +16,7 @@ public class DateTime {
      * Object with the current date and time
      */
     public DateTime() {
-
         this(new Date());
-
     }
 
     /**
