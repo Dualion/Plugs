@@ -12,10 +12,15 @@ import com.dualion.power_strip.model.Calendar.Time;
 import com.dualion.power_strip.model.Calendar.TimePicker;
 import com.dualion.power_strip.model.PlugsList;
 import com.dualion.power_strip.model.Calendar.SimpleDateTimePicker;
+import com.dualion.power_strip.model.Scheduler;
+import com.dualion.power_strip.model.SchedulerDiario;
+import com.dualion.power_strip.model.SchedulerSemanal;
 import com.dualion.power_strip.model.ui.BaseFragmentActivity;
 import com.dualion.power_strip.model.ui.SelectedBox;
 import com.dualion.power_strip.restapi.PlugService;
 import com.dualion.power_strip.restapi.RestPlug;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import android.view.View;
 import android.view.Window;
@@ -32,6 +37,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,11 +46,13 @@ import javax.inject.Inject;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 import static com.dualion.power_strip.utils.ui.showView;
 
 public class DatesActivity extends BaseFragmentActivity implements
-        OnCheckedChangeListener {
+        OnCheckedChangeListener, Callback<PlugsList> {
 
     private SimpleDateTimePicker initDateTimePicker;
     private SimpleDateTimePicker endDateTimePicker;
@@ -65,8 +73,6 @@ public class DatesActivity extends BaseFragmentActivity implements
 
     @Inject
     SharedData settings;
-
-    PlugService plugService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,34 +123,56 @@ public class DatesActivity extends BaseFragmentActivity implements
                 } else {
                     sendDates.setError(null);
                 }
-
-                plugService = restProduct.getService();
-                String body;
-                try {
-                    body = generateBody();
-                    plugService.SetSchedulerPlugFromId(body, Integer.parseInt(pid), new Callback<PlugsList>(){
-
-                        @Override
-                        public void success(PlugsList plugsList, Response response) {
-                            Toast.makeText(DatesActivity.this, "OK", Toast.LENGTH_LONG).show();
-                        }
-
-                        @Override
-                        public void failure(RetrofitError retrofitError) {
-                            Toast.makeText(DatesActivity.this, "fail", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                } catch (JSONException e) {
-                    Toast.makeText(DatesActivity.this, "fail json", Toast.LENGTH_LONG).show();
-                }
+                PlugService plugService = restProduct.getService();
+                callRestApi(restProduct.getService(), Integer.parseInt(pid));
             }
         });
     }
 
-    private String generateBody() throws JSONException {
+    private void callRestApi(PlugService service, int pid) {
+
+        TableLayout table = tablaDiasSemana;
+        TableRow row = (TableRow) table.getChildAt(0);
+
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
+
+        if (checkBoxDiario.isChecked()) {
+            SchedulerDiario schDiario = new SchedulerDiario();
+            schDiario.setStart(initDate.getText().toString());
+            schDiario.setStop(endDate.getText().toString());
+            //gson.toJson(schDiario, SchedulerDiario.class);
+            service.SetSchedulerDiarioFromId(schDiario, pid, this);
+        } else if (checkBoxSemanal.isChecked()) {
+            SchedulerSemanal schSemanal = new SchedulerSemanal();
+            schSemanal.setStart(initDate.getText().toString());
+            schSemanal.setStop(endDate.getText().toString());
+            SchedulerSemanal.DaysOfWeek repeatOnDays = schSemanal.new DaysOfWeek();
+            repeatOnDays.setMonday(Boolean.toString(((SelectedBox) row.getChildAt(0)).isChecked()));
+            repeatOnDays.setTuesday(Boolean.toString(((SelectedBox) row.getChildAt(1)).isChecked()));
+            repeatOnDays.setWednesday(Boolean.toString(((SelectedBox) row.getChildAt(2)).isChecked()));
+            repeatOnDays.setThursday(Boolean.toString(((SelectedBox) row.getChildAt(3)).isChecked()));
+            repeatOnDays.setFriday(Boolean.toString(((SelectedBox) row.getChildAt(4)).isChecked()));
+            repeatOnDays.setSaturday(Boolean.toString(((SelectedBox) row.getChildAt(5)).isChecked()));
+            repeatOnDays.setSunday(Boolean.toString(((SelectedBox) row.getChildAt(6)).isChecked()));
+            schSemanal.setRepeatOnDays(repeatOnDays);
+            //gson.toJson(schSemanal, SchedulerSemanal.class);
+            service.SetSchedulerSemanalFromId(schSemanal, pid, this);
+        } else {
+            Scheduler sch = new Scheduler();
+            sch.setStart(initMillis);
+            sch.setStop(endMillis);
+            //gson.toJson(sch, Scheduler.class);
+            service.SetSchedulerFromId(sch, pid, this);
+        }
+    }
+
+    /*private String generateBody() throws JSONException {
 
         TableLayout table=tablaDiasSemana;
         TableRow row = (TableRow)table.getChildAt(0);
+
         JSONObject json = new JSONObject();
 
         if (checkBoxDiario.isChecked()) {
@@ -170,14 +198,15 @@ public class DatesActivity extends BaseFragmentActivity implements
             json.put("start_at",initMillis);
             json.put("repeat", "");
         }
+
         return json.toString();
-    }
+    }*/
 
     private void initTimePicker() {
         Calendar calendar = Calendar.getInstance();
         initTimePicker = SimpleTimePicker.make(
                 getString(R.string.prompt_initTime),
-                new Time(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE)+1),
+                new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)+1),
                 new TimePicker.OnTimeSetListener() {
                     @Override
                     public void TimeSet(Time timeSet) {
@@ -196,7 +225,7 @@ public class DatesActivity extends BaseFragmentActivity implements
 
         endTimePicker = SimpleTimePicker.make(
                 getString(R.string.prompt_endTime),
-                new Time(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE)+2),
+                new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)+2),
                 new TimePicker.OnTimeSetListener() {
                     @Override
                     public void TimeSet(Time timeSet) {
@@ -297,4 +326,15 @@ public class DatesActivity extends BaseFragmentActivity implements
         initDate.setText("");
         endDate.setText("");
     }
+
+    @Override
+    public void success(PlugsList plugsList, Response response) {
+        Toast.makeText(DatesActivity.this, "OK", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void failure(RetrofitError retrofitError) {
+        Toast.makeText(DatesActivity.this, "fail", Toast.LENGTH_LONG).show();
+    }
+
 }

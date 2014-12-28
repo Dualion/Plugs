@@ -23,6 +23,10 @@ public class Plug {
     @Expose
     private String component;
 
+    @SerializedName("repeat_frecuency")
+    @Expose
+    private Frequency repeatFrecuency;
+
     Plug(){}
 
     public String getHour() {
@@ -59,5 +63,26 @@ public class Plug {
 
     public void setComponent(String component) {
         this.component = component;
+    }
+
+    public enum Frequency {
+
+        @SerializedName("Diario")
+        DIARIO (0),
+
+        @SerializedName("Semanal")
+        SEMANAL (1),
+
+        @SerializedName("")
+        NONE (2);
+
+        private final int value;
+        public int getValue() {
+            return value;
+        }
+
+        private Frequency(int value) {
+            this.value = value;
+        }
     }
 }

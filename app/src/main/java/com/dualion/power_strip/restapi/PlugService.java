@@ -1,6 +1,13 @@
 package com.dualion.power_strip.restapi;
 
 import com.dualion.power_strip.model.PlugsList;
+import com.dualion.power_strip.model.Scheduler;
+import com.dualion.power_strip.model.SchedulerDiario;
+import com.dualion.power_strip.model.SchedulerSemanal;
+import com.google.common.net.MediaType;
+
+import org.json.JSONObject;
+
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -28,11 +35,13 @@ public interface PlugService {
     @PUT("/api/v1.0/pins/{id}/{pin_name}")
     public void SetComponentPlugFromId(@Path("id") Integer id, @Path("pin_name") String component, Callback<PlugsList> callback);
 
-    //@PUT("/api/v1.0/pins/{id}/{start}/{stop}/{repeat}")
-    //public void SetSchedulerPlugFromId(@Body String body, @Path("id") Integer id, @Path("start") Long start, @Path("stop") Long stop, @Path("repeat") String repeat, Callback<PlugsList> callback);
+    @PUT("/api/v1.0/pins/scheduler/{id}")
+    public void SetSchedulerDiarioFromId(@Body SchedulerDiario body, @Path("id") Integer id, Callback<PlugsList> callback);
 
     @PUT("/api/v1.0/pins/scheduler/{id}")
-    public void SetSchedulerPlugFromId(@Body String body, @Path("id") Integer id, Callback<PlugsList> callback);
+    public void SetSchedulerSemanalFromId(@Body SchedulerSemanal body, @Path("id") Integer id, Callback<PlugsList> callback);
 
+    @PUT("/api/v1.0/pins/scheduler/{id}")
+    public void SetSchedulerFromId(@Body Scheduler body, @Path("id") Integer id, Callback<PlugsList> callback);
 
 }
