@@ -26,7 +26,7 @@ public class CustomGrid extends BaseAdapter {
     private ArrayList<Plug> plugs;
     private final Context context;
     private final PlugService plugService;
-    private final int lastPosition;
+    //private final int lastPosition;
 
     // View lookup cache
     private static class ViewHolder {
@@ -41,7 +41,7 @@ public class CustomGrid extends BaseAdapter {
         this.context = c;
         this.plugs = plugs;
         this.plugService = plugService;
-        this.lastPosition = -1;
+        //this.lastPosition = -1;
     }
 
     @Override

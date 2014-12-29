@@ -191,8 +191,6 @@ public class DatesActivity extends BaseFragmentActivity implements
                 },
                 getSupportFragmentManager()
         );
-
-
     }
 
     private void initDateTimePicker() {
@@ -235,7 +233,6 @@ public class DatesActivity extends BaseFragmentActivity implements
                 },
                 getSupportFragmentManager()
         );
-
     }
 
     public void selectInitDate(View view) {

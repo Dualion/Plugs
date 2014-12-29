@@ -112,6 +112,23 @@ public class MainActivity extends BaseListActivity {
             }
         });
 
+	    mainView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		    @Override
+		    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			    // getting values from selected ListItem
+			    String pid = String.valueOf(adapter.getItem(position).getId());
+
+			    // Starting new intent
+			    Intent in = new Intent(getApplicationContext(), DatesActivity.class);
+
+			    // sending pid to next activity
+			    in.putExtra("pid", pid);
+
+			    // starting new activity and expecting some response back
+			    startActivityForResult(in, 100);
+		    }
+	    });
+
         mainView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
@@ -149,7 +166,7 @@ public class MainActivity extends BaseListActivity {
         });
     }
 
-    @Override
+    /*@Override
     protected void onListItemClick(ListView l, View v, final int position, long id) {
         super.onListItemClick(l, v, position, id);
 
@@ -164,35 +181,6 @@ public class MainActivity extends BaseListActivity {
 
         // starting new activity and expecting some response back
         startActivityForResult(in, 100);
-    }
-
-    /*@Override
-    protected void onListItemClick(ListView l, View v, final int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-        // Set an EditText view to get user input
-        final EditText input = new EditText(MainActivity.this);
-        input.setHint("Component");
-        input.setText(adapter.getItem(position).getComponent());
-        new AlertDialog.Builder(MainActivity.this)
-                .setTitle("Info Component")
-                //.setMessage("Component")
-                .setView(input)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        Editable value = input.getText();
-                        Plug plug = adapter.getItem(position);
-                        Toast.makeText(MainActivity.this, plug.getPinId() + ": " + value, Toast.LENGTH_SHORT).show();
-                        mySettings.edit().putString(plug.getPinId(), value.toString()).apply();
-                        adapter.setComponent(position, value.toString());
-                    }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Do nothing.
-                Toast.makeText(MainActivity.this, "Nothing", Toast.LENGTH_SHORT).show();
-            }
-        }).show();
-
     }*/
 
     @Override
@@ -207,10 +195,9 @@ public class MainActivity extends BaseListActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        switch (id) {
+        switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
@@ -219,26 +206,45 @@ public class MainActivity extends BaseListActivity {
             case R.id.action_refresh:
                 swipeRefreshWidget.setRefreshing(true);
                 refresh();
-                break;
+                return true;
+            case R.id.action_stop:
+	            swipeRefreshWidget.setRefreshing(true);
+	            stopPlugs();
+                return true;
             case R.id.action_logout:
                 //mySettings.edit().putString("prefCurrentPass", "").apply();
                 settings.setCurrentPass("");
                 startActivityForResult(new Intent(this, LoginActivity.class), 0);
                 finish();
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                break;
+                return true;
             case R.id.action_quit:
                 finish();
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
+	private void stopPlugs() {
+		plugService.SetOffStatePlugs(new Callback<PlugsList>() {
+			@Override
+			public void success(PlugsList plugsList, Response response) {
+				adapter.setPlugs((ArrayList<Plug>) plugsList.getPlugs());
+				swipeRefreshWidget.setRefreshing(false);
+			}
+
+			@Override
+			public void failure(RetrofitError retrofitError) {
+				Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
+				swipeRefreshWidget.setRefreshing(false);
+			}
+		});
+	}
 
 
-    private void refresh() {
+	private void refresh() {
         plugService.getAllPlugs(new Callback<PlugsList>() {
             @Override
             public void success(PlugsList plugsList, Response response) {
@@ -252,14 +258,6 @@ public class MainActivity extends BaseListActivity {
             }
         });
     }
-
-    /*private void loadPref() {
-        mySettings = PreferenceManager.getDefaultSharedPreferences(this);
-
-        url = mySettings.getString("prefUrlApi", "http://127.0.0.1");
-        user = mySettings.getString("prefUser", "");
-        password = mySettings.getString("prefCurrentPass", "");
-    }*/
 
     private void PutComponent(final int id, final String componentName) {
         plugService.SetComponentPlugFromId(id+1, componentName, new Callback<PlugsList>() {
