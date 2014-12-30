@@ -2,4 +2,5 @@
 <resources>
     <style name="AppTheme" parent="android:ThemeOverlay.Material.Dark">
     </style>
+
 </resources>

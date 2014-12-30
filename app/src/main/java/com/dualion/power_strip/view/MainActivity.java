@@ -229,18 +229,18 @@ public class MainActivity extends BaseListActivity {
 
 	private void stopPlugs() {
 		plugService.SetOffStatePlugs(new Callback<PlugsList>() {
-			@Override
-			public void success(PlugsList plugsList, Response response) {
-				adapter.setPlugs((ArrayList<Plug>) plugsList.getPlugs());
-				swipeRefreshWidget.setRefreshing(false);
-			}
+            @Override
+            public void success(PlugsList plugsList, Response response) {
+                adapter.setPlugs((ArrayList<Plug>) plugsList.getPlugs());
+                swipeRefreshWidget.setRefreshing(false);
+            }
 
-			@Override
-			public void failure(RetrofitError retrofitError) {
-				Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
-				swipeRefreshWidget.setRefreshing(false);
-			}
-		});
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
+                swipeRefreshWidget.setRefreshing(false);
+            }
+        });
 	}
 
 
