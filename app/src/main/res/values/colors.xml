@@ -4,4 +4,7 @@
     <color name="dualion">#162A83</color>
     <color name="dualion_light">#ff5d9cff</color>
     <color name="background">#FBFBEE</color>
+	<color name="borde">#ffa1a2a3</color>
+	<color name="bg_listview">#323232</color>
+	<color name="light_grey">#cccccc</color>
 </resources>

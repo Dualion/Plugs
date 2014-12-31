@@ -47,7 +47,11 @@
                 android:hint="@string/prompt_urlApi"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:inputType="textUri" />
+                android:inputType="textUri"
+                android:background="@drawable/edittext_top_bg"
+                android:padding="10dp"
+                android:textColorHint="#bbbbbb"
+                android:drawableLeft="@drawable/ic_action_web_site" />
 
             <AutoCompleteTextView
                 android:id="@+id/user"
@@ -56,7 +60,12 @@
                 android:hint="@string/prompt_user"
                 android:inputType="text"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:background="@drawable/edittext_default_bg"
+                android:layout_marginTop="-2dp"
+                android:padding="10dp"
+                android:textColorHint="#bbbbbb"
+                android:drawableLeft="@drawable/ic_action_person"/>
 
             <EditText android:id="@+id/password"
                 android:layout_width="match_parent"
@@ -67,7 +76,13 @@
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:background="@drawable/edittext_bottom_bg"
+                android:layout_marginTop="-2dp"
+                android:padding="10dp"
+                android:textColorHint="#bbbbbb"
+                android:password="true"
+                android:drawableLeft="@drawable/ic_action_secure"/>
 
             <CheckBox
                 android:id="@+id/savePass"
@@ -75,9 +90,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/prompt_savePass" />
 
-            <Button android:id="@+id/user_sign_in_button" style="?android:textAppearanceSmall"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" android:text="@string/action_sign_in"
+            <Button
+	            android:id="@+id/user_sign_in_button"
+	            style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
         </LinearLayout>

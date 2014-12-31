@@ -1,7 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16sp</dimen>
-    <dimen name="activity_vertical_margin">16sp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!--Grid ListView from main activity-->
     <dimen name="title">20sp</dimen>
@@ -12,6 +12,6 @@
     <dimen name="title_dates">36sp</dimen>
     <dimen name="text_dates">24sp</dimen>
     <dimen name="text_day_week">20sp</dimen>
-    <dimen name="SelectedBoxWeekDay">40sp</dimen>
+    <dimen name="SelectedBoxWeekDay">40dp</dimen>
 
 </resources>

@@ -154,34 +154,15 @@ public class MainActivity extends BaseListActivity {
         swipeRefreshWidget.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshWidget.setRefreshing(true);
                 (new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         refresh();
-                        swipeRefreshWidget.setRefreshing(false);
                     }
-                }, 3000);
+                }, 1500);
             }
         });
     }
-
-    /*@Override
-    protected void onListItemClick(ListView l, View v, final int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-        // getting values from selected ListItem
-        String pid = String.valueOf(adapter.getItem(position).getId());
-
-        // Starting new intent
-        Intent in = new Intent(getApplicationContext(), DatesActivity.class);
-
-        // sending pid to next activity
-        in.putExtra("pid", pid);
-
-        // starting new activity and expecting some response back
-        startActivityForResult(in, 100);
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -204,15 +185,12 @@ public class MainActivity extends BaseListActivity {
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 return true;
             case R.id.action_refresh:
-                swipeRefreshWidget.setRefreshing(true);
                 refresh();
                 return true;
             case R.id.action_stop:
-	            swipeRefreshWidget.setRefreshing(true);
 	            stopPlugs();
                 return true;
             case R.id.action_logout:
-                //mySettings.edit().putString("prefCurrentPass", "").apply();
                 settings.setCurrentPass("");
                 startActivityForResult(new Intent(this, LoginActivity.class), 0);
                 finish();
@@ -228,35 +206,46 @@ public class MainActivity extends BaseListActivity {
     }
 
 	private void stopPlugs() {
-		plugService.SetOffStatePlugs(new Callback<PlugsList>() {
-            @Override
-            public void success(PlugsList plugsList, Response response) {
-                adapter.setPlugs((ArrayList<Plug>) plugsList.getPlugs());
-                swipeRefreshWidget.setRefreshing(false);
-            }
+		new AlertDialog.Builder(this)
+				.setIcon(android.R.drawable.ic_dialog_alert)
+				.setTitle(R.string.action_stop)
+				.setMessage(R.string.are_sure)
+				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						swipeRefreshWidget.setRefreshing(true);
+						plugService.SetOffStatePlugs(new Callback<PlugsList>() {
+							@Override
+							public void success(PlugsList plugsList, Response response) {
+								adapter.setPlugs((ArrayList<Plug>) plugsList.getPlugs());
+							}
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
-                swipeRefreshWidget.setRefreshing(false);
-            }
-        });
+							@Override
+							public void failure(RetrofitError retrofitError) {
+								Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
+							}
+						});
+						swipeRefreshWidget.setRefreshing(false);
+					}
+				})
+				.setNegativeButton(R.string.no, null)
+				.show();
 	}
 
 
 	private void refresh() {
+		swipeRefreshWidget.setRefreshing(true);
         plugService.getAllPlugs(new Callback<PlugsList>() {
             @Override
             public void success(PlugsList plugsList, Response response) {
                 adapter.setPlugs((ArrayList<Plug>) plugsList.getPlugs());
-                swipeRefreshWidget.setRefreshing(false);
             }
             @Override
             public void failure(RetrofitError retrofitError) {
                 Toast.makeText(MainActivity.this, "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
-                swipeRefreshWidget.setRefreshing(false);
             }
         });
+		swipeRefreshWidget.setRefreshing(false);
     }
 
     private void PutComponent(final int id, final String componentName) {

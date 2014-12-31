@@ -1,15 +1,15 @@
 <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_refresh_widget"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        tools:context=".MainActivity" >
+        android:gravity="center_horizontal" >
 
         <ProgressBar
             android:id="@+id/main_progress"
@@ -28,10 +28,9 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background"
             android:clickable="true"
-            android:longClickable="true"/>
-
+            android:longClickable="true"
+            android:background="@color/background" />
 
     </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

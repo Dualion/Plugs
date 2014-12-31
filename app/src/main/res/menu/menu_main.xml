@@ -1,37 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	tools:context=".MainActivity">
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".MainActivity">
 
 	<!-- Stop -->
 	<item
 		android:id="@+id/action_stop"
-		app:showAsAction="always"
 		android:icon="@drawable/ic_action_shutdown"
+		android:showAsAction="always"
 		android:title="@string/action_stop"/>
 
 	<!-- Refresh -->
 	<item
 		android:id="@+id/action_refresh"
-		app:showAsAction="never"
 		android:icon="@drawable/ic_action_refresh"
-
-		android:title="@string/action_refresh"/>
-
-	<item
-		android:id="@+id/action_settings"
-		app:showAsAction="never"
-		android:icon="@drawable/ic_action_settings"
-		android:title="@string/action_settings" />
+		android:showAsAction="always"
+		android:title="@string/action_refresh" />
 
 	<item
-		android:id="@+id/action_logout"
-		app:showAsAction="never"
-		android:title="@string/action_logout" />
+		android:id="@+id/empty"
+		android:icon="@drawable/ic_action_overflow"
+		android:orderInCategory="101"
+		android:showAsAction="always">
 
-	<item
-		android:id="@+id/action_quit"
-		app:showAsAction="never"
-		android:title="@string/action_quit" />
+		<menu>
+			<item
+				android:id="@+id/action_settings"
+				android:icon="@drawable/ic_action_settings"
+				android:showAsAction="always|withText"
+				android:title="@string/action_settings"/>
+
+			<item
+				android:id="@+id/action_logout"
+				android:showAsAction="always|withText"
+				android:title="@string/action_logout"/>
+
+			<item
+				android:id="@+id/action_quit"
+				android:showAsAction="always|withText"
+				android:title="@string/action_quit"/>
+		</menu>
+	</item>
 
 </menu>

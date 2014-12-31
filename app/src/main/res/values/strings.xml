@@ -63,5 +63,8 @@
     <string name="Vie">V</string>
     <string name="Sab">S</string>
     <string name="Dom">D</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="are_sure">Are you sure?</string>
 
 </resources>
