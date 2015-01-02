@@ -1,13 +1,17 @@
 package com.dualion.power_strip.view;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -37,6 +41,9 @@ import static com.dualion.power_strip.utils.ui.toggleView;
 
 public class PlugsFragment extends BaseListFragment {
 
+    boolean dualPane;
+    int position = 0;
+
 	@Inject
 	SharedData settings;
 
@@ -45,12 +52,12 @@ public class PlugsFragment extends BaseListFragment {
 	private ListView mainView;
 	private SwipeRefreshLayout swipeRefreshWidget;
 	private PlugService plugService;
-	OnHeadlineSelectedListener mCallback;
 
-	// Container Activity must implement this interface
-	public interface OnHeadlineSelectedListener {
-		public void onArticleSelected(String position);
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,10 +136,7 @@ public class PlugsFragment extends BaseListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-				String pid = String.valueOf(adapter.getItem(position).getId());
-
-				// Notify the parent activity of selected item
-				mCallback.onArticleSelected(pid);
+                showDetails(position);
 
 				// Set the item as checked to be highlighted when in two-pane layout
 				mainView.setItemChecked(position, true);
@@ -174,34 +178,106 @@ public class PlugsFragment extends BaseListFragment {
 			}
 		});
 
+        // Check to see if we have a frame in which to embed the details
+        // fragment directly in the containing UI.
+        View detailsFrame = getActivity().findViewById(R.id.plug_details);
+        dualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
+
+        if (savedInstanceState != null) {
+            // Restore last state for checked position.
+            position = savedInstanceState.getInt("position", 0);
+        }
+
+        if (dualPane) {
+            // In dual-pane mode, the list view highlights the selected item.
+            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            // Make sure our UI is in the correct state.
+            showDetails(position);
+        }
+
 	}
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+    /**
+     * Helper function to show the details of a selected item, either by
+     * displaying a fragment in-place in the current UI, or starting a
+     * whole new activity in which it is displayed.
+     */
+    void showDetails(int index) {
+        position = index;
+        String pid = String.valueOf(adapter.getItem(index).getId());
 
-		// This makes sure that the container activity has implemented
-		// the callback interface. If not, it throws an exception
-		try {
-			mCallback = (OnHeadlineSelectedListener) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement OnHeadlineSelectedListener");
-		}
-	}
+        if (dualPane) {
+            // We can display everything in-place with fragments, so update
+            // the list to highlight the selected item and show the data.
+            getListView().setItemChecked(index, true);
 
-	@Override
-	public void onStart() {
-		super.onStart();
+            // Check what fragment is currently shown, replace if needed.
+            DetailPlugFragment details = (DetailPlugFragment)
+                    getFragmentManager().findFragmentById(R.id.plug_details);
+            if (details == null || details.getShownIndex() != index) {
+                // Make new fragment to show this selection.
+                details = DetailPlugFragment.newInstance(index, pid);
 
-		// When in two-pane layout, set the listview to highlight the selected list item
-		// (We do this during onStart because at the point the listview is available.)
-		if (getFragmentManager().findFragmentById(R.id.plug_details) != null) {
-			mainView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		}
-	}
+                // Execute a transaction, replacing any existing fragment
+                // with this one inside the frame.
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.plug_details, details)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit();
+            }
 
-	private void stopPlugs() {
+        } else {
+            // Otherwise we need to launch a new activity to display
+            // the dialog fragment with selected text.
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), DetailPlugActivity.class);
+            intent.putExtra(DetailPlugFragment.ARG_INDEX, index);
+            intent.putExtra(DetailPlugFragment.ARG_PID, pid);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        //noinspection SimplifiableIfStatement
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent i = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                return true;
+            case R.id.action_refresh:
+                refresh();
+                return true;
+            case R.id.action_stop:
+                stopPlugs();
+                return true;
+            case R.id.action_logout:
+                settings.setCurrentPass("");
+                startActivityForResult(new Intent(getActivity(), LoginActivity.class), 0);
+                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                return true;
+            case R.id.action_quit:
+                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+	public void stopPlugs() {
 		new AlertDialog.Builder(getActivity())
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setTitle(R.string.action_stop)
@@ -229,7 +305,7 @@ public class PlugsFragment extends BaseListFragment {
 	}
 
 
-	private void refresh() {
+	public void refresh() {
 		swipeRefreshWidget.setRefreshing(true);
 		plugService.getAllPlugs(new Callback<PlugsList>() {
 			@Override
@@ -244,7 +320,7 @@ public class PlugsFragment extends BaseListFragment {
 		swipeRefreshWidget.setRefreshing(false);
 	}
 
-	private void PutComponent(final int id, final String componentName) {
+	public void PutComponent(final int id, final String componentName) {
 		plugService.SetComponentPlugFromId(id+1, componentName, new Callback<PlugsList>() {
 			@Override
 			public void success(PlugsList plugsList, Response response) {

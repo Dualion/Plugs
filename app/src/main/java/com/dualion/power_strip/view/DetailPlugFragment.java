@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -54,6 +55,8 @@ public class DetailPlugFragment extends BaseFragment implements
 	private EditText endDate;
 	private CheckBox checkBoxDiario;
 	private CheckBox checkBoxSemanal;
+    private ImageButton buttonInitDate;
+    private ImageButton buttonEndDate;
 
 	private TableLayout tablaDiasSemana;
 
@@ -63,19 +66,35 @@ public class DetailPlugFragment extends BaseFragment implements
 	@Inject
 	SharedData settings;
 
-	final static String ARG_PID = "pid";
-	String currentPid = "";
+    final static String ARG_PID = "pid";
+    final static String ARG_INDEX = "index";
+
+    public static DetailPlugFragment newInstance(int index, String pid) {
+        DetailPlugFragment f = new DetailPlugFragment();
+
+        // Supply index input as an argument.
+        Bundle args = new Bundle();
+        args.putInt(ARG_INDEX, index);
+        args.putString(ARG_PID, pid);
+        f.setArguments(args);
+
+        return f;
+    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 
-		// If activity recreated (such as from screen rotate), restore
-		// the previous article selection set by onSaveInstanceState().
-		// This is primarily necessary when in the two-pane layout.
-		if (savedInstanceState != null) {
-			currentPid = savedInstanceState.getString(ARG_PID);
-		}
+        if (container == null) {
+            // We have different layouts, and in one of them this
+            // fragment's containing frame doesn't exist.  The fragment
+            // may still be created from its saved state, but there is
+            // no reason to try to create its view hierarchy because it
+            // won't be displayed.  Note this is not needed -- we could
+            // just run the code below, where we would create and return
+            // the view hierarchy; it would just never be used.
+            return null;
+        }
 
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.activity_dates, container, false);
@@ -90,6 +109,8 @@ public class DetailPlugFragment extends BaseFragment implements
 		sendDates = (Button) getActivity().findViewById(R.id.sendDates);
 		checkBoxDiario = (CheckBox) getActivity().findViewById(R.id.checkBoxDiario);
 		checkBoxSemanal = (CheckBox) getActivity().findViewById(R.id.checkBoxSemanal);
+        buttonInitDate = (ImageButton) getActivity().findViewById(R.id.buttonInitDate);
+        buttonEndDate = (ImageButton) getActivity().findViewById(R.id.buttonEndDate);
 		tablaDiasSemana = (TableLayout) getActivity().findViewById(R.id.tablaDiasSemana);
 
 		initMillis = 0L;
@@ -97,6 +118,34 @@ public class DetailPlugFragment extends BaseFragment implements
 
 		checkBoxSemanal.setOnCheckedChangeListener(this);
 		checkBoxDiario.setOnCheckedChangeListener(this);
+
+        initDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectInitDate();
+            }
+        });
+
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectEndDate();
+            }
+        });
+
+        buttonInitDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectInitDate();
+            }
+        });
+
+        buttonEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectEndDate();
+            }
+        });
 
 		//init DateTimePicker
 		initDateTimePicker();
@@ -117,43 +166,28 @@ public class DetailPlugFragment extends BaseFragment implements
 				} else {
 					sendDates.setError(null);
 				}
-				callRestApi(restProduct.getService(), Integer.parseInt(currentPid));
+				callRestApi(restProduct.getService(), Integer.parseInt(getShownPid()));
 			}
 		});
 
 	}
 
+    public int getShownIndex() {
+        return getArguments().getInt(ARG_INDEX, 0);
+    }
+
+    public String getShownPid() {
+        return getArguments().getString(ARG_PID);
+    }
 
 	@Override
 	public void onStart() {
 		super.onStart();
-
-		// During startup, check if there are arguments passed to the fragment.
-		// onStart is a good place to do this because the layout has already been
-		// applied to the fragment at this point so we can safely call the method
-		// below that sets the article text.
-		Bundle args = getArguments();
-		if (args != null) {
-			// Set article based on argument passed in
-			updateArticleView(args.getString(ARG_PID));
-		} else if (!currentPid.equals("")) {
-			// Set article based on saved instance state defined during onCreateView
-			updateArticleView(currentPid);
-		}
-	}
-
-	public void updateArticleView(String pid) {
-		TextView titleDate = (TextView) getActivity().findViewById(R.id.titleDate);
-		titleDate.setText(getString(R.string.plug) + ": " + pid);
-		currentPid = pid;
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-
-		// Save the current article selection in case we need to recreate the fragment
-		outState.putString(ARG_PID, currentPid);
 	}
 
 	private void callRestApi(PlugService service, int pid) {
@@ -271,14 +305,14 @@ public class DetailPlugFragment extends BaseFragment implements
 		);
 	}
 
-	public void selectInitDate(View view) {
+	public void selectInitDate() {
 		if (!checkBoxDiario.isChecked() && !checkBoxSemanal.isChecked() )
 			initDateTimePicker.show();
 		else
 			initTimePicker.show();
 	}
 
-	public void selectEndDate(View view) {
+	public void selectEndDate() {
 		if (!checkBoxDiario.isChecked() && !checkBoxSemanal.isChecked() )
 			endDateTimePicker.show();
 		else

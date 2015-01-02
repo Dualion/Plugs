@@ -27,6 +27,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -56,6 +57,8 @@ public class DatesActivity extends BaseFragmentActivity implements
     private EditText endDate;
     private CheckBox checkBoxDiario;
     private CheckBox checkBoxSemanal;
+    private ImageButton buttonInitDate;
+    private ImageButton buttonEndDate;
 
     private TableLayout tablaDiasSemana;
 
@@ -86,6 +89,8 @@ public class DatesActivity extends BaseFragmentActivity implements
         sendDates = (Button) findViewById(R.id.sendDates);
         checkBoxDiario = (CheckBox) findViewById(R.id.checkBoxDiario);
         checkBoxSemanal = (CheckBox) findViewById(R.id.checkBoxSemanal);
+        buttonInitDate = (ImageButton) findViewById(R.id.buttonInitDate);
+        buttonEndDate = (ImageButton) findViewById(R.id.buttonEndDate);
         tablaDiasSemana = (TableLayout) findViewById(R.id.tablaDiasSemana);
 
         titleDate.setText(getString(R.string.plug) + ": " + pid);
@@ -95,6 +100,34 @@ public class DatesActivity extends BaseFragmentActivity implements
 
         checkBoxSemanal.setOnCheckedChangeListener(this);
         checkBoxDiario.setOnCheckedChangeListener(this);
+
+        initDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectInitDate();
+            }
+        });
+
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectEndDate();
+            }
+        });
+
+        buttonInitDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectInitDate();
+            }
+        });
+
+        buttonEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectEndDate();
+            }
+        });
 
         //init DateTimePicker
         initDateTimePicker();
@@ -235,14 +268,14 @@ public class DatesActivity extends BaseFragmentActivity implements
         );
     }
 
-    public void selectInitDate(View view) {
+    private void selectInitDate() {
         if (!checkBoxDiario.isChecked() && !checkBoxSemanal.isChecked() )
             initDateTimePicker.show();
         else
             initTimePicker.show();
     }
 
-    public void selectEndDate(View view) {
+    private void selectEndDate() {
         if (!checkBoxDiario.isChecked() && !checkBoxSemanal.isChecked() )
             endDateTimePicker.show();
         else

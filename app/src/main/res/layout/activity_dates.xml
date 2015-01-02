@@ -29,7 +29,6 @@
         android:singleLine="true"
         android:inputType="none"
         android:focusable="false"
-        android:onClick="selectInitDate"
         android:textSize="@dimen/text_dates"
         android:layout_below="@+id/tablaDiasSemana"
         android:layout_alignLeft="@+id/tablaDiasSemana"
@@ -38,12 +37,11 @@
         android:layout_alignEnd="@+id/endDate" />
 
     <ImageButton
-        android:id="@+id/ButtonInitDate"
+        android:id="@+id/buttonInitDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/prompt_selectDate"
         android:cropToPadding="true"
-        android:onClick="selectInitDate"
         android:src="@drawable/ic_action_data_usage"
         android:layout_alignBottom="@+id/initDate"
         android:layout_alignParentRight="true"
@@ -58,27 +56,25 @@
         android:maxLines="1"
         android:singleLine="true"
         android:inputType="none"
-        android:layout_below="@+id/ButtonInitDate"
+        android:layout_below="@+id/buttonInitDate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="selectEndDate"
         android:focusable="false"
         android:textSize="@dimen/text_dates"
-        android:layout_toLeftOf="@+id/ButtonEndDate"
-        android:layout_toStartOf="@+id/ButtonEndDate" />
+        android:layout_toLeftOf="@+id/buttonEndDate"
+        android:layout_toStartOf="@+id/buttonEndDate" />
 
     <ImageButton
-        android:id="@+id/ButtonEndDate"
+        android:id="@+id/buttonEndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/prompt_selectDate"
         android:cropToPadding="true"
-        android:onClick="selectEndDate"
         android:src="@drawable/ic_action_data_usage"
         android:clickable="true"
         android:layout_alignBottom="@+id/endDate"
-        android:layout_alignLeft="@+id/ButtonInitDate"
-        android:layout_alignStart="@+id/ButtonInitDate" />
+        android:layout_alignLeft="@+id/buttonInitDate"
+        android:layout_alignStart="@+id/buttonInitDate" />
 
     <Button
         android:layout_width="fill_parent"
