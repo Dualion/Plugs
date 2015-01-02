@@ -84,7 +84,8 @@ public class DetailPlugFragment extends BaseFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-			initDate = (EditText) getActivity().findViewById(R.id.initDate);
+
+		initDate = (EditText) getActivity().findViewById(R.id.initDate);
 		endDate = (EditText) getActivity().findViewById(R.id.endDate);
 		sendDates = (Button) getActivity().findViewById(R.id.sendDates);
 		checkBoxDiario = (CheckBox) getActivity().findViewById(R.id.checkBoxDiario);

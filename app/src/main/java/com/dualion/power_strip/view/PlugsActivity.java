@@ -15,8 +15,8 @@ public class PlugsActivity extends BaseFragmentActivity implements PlugsFragment
 		setContentView(R.layout.plug_list);
 
 		// Check whether the activity is using the layout version with
-		// the fragment_container FrameLayout. If so, we must add the first fragment
-		if (findViewById(R.id.plugs) != null) {
+		// the plugs_list FrameLayout. If so, we must add the first fragment
+		if (findViewById(R.id.plugs_list) != null) {
 
 			// However, if we're being restored from a previous state,
 			// then we don't need to do anything and should return or else
@@ -32,9 +32,9 @@ public class PlugsActivity extends BaseFragmentActivity implements PlugsFragment
 			// pass the Intent's extras to the fragment as arguments
 			firstFragment.setArguments(getIntent().getExtras());
 
-			// Add the fragment to the 'plugs' FrameLayout
+			// Add the fragment to the 'plugs_list' FrameLayout
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.plugs, firstFragment).commit();
+					.add(R.id.plugs_list, firstFragment).commit();
 		}
 	}
 
@@ -63,7 +63,7 @@ public class PlugsActivity extends BaseFragmentActivity implements PlugsFragment
 
 			// Replace whatever is in the fragment_container view with this fragment,
 			// and add the transaction to the back stack so the user can navigate back
-			transaction.replace(R.id.plugs, newFragment);
+			transaction.replace(R.id.plugs_list, newFragment);
 			transaction.addToBackStack(null);
 
 			// Commit the transaction

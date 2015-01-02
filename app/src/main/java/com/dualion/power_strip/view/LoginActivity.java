@@ -211,8 +211,8 @@ public class LoginActivity extends BaseActivity {
                     settings.setCurrentPass(user.getPassword());
                 }
 
-                Intent myIntent = new Intent(loginFormView.getContext(), MainActivity.class);
-	            //Intent myIntent = new Intent(loginFormView.getContext(), PlugsActivity.class);
+                //Intent myIntent = new Intent(loginFormView.getContext(), MainActivity.class);
+	            Intent myIntent = new Intent(loginFormView.getContext(), PlugsActivity.class);
                 startActivityForResult(myIntent, 0);
                 finish();
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);

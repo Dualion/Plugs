@@ -21,7 +21,7 @@ import com.dualion.power_strip.adapter.CustomGrid;
 import com.dualion.power_strip.data.SharedData;
 import com.dualion.power_strip.model.plug.Plug;
 import com.dualion.power_strip.model.plug.PlugsList;
-import com.dualion.power_strip.model.ui.BaseFragment;
+import com.dualion.power_strip.model.ui.BaseListFragment;
 import com.dualion.power_strip.restapi.PlugService;
 import com.dualion.power_strip.restapi.RestPlug;
 
@@ -35,7 +35,7 @@ import retrofit.client.Response;
 
 import static com.dualion.power_strip.utils.ui.toggleView;
 
-public class PlugsFragment extends BaseFragment {
+public class PlugsFragment extends BaseListFragment {
 
 	@Inject
 	SharedData settings;
@@ -47,9 +47,9 @@ public class PlugsFragment extends BaseFragment {
 	private PlugService plugService;
 	OnHeadlineSelectedListener mCallback;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	// Container Activity must implement this interface
+	public interface OnHeadlineSelectedListener {
+		public void onArticleSelected(String position);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class PlugsFragment extends BaseFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		mainView = (ListView) getActivity().findViewById(android.R.id.list);
+		mainView = getListView();
 		progressView = getActivity().findViewById(R.id.main_progress);
 		swipeRefreshWidget = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh_widget);
 		swipeRefreshWidget.setColorSchemeColors(R.color.dualion);
@@ -78,25 +78,25 @@ public class PlugsFragment extends BaseFragment {
 		RestPlug restProduct = new RestPlug(settings.getURI(), settings.getUser(), settings.getCurrentPass());
 		plugService = restProduct.getService();
 		plugService.getAllPlugs(new Callback<PlugsList>() {
-			@Override
-			public void success(PlugsList plugsList, Response response) {
-				adapter = new CustomGrid(getActivity(), (ArrayList<Plug>) plugsList.getPlugs(), plugService);
-				mainView.setAdapter(adapter);
-				toggleView(mainView,
-						progressView,
-						getResources().getInteger(android.R.integer.config_shortAnimTime),
-						false);
-			}
+					 @Override
+					 public void success(PlugsList plugsList, Response response) {
+						 adapter = new CustomGrid(getActivity(), (ArrayList<Plug>) plugsList.getPlugs(), plugService);
+						 setListAdapter(adapter);
+						 toggleView(mainView,
+								 progressView,
+								 getResources().getInteger(android.R.integer.config_shortAnimTime),
+								 false);
+					 }
 
-			@Override
-			public void failure(RetrofitError retrofitError) {
-				Toast.makeText(getActivity(), "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
-				toggleView(mainView,
-						progressView,
-						getResources().getInteger(android.R.integer.config_shortAnimTime),
-						false);
-			}
-		});
+					 @Override
+					 public void failure(RetrofitError retrofitError) {
+						 Toast.makeText(getActivity(), "Fail: " + retrofitError.getUrl(), Toast.LENGTH_SHORT).show();
+						 toggleView(mainView,
+								 progressView,
+								 getResources().getInteger(android.R.integer.config_shortAnimTime),
+								 false);
+					 }
+				 });
 
 		mainView.setLongClickable(true);
 		mainView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -174,11 +174,6 @@ public class PlugsFragment extends BaseFragment {
 			}
 		});
 
-	}
-
-	// Container Activity must implement this interface
-	public interface OnHeadlineSelectedListener {
-		public void onArticleSelected(String position);
 	}
 
 	@Override
