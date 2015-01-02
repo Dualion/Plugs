@@ -63,8 +63,16 @@
     <string name="Vie">V</string>
     <string name="Sab">S</string>
     <string name="Dom">D</string>
+
+	<!-- Main activity -->
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
 	<string name="are_sure">Are you sure?</string>
+	<string name="inactivo">Inactivo</string>
+	<string name="activo">Activo</string>
+	<string name="frequency">Repetición</string>
+	<string name="diaria">Diaria</string>
+	<string name="semanal">Semanal</string>
+	<string name="unica">Unica</string>
 
 </resources>

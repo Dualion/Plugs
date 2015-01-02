@@ -103,7 +103,8 @@ public class Plug {
      }
 
     public State getSchedulerState() {
-        return schedulerState;
+	    if (schedulerState == null) return State.PARADO;
+        else return schedulerState;
     }
 
     public void setSchedulerState(State schedulerState) {
@@ -196,7 +197,8 @@ public class Plug {
          }
 
          public String getMonday() {
-             return monday;
+             if (monday == null) return "False";
+	         else return monday;
          }
 
          public void setMonday(String monday) {
@@ -204,7 +206,8 @@ public class Plug {
          }
 
          public String getTuesday() {
-             return tuesday;
+	         if (tuesday == null) return "False";
+	         else return tuesday;
          }
 
          public void setTuesday(String tuesday) {
@@ -212,7 +215,8 @@ public class Plug {
          }
 
          public String getWednesday() {
-             return wednesday;
+	         if (wednesday == null) return "False";
+	         else return wednesday;
          }
 
          public void setWednesday(String wednesday) {
@@ -220,7 +224,8 @@ public class Plug {
          }
 
          public String getThursday() {
-             return thursday;
+	         if (thursday == null) return "False";
+	         else return thursday;
          }
 
          public void setThursday(String thursday) {
@@ -228,7 +233,8 @@ public class Plug {
          }
 
          public String getFriday() {
-             return friday;
+	         if (friday == null) return "False";
+	         else return friday;
          }
 
          public void setFriday(String friday) {
@@ -236,7 +242,8 @@ public class Plug {
          }
 
          public String getSaturday() {
-             return saturday;
+	         if (saturday == null) return "False";
+	         else return saturday;
          }
 
          public void setSaturday(String saturday) {
@@ -244,7 +251,8 @@ public class Plug {
          }
 
          public String getSunday() {
-             return sunday;
+	         if (sunday == null) return "False";
+	         else return sunday;
          }
 
          public void setSunday(String sunday) {

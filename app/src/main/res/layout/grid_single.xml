@@ -11,27 +11,16 @@
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <!-- Img -->
-    <ImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:contentDescription="@string/fail"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:clickable="true" />
-
     <TextView
         android:id="@+id/name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
-        android:layout_toLeftOf="@+id/thumbnail"
         android:textSize="@dimen/title"
         android:textStyle="bold"
-        android:gravity="center"
-        android:text="@string/Name" />
+        android:text="@string/Name"
+        android:layout_toLeftOf="@+id/thumbnail"
+        android:layout_toStartOf="@+id/thumbnail"/>
 
     <TextView
         android:id="@+id/component"
@@ -41,19 +30,46 @@
         android:layout_marginTop="1dip"
         android:layout_toLeftOf="@+id/thumbnail"
         android:textSize="@dimen/component"
-        android:gravity="center"
         android:text="@string/component" />
 
-    <TextView
-        android:id="@+id/pin"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/component"
-        android:layout_marginTop="5dp"
-        android:layout_toLeftOf="@+id/thumbnail"
-        android:textColor="@color/pin"
-        android:textSize="@dimen/description"
-        android:gravity="center"
-        android:text="@string/Pin" />
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/component"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true"
+		android:layout_toLeftOf="@+id/thumbnail"
+		android:layout_toStartOf="@+id/thumbnail">
+
+		<TextView
+			android:id="@+id/state"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/pin"
+			android:layout_weight="1"
+			android:textSize="@dimen/description"
+			android:text="@string/Pin" />
+
+		<TextView
+			android:id="@+id/frequency"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="2"
+			android:textColor="@color/pin"
+			android:textSize="@dimen/description"
+			android:text="@string/frequency" />
+
+	</LinearLayout>
+
+	<!-- Img -->
+	<ImageView
+		android:id="@+id/thumbnail"
+		android:layout_width="80dp"
+		android:layout_height="80dp"
+		android:contentDescription="@string/fail"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true"
+		android:clickable="true" />
 
 </RelativeLayout>
