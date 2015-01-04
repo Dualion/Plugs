@@ -19,6 +19,10 @@ public interface PlugService {
     @GET("/api/v1.0/pins")
     public void getAllPlugs(Callback<PlugsList> callback);
 
+	@Headers("Content-Type: form-urlencoded; charset=utf-8")
+	@GET("/api/v1.0/pins")
+	public PlugsList getAllPlugs2();
+
     // "/api/v1.0/pins/{id}"
     @Headers("Content-Type: form-urlencoded; charset=utf-8")
     @GET("/api/v1.0/pins/{id}")

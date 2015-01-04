@@ -42,7 +42,7 @@ import retrofit.client.Response;
 
 import static com.dualion.power_strip.utils.ui.showView;
 
-public class DetailPlugFragment extends BaseFragment implements
+public class DatesFragment extends BaseFragment implements
 		CompoundButton.OnCheckedChangeListener, Callback<PlugsList> {
 
 	private SimpleDateTimePicker initDateTimePicker;
@@ -51,6 +51,7 @@ public class DetailPlugFragment extends BaseFragment implements
 	private SimpleTimePicker endTimePicker;
 
 	private Button sendDates;
+	private TextView titleDate;
 	private EditText initDate;
 	private EditText endDate;
 	private CheckBox checkBoxDiario;
@@ -66,11 +67,8 @@ public class DetailPlugFragment extends BaseFragment implements
 	@Inject
 	SharedData settings;
 
-    final static String ARG_PID = "pid";
-    final static String ARG_INDEX = "index";
-
-    public static DetailPlugFragment newInstance(int index, String pid) {
-        DetailPlugFragment f = new DetailPlugFragment();
+    public static DatesFragment newInstance(int index, String pid) {
+        DatesFragment f = new DatesFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
@@ -104,6 +102,11 @@ public class DetailPlugFragment extends BaseFragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		if (getView() == null){
+			return;
+		}
+
+		titleDate =(TextView) getActivity().findViewById(R.id.titleDate);
 		initDate = (EditText) getActivity().findViewById(R.id.initDate);
 		endDate = (EditText) getActivity().findViewById(R.id.endDate);
 		sendDates = (Button) getActivity().findViewById(R.id.sendDates);
@@ -115,6 +118,8 @@ public class DetailPlugFragment extends BaseFragment implements
 
 		initMillis = 0L;
 		endMillis = 0L;
+
+		titleDate.setText(getShownPid());
 
 		checkBoxSemanal.setOnCheckedChangeListener(this);
 		checkBoxDiario.setOnCheckedChangeListener(this);

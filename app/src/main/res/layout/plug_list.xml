@@ -7,10 +7,9 @@
 
     <fragment
         android:id="@+id/plugs"
-        android:layout_weight="1"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.dualion.power_strip.view.PlugsFragment"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/activity_main"/>
 
 </FrameLayout>
