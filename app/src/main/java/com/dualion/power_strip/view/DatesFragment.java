@@ -2,6 +2,9 @@ package com.dualion.power_strip.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -11,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dualion.power_strip.R;
@@ -51,7 +53,6 @@ public class DatesFragment extends BaseFragment implements
 	private SimpleTimePicker endTimePicker;
 
 	private Button sendDates;
-	private TextView titleDate;
 	private EditText initDate;
 	private EditText endDate;
 	private CheckBox checkBoxDiario;
@@ -106,7 +107,9 @@ public class DatesFragment extends BaseFragment implements
 			return;
 		}
 
-		titleDate =(TextView) getActivity().findViewById(R.id.titleDate);
+		// We have a menu item to show in action bar.
+		setHasOptionsMenu(true);
+
 		initDate = (EditText) getActivity().findViewById(R.id.initDate);
 		endDate = (EditText) getActivity().findViewById(R.id.endDate);
 		sendDates = (Button) getActivity().findViewById(R.id.sendDates);
@@ -118,8 +121,6 @@ public class DatesFragment extends BaseFragment implements
 
 		initMillis = 0L;
 		endMillis = 0L;
-
-		titleDate.setText(getShownPid());
 
 		checkBoxSemanal.setOnCheckedChangeListener(this);
 		checkBoxDiario.setOnCheckedChangeListener(this);
@@ -176,6 +177,14 @@ public class DatesFragment extends BaseFragment implements
 		});
 
 	}
+
+	/*@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		// Place an action bar item for searching.
+		MenuItem item = menu.add("Stop");
+		item.setIcon(R.drawable.ic_action_stop);
+	}*/
+
 
     public int getShownIndex() {
         return getArguments().getInt(ARG_INDEX, 0);

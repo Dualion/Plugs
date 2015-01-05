@@ -75,9 +75,6 @@ public class TabsPlugsFragment extends BaseFragment {
 		tabsAdapter.addTab(tabHost.newTabSpec("dates").setIndicator("Dates"),
 				DatesFragment.class, getArguments());
 
-		tabsAdapter.addTab(tabHost.newTabSpec("dates2").setIndicator("Dates2"),
-				DatesFragment.class, getArguments());
-
 		if (savedInstanceState != null) {
 			tabHost.setCurrentTabByTag(savedInstanceState.getString(ARG_TAB));
 		}

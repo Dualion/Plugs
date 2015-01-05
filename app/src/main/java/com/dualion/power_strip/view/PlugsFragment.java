@@ -1,14 +1,11 @@
 package com.dualion.power_strip.view;
 
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -253,7 +250,7 @@ public class PlugsFragment extends BaseListFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_main, menu);
+		inflater.inflate(R.menu.plugs_menu, menu);
 	}
 
 	@Override
