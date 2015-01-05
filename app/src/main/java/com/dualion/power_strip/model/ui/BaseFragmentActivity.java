@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.dualion.power_strip.PowerStripApp;
 
-public abstract class BaseFragmentActivity extends FragmentActivity {
+public abstract class BaseFragmentActivity extends FragmentActivity implements Base {
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {

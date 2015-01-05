@@ -1,11 +1,11 @@
 package com.dualion.power_strip.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +20,11 @@ import java.util.ArrayList;
 
 public class TabsPlugsFragment extends BaseFragment {
 
-	TabHost mTabHost;
-	ViewPager mViewPager;
-	TabsAdapter mTabsAdapter;
+	TabHost tabHost;
+	ViewPager viewPager;
+	TabsAdapter tabsAdapter;
+
+	public final static String ARG_TAB = "tab";
 
 	public static TabsPlugsFragment newInstance(int index, String pid) {
 		TabsPlugsFragment f = new TabsPlugsFragment();
@@ -63,21 +65,21 @@ public class TabsPlugsFragment extends BaseFragment {
 			return;
 		}
 
-		Intent intent = getActivity().getIntent();
-		Bundle bundle = intent.getExtras();
+		tabHost = (TabHost) getActivity().findViewById(android.R.id.tabhost);
+		tabHost.setup();
 
-		mTabHost = (TabHost) getActivity().findViewById(android.R.id.tabhost);
-		mTabHost.setup();
+		viewPager = (ViewPager)getActivity().findViewById(R.id.pager);
 
-		mViewPager = (ViewPager)getActivity().findViewById(R.id.pager);
+		tabsAdapter = new TabsAdapter(getActivity(), tabHost, viewPager);
 
-		mTabsAdapter = new TabsAdapter(getActivity(), mTabHost, mViewPager);
+		tabsAdapter.addTab(tabHost.newTabSpec("dates").setIndicator("Dates"),
+				DatesFragment.class, getArguments());
 
-		mTabsAdapter.addTab(mTabHost.newTabSpec("dates").setIndicator("Dates"),
-				DatesFragment.class, bundle);
+		tabsAdapter.addTab(tabHost.newTabSpec("dates2").setIndicator("Dates2"),
+				DatesFragment.class, getArguments());
 
 		if (savedInstanceState != null) {
-			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+			tabHost.setCurrentTabByTag(savedInstanceState.getString(ARG_TAB));
 		}
 
 	}
@@ -85,15 +87,22 @@ public class TabsPlugsFragment extends BaseFragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putString("tab", mTabHost.getCurrentTabTag());
+		if (tabHost != null)
+			outState.putString(ARG_TAB, tabHost.getCurrentTabTag());
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+
+		tabHost = null;
+		viewPager = null;
+		tabsAdapter = null;
+
 	}
 
 	public int getShownIndex() {
 		return getArguments().getInt(ARG_INDEX, 0);
-	}
-
-	public String getShownPid() {
-		return getArguments().getString(ARG_PID);
 	}
 
 	/**
@@ -107,12 +116,13 @@ public class TabsPlugsFragment extends BaseFragment {
 	 * care of switch to the correct paged in the ViewPager whenever the selected
 	 * tab changes.
 	 */
-	public static class TabsAdapter extends FragmentPagerAdapter
+	public static class TabsAdapter extends FragmentStatePagerAdapter
 			implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
-		private final Context mContext;
-		private final TabHost mTabHost;
-		private final ViewPager mViewPager;
-		private final ArrayList<TabInfo> mTabs = new ArrayList<>();
+
+		private final Context context;
+		private final TabHost tabHost;
+		private final ViewPager viewPager;
+		private final ArrayList<TabInfo> tabs = new ArrayList<>();
 
 		static final class TabInfo {
 			private final String tag;
@@ -144,39 +154,39 @@ public class TabsPlugsFragment extends BaseFragment {
 
 		public TabsAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager) {
 			super(activity.getSupportFragmentManager());
-			mContext = activity;
-			mTabHost = tabHost;
-			mViewPager = pager;
-			mTabHost.setOnTabChangedListener(this);
-			mViewPager.setAdapter(this);
-			mViewPager.setOnPageChangeListener(this);
+			context = activity;
+			this.tabHost = tabHost;
+			viewPager = pager;
+			this.tabHost.setOnTabChangedListener(this);
+			viewPager.setAdapter(this);
+			viewPager.setOnPageChangeListener(this);
 		}
 
 		public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args) {
-			tabSpec.setContent(new DummyTabFactory(mContext));
+			tabSpec.setContent(new DummyTabFactory(context));
 			String tag = tabSpec.getTag();
 
 			TabInfo info = new TabInfo(tag, clss, args);
-			mTabs.add(info);
-			mTabHost.addTab(tabSpec);
+			tabs.add(info);
+			tabHost.addTab(tabSpec);
 			notifyDataSetChanged();
 		}
 
 		@Override
 		public int getCount() {
-			return mTabs.size();
+			return tabs.size();
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			TabInfo info = mTabs.get(position);
-			return Fragment.instantiate(mContext, info.clss.getName(), info.args);
+			TabInfo info = tabs.get(position);
+			return Fragment.instantiate(context, info.clss.getName(), info.args);
 		}
 
 		@Override
 		public void onTabChanged(String tabId) {
-			int position = mTabHost.getCurrentTab();
-			mViewPager.setCurrentItem(position);
+			int position = tabHost.getCurrentTab();
+			viewPager.setCurrentItem(position);
 		}
 
 		@Override
@@ -190,10 +200,10 @@ public class TabsPlugsFragment extends BaseFragment {
 			// The jerk.
 			// This hack tries to prevent this from pulling focus out of our
 			// ViewPager.
-			TabWidget widget = mTabHost.getTabWidget();
+			TabWidget widget = tabHost.getTabWidget();
 			int oldFocusability = widget.getDescendantFocusability();
 			widget.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-			mTabHost.setCurrentTab(position);
+			tabHost.setCurrentTab(position);
 			widget.setDescendantFocusability(oldFocusability);
 		}
 

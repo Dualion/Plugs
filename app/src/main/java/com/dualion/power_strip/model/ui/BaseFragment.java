@@ -5,10 +5,7 @@ import android.support.v4.app.Fragment;
 
 import com.dualion.power_strip.PowerStripApp;
 
-public class BaseFragment extends Fragment {
-
-	public final static String ARG_PID = "pid";
-	public final static String ARG_INDEX = "index";
+public class BaseFragment extends Fragment implements Base {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

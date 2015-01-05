@@ -5,7 +5,7 @@ import android.support.v4.app.ListFragment;
 
 import com.dualion.power_strip.PowerStripApp;
 
-public abstract class BaseListFragment extends ListFragment {
+public abstract class BaseListFragment extends ListFragment implements Base {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -1,11 +1,14 @@
 package com.dualion.power_strip.view;
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -53,6 +56,8 @@ public class PlugsFragment extends BaseListFragment {
 	private SwipeRefreshLayout swipeRefreshWidget;
 	private PlugService plugService;
 
+	public final static String ARG_POS = "pos";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,6 +72,11 @@ public class PlugsFragment extends BaseListFragment {
 		return inflater.inflate(R.layout.activity_main, container, false);
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(ARG_POS, position);
+	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -74,7 +84,7 @@ public class PlugsFragment extends BaseListFragment {
 
 		if (savedInstanceState != null) {
 			// Restore last state for checked position.
-			position = savedInstanceState.getInt(DatesFragment.ARG_INDEX, 0);
+			position = savedInstanceState.getInt(ARG_POS, 0);
 		}
 
 		mainView = getListView();
@@ -96,17 +106,7 @@ public class PlugsFragment extends BaseListFragment {
 				adapter = new CustomGrid(getActivity(), (ArrayList<Plug>) plugsList.getPlugs(), plugService);
 				setListAdapter(adapter);
 
-				// Check to see if we have a frame in which to embed the details
-				// fragment directly in the containing UI.
-				View detailsFrame = getActivity().findViewById(R.id.plug_details);
-				dualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
-
-				if (dualPane) {
-					// In dual-pane mode, the list view highlights the s"position"elected item.
-					getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-					// Make sure our UI is in the correct state.
-					showDetails(position);
-				}
+				initList();
 
 				toggleView(mainView,
 						progressView,
@@ -121,8 +121,25 @@ public class PlugsFragment extends BaseListFragment {
 						progressView,
 						getResources().getInteger(android.R.integer.config_shortAnimTime),
 						false);
+				logout();
 			}
 		});
+
+	}
+
+	private void initList() {
+
+		// Check to see if we have a frame in which to embed the details
+		// fragment directly in the containing UI.
+		View detailsFrame = getActivity().findViewById(R.id.plug_details);
+		dualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
+
+		if (dualPane) {
+			// In dual-pane mode, the list view highlights the s"position"elected item.
+			getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+			// Make sure our UI is in the correct state.
+			showDetails(position);
+		}
 
 		mainView.setLongClickable(true);
 		mainView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -154,12 +171,7 @@ public class PlugsFragment extends BaseListFragment {
 		mainView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
 				showDetails(position);
-
-				// Set the item as checked to be highlighted when in two-pane layout
-				mainView.setItemChecked(position, true);
-
 			}
 		});
 
@@ -193,7 +205,7 @@ public class PlugsFragment extends BaseListFragment {
 					public void run() {
 						refresh();
 					}
-				}, 1500);
+				}, 1000);
 			}
 		});
 
@@ -232,15 +244,14 @@ public class PlugsFragment extends BaseListFragment {
 			// the dialog fragment with selected text.
 			Intent intent = new Intent();
 			intent.setClass(getActivity(), DetailActivity.class);
-			intent.putExtra(DatesFragment.ARG_INDEX, index);
-			intent.putExtra(DatesFragment.ARG_PID, pid);
+			intent.putExtra(ARG_INDEX, index);
+			intent.putExtra(ARG_PID, pid);
 			startActivity(intent);
 		}
 	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.menu_main, menu);
 	}
@@ -265,10 +276,7 @@ public class PlugsFragment extends BaseListFragment {
 				stopPlugs();
 				return true;
 			case R.id.action_logout:
-				settings.setCurrentPass("");
-				startActivityForResult(new Intent(getActivity(), LoginActivity.class), 0);
-				getActivity().finish();
-				getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+				logout();
 				return true;
 			case R.id.action_quit:
 				getActivity().finish();
@@ -277,6 +285,13 @@ public class PlugsFragment extends BaseListFragment {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void logout() {
+		settings.setCurrentPass("");
+		startActivityForResult(new Intent(getActivity(), LoginActivity.class), 0);
+		getActivity().finish();
+		getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 	}
 
 	public void stopPlugs() {

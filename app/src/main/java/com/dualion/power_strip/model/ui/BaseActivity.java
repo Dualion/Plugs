@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 
 import com.dualion.power_strip.PowerStripApp;
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity implements Base {
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
