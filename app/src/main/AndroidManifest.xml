@@ -33,6 +33,8 @@
 		    android:name=".view.DetailActivity"
 		    android:parentActivityName="com.dualion.power_strip.view.PlugsActivity"
 		    android:label="@string/plug" >
+		    <meta-data android:name="android.support.PARENT_ACTIVITY"
+		               android:value="com.dualion.power_strip.view.PlugsActivity" />
 	    </activity>
 
     </application>
