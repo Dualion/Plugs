@@ -5,7 +5,7 @@
 
     <!-- General -->
     <string name="fail">Fail</string>
-    <string name="Name">Name</string>
+    <string name="name">Name</string>
     <string name="component">Component</string>
     <string name="Pin">Pin</string>
 
@@ -14,6 +14,7 @@
     <string name="action_refresh">Refresh</string>
 	<string name="action_stop_all">Stop all</string>
 	<string name="action_stop">Stop plug</string>
+	<string name="action_overflow">Overflow</string>
 
     <!-- Settings -->
     <string name="pref_user_profile">User Profile</string>
@@ -46,17 +47,17 @@
     <string name="tab_date">Date</string>
     <string name="tab_time">Time</string>
     <string name="action_dates">Dates</string>
-    <string name="prompt_initDate">Initial date</string>
-    <string name="prompt_endDate">End date</string>
-    <string name="prompt_initTime">Initial Time</string>
-    <string name="prompt_endTime">End Time</string>
+    <string name="prompt_initDate">Fecha encendido</string>
+    <string name="prompt_endDate">Fecha parado</string>
+    <string name="prompt_initTime">Hora encendido</string>
+    <string name="prompt_endTime">Hora apagado</string>
     <string name="plug">Plug</string>
-    <string name="Send">Send</string>
-    <string name="Dualion">Dualion</string>
-    <string name="WrongDate">Wrong date</string>
-    <string name="Plugs">plugs</string>
-    <string name="Diario">Diario</string>
-    <string name="Semanal">Semanal</string>
+    <string name="send">Send</string>
+    <string name="dualion">Dualion</string>
+    <string name="wrong_date">Wrong date</string>
+    <string name="plugs">plugs</string>
+    <string name="diario">Diario</string>
+	<string name="semanal">Semanal</string>
     <string name="Lun">L</string>
     <string name="Mar">M</string>
     <string name="Mir">X</string>
@@ -72,8 +73,9 @@
 	<string name="inactivo">Inactivo</string>
 	<string name="activo">Activo</string>
 	<string name="frequency">Repetición</string>
+	<string name="freq">Rep</string>
 	<string name="diaria">Diaria</string>
-	<string name="semanal">Semanal</string>
-	<string name="unica">Unica</string>
+	<string name="unica">Única</string>
+	<string name="dia">Dia</string>
 
 </resources>

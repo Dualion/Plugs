@@ -4,28 +4,11 @@
       tools:context="com.dualion.power_strip.view.DatesFragment" >
 
 	<item
-		android:id="@+id/empty"
-		android:icon="@drawable/ic_action_overflow"
-		android:orderInCategory="101"
-		android:showAsAction="always" >
-
-		<menu>
-			<item
-				android:id="@+id/action_settings"
-				android:icon="@drawable/ic_action_settings"
-				android:showAsAction="always|withText"
-				android:title="@string/action_settings"/>
-
-			<item
-				android:id="@+id/action_logout"
-				android:showAsAction="always|withText"
-				android:title="@string/action_logout"/>
-
-			<item
-				android:id="@+id/action_quit"
-				android:showAsAction="always|withText"
-				android:title="@string/action_quit"/>
-		</menu>
+		android:id="@+id/action_stop_plug"
+		android:icon="@drawable/ic_action_stop"
+		android:orderInCategory="99"
+		android:showAsAction="always"
+		android:title="@string/action_stop">
 	</item>
 
 </menu>

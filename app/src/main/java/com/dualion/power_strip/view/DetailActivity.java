@@ -34,9 +34,10 @@ public class DetailActivity extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		String nPlug = getIntent().getExtras().getString(ARG_PID);
+		String component = getIntent().getExtras().getString(ARG_COMP);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		setTitle(getResources().getString(R.string.plug) + ": " + nPlug);
+		setTitle( getResources().getString(R.string.plug) + " " + nPlug  + ": " + component );
 
 		if (savedInstanceState == null) {
 			// During initial setup, plug in the details fragment.
@@ -48,12 +49,6 @@ public class DetailActivity extends BaseFragmentActivity {
 					.add(android.R.id.content, details)
 					.commit();
 		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.detail_menu, menu);
-		return true;
 	}
 
 	@Override
@@ -77,27 +72,7 @@ public class DetailActivity extends BaseFragmentActivity {
 			 }
 			 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 			 return true;
-			case R.id.action_settings:
-				Intent i = new Intent(this, SettingsActivity.class);
-				startActivity(i);
-				overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-				return true;
-			case R.id.action_logout:
-				logout();
-				return true;
-			case R.id.action_quit:
-				finish();
-				System.exit(0);
-				overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-				return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	private void logout() {
-		settings.setCurrentPass("");
-		startActivityForResult(new Intent(this, LoginActivity.class), 0);
-		finish();
-		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 	}
 }

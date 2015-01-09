@@ -4,12 +4,11 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!--Grid ListView from main activity-->
-    <dimen name="title">20sp</dimen>
-    <dimen name="component">18sp</dimen>
-    <dimen name="description">16sp</dimen>
+    <dimen name="title">18sp</dimen>
+    <dimen name="component">16sp</dimen>
+    <dimen name="description">14sp</dimen>
 
     <!-- Activity Dates -->
-    <dimen name="title_dates">36sp</dimen>
     <dimen name="text_dates">24sp</dimen>
     <dimen name="text_day_week">20sp</dimen>
     <dimen name="SelectedBoxWeekDay">40dp</dimen>

@@ -167,7 +167,7 @@ public class DatesFragment extends BaseFragment implements
 			public void onClick(View v) {
 
 				if (initMillis >= endMillis) {
-					sendDates.setError(getString(R.string.WrongDate));
+					sendDates.setError(getString(R.string.wrong_date));
 					return;
 				} else {
 					sendDates.setError(null);
@@ -177,14 +177,6 @@ public class DatesFragment extends BaseFragment implements
 		});
 
 	}
-
-	/*@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// Place an action bar item for searching.
-		MenuItem item = menu.add("Stop");
-		item.setIcon(R.drawable.ic_action_stop);
-	}*/
-
 
     public int getShownIndex() {
         return getArguments().getInt(ARG_INDEX, 0);
@@ -202,6 +194,22 @@ public class DatesFragment extends BaseFragment implements
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.detail_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_stop_plug:
+				Toast.makeText(getActivity(), "Stop", Toast.LENGTH_SHORT).show();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void callRestApi(PlugService service, int pid) {

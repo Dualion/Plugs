@@ -216,6 +216,7 @@ public class PlugsFragment extends BaseListFragment {
 	void showDetails(int index) {
 		position = index;
 		String pid = String.valueOf(adapter.getItem(index).getId());
+		String component = adapter.getItem(index).getComponent();
 
 		if (dualPane) {
 			// We can display everything in-place with fragments, so update
@@ -226,7 +227,7 @@ public class PlugsFragment extends BaseListFragment {
 					getFragmentManager().findFragmentById(R.id.plug_details);
 			if (details == null || details.getShownIndex() != index) {
 				// Make new fragment to show this selection.
-				details = TabsPlugsFragment.newInstance(index, pid);
+				details = TabsPlugsFragment.newInstance(index, pid, component);
 
 				// Execute a transaction, replacing any existing fragment
 				// with this one inside the frame.
@@ -243,6 +244,7 @@ public class PlugsFragment extends BaseListFragment {
 			intent.setClass(getActivity(), DetailActivity.class);
 			intent.putExtra(ARG_INDEX, index);
 			intent.putExtra(ARG_PID, pid);
+			intent.putExtra(ARG_COMP,component);
 			startActivity(intent);
 		}
 	}

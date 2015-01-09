@@ -26,13 +26,14 @@ public class TabsPlugsFragment extends BaseFragment {
 
 	public final static String ARG_TAB = "tab";
 
-	public static TabsPlugsFragment newInstance(int index, String pid) {
+	public static TabsPlugsFragment newInstance(int index, String pid, String component ) {
 		TabsPlugsFragment f = new TabsPlugsFragment();
 
 		// Supply index input as an argument.
 		Bundle args = new Bundle();
 		args.putInt(ARG_INDEX, index);
 		args.putString(ARG_PID, pid);
+		args.putString(ARG_COMP,component);
 		f.setArguments(args);
 
 		return f;

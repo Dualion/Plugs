@@ -85,7 +85,7 @@ public class CustomGrid extends BaseAdapter {
 		if (inflater == null)
 			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.grid_single, null);
+			convertView = inflater.inflate(R.layout.plug, null);
 			viewHolder = new ViewHolder();
 			viewHolder.pid = (TextView) convertView.findViewById(R.id.pid);
 			viewHolder.component = (TextView) convertView.findViewById(R.id.component);
@@ -99,7 +99,7 @@ public class CustomGrid extends BaseAdapter {
 		}
 
 		viewHolder.pid.setText(plug.getId());
-		viewHolder.name.setText("Plug: " + plug.getId());
+		viewHolder.name.setText("Plug " + plug.getId() + ": ");
 		viewHolder.component.setText(plug.getComponent());
 
 		//Estado de la programación
@@ -113,7 +113,7 @@ public class CustomGrid extends BaseAdapter {
 						viewHolder.frequency.setText(context.getResources().getString(R.string.frequency)+ ": " + context.getResources().getString(R.string.diaria));
 						break;
 					case SEMANAL:
-						viewHolder.frequency.setText(context.getResources().getString(R.string.frequency)+ ": " + context.getResources().getString(R.string.semanal));
+						viewHolder.frequency.setText(repeticionSemanal(plug));
 						break;
 					case NONE:
 						viewHolder.frequency.setText(context.getResources().getString(R.string.frequency)+ ": " + context.getResources().getString(R.string.unica));
@@ -174,5 +174,23 @@ public class CustomGrid extends BaseAdapter {
 
 		// Return the completed view to render on screen
 		return convertView;
+	}
+
+	private String repeticionSemanal(Plug plug) {
+
+		String text;
+
+		text = context.getResources().getString(R.string.freq)+ ": " + context.getResources().getString(R.string.semanal) + "   ";
+
+		text += context.getResources().getString(R.string.dia)+ ": ";
+		if (plug.getRepeatOnDays().getMonday().equals("True")) text += " " + context.getResources().getString(R.string.Lun);
+		if (plug.getRepeatOnDays().getTuesday().equals("True")) text += " " + context.getResources().getString(R.string.Mar);
+		if (plug.getRepeatOnDays().getWednesday().equals("True")) text += " " + context.getResources().getString(R.string.Mir);
+		if (plug.getRepeatOnDays().getThursday().equals("True")) text += " " + context.getResources().getString(R.string.Jue);
+		if (plug.getRepeatOnDays().getFriday().equals("True")) text += " " + context.getResources().getString(R.string.Vie);
+		if (plug.getRepeatOnDays().getSaturday().equals("True")) text += " " + context.getResources().getString(R.string.Sab);
+		if (plug.getRepeatOnDays().getSunday().equals("True")) text += " " + context.getResources().getString(R.string.Dom);
+
+		return text;
 	}
 }
