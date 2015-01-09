@@ -57,8 +57,6 @@ public class DatesFragment extends BaseFragment implements
 	private EditText endDate;
 	private CheckBox checkBoxDiario;
 	private CheckBox checkBoxSemanal;
-    private ImageButton buttonInitDate;
-    private ImageButton buttonEndDate;
 
 	private TableLayout tablaDiasSemana;
 
@@ -67,18 +65,6 @@ public class DatesFragment extends BaseFragment implements
 
 	@Inject
 	SharedData settings;
-
-    public static DatesFragment newInstance(int index, String pid) {
-        DatesFragment f = new DatesFragment();
-
-        // Supply index input as an argument.
-        Bundle args = new Bundle();
-        args.putInt(ARG_INDEX, index);
-        args.putString(ARG_PID, pid);
-        f.setArguments(args);
-
-        return f;
-    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,8 +101,8 @@ public class DatesFragment extends BaseFragment implements
 		sendDates = (Button) getActivity().findViewById(R.id.sendDates);
 		checkBoxDiario = (CheckBox) getActivity().findViewById(R.id.checkBoxDiario);
 		checkBoxSemanal = (CheckBox) getActivity().findViewById(R.id.checkBoxSemanal);
-        buttonInitDate = (ImageButton) getActivity().findViewById(R.id.buttonInitDate);
-        buttonEndDate = (ImageButton) getActivity().findViewById(R.id.buttonEndDate);
+		ImageButton buttonInitDate = (ImageButton) getActivity().findViewById(R.id.buttonInitDate);
+		ImageButton buttonEndDate = (ImageButton) getActivity().findViewById(R.id.buttonEndDate);
 		tablaDiasSemana = (TableLayout) getActivity().findViewById(R.id.tablaDiasSemana);
 
 		initMillis = 0L;
@@ -140,17 +126,17 @@ public class DatesFragment extends BaseFragment implements
         });
 
         buttonInitDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectInitDate();
-            }
+	        @Override
+	        public void onClick(View v) {
+		        selectInitDate();
+	        }
         });
 
         buttonEndDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectEndDate();
-            }
+	        @Override
+	        public void onClick(View v) {
+		        selectEndDate();
+	        }
         });
 
 		//init DateTimePicker
@@ -185,16 +171,6 @@ public class DatesFragment extends BaseFragment implements
     public String getShownPid() {
         return getArguments().getString(ARG_PID);
     }
-
-	@Override
-	public void onStart() {
-		super.onStart();
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

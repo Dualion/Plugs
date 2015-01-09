@@ -80,7 +80,6 @@
                 android:layout_marginTop="-2dp"
                 android:padding="10dp"
                 android:textColorHint="#bbbbbb"
-                android:password="true"
                 android:drawableLeft="@drawable/ic_action_secure"/>
 
             <CheckBox

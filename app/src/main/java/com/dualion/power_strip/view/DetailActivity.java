@@ -1,33 +1,15 @@
 package com.dualion.power_strip.view;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.dualion.power_strip.R;
-import com.dualion.power_strip.data.SharedData;
-import com.dualion.power_strip.model.plug.Plug;
-import com.dualion.power_strip.model.plug.PlugsList;
 import com.dualion.power_strip.model.ui.BaseFragmentActivity;
 
-import java.util.ArrayList;
-
-import javax.inject.Inject;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 public class DetailActivity extends BaseFragmentActivity {
-
-	@Inject
-	SharedData settings;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +18,10 @@ public class DetailActivity extends BaseFragmentActivity {
 		String nPlug = getIntent().getExtras().getString(ARG_PID);
 		String component = getIntent().getExtras().getString(ARG_COMP);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		try {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		} catch (NullPointerException e){ }
+
 		setTitle( getResources().getString(R.string.plug) + " " + nPlug  + ": " + component );
 
 		if (savedInstanceState == null) {
