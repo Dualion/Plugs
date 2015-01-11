@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.Toast;
 
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.model.ui.BaseFragment;
@@ -61,11 +62,12 @@ public class TabsPlugsFragment extends BaseFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		if (getView() == null) {
+		tabHost = (TabHost) getActivity().findViewById(android.R.id.tabhost);
+
+		if (tabHost == null){
 			return;
 		}
 
-		tabHost = (TabHost) getActivity().findViewById(android.R.id.tabhost);
 		tabHost.setup();
 
 		viewPager = (ViewPager)getActivity().findViewById(R.id.pager);

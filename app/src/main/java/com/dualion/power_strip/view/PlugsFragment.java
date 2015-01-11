@@ -85,6 +85,7 @@ public class PlugsFragment extends BaseListFragment {
 		}
 
 		mainView = getListView();
+		mainView.setSelector(R.drawable.list_item_selector);
 		progressView = getActivity().findViewById(R.id.main_progress);
 		swipeRefreshWidget = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh_widget);
 		swipeRefreshWidget.setColorSchemeColors(R.color.dualion);
@@ -223,11 +224,11 @@ public class PlugsFragment extends BaseListFragment {
 			// the list to highlight the selected item and show the data.
 			getListView().setItemChecked(index, true);
 
-			TabsPlugsFragment details = (TabsPlugsFragment)
-					getFragmentManager().findFragmentById(R.id.plug_details);
-			if (details == null || details.getShownIndex() != index) {
+			//TabsPlugsFragment details = (TabsPlugsFragment)
+			//		getFragmentManager().findFragmentById(R.id.plug_details);
+			//if (details == null || details.getShownIndex() != index) {
 				// Make new fragment to show this selection.
-				details = TabsPlugsFragment.newInstance(index, pid, component);
+				TabsPlugsFragment details = TabsPlugsFragment.newInstance(index, pid, component);
 
 				// Execute a transaction, replacing any existing fragment
 				// with this one inside the frame.
@@ -235,7 +236,7 @@ public class PlugsFragment extends BaseListFragment {
 						.replace(R.id.plug_details, details)
 						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 						.commit();
-			}
+			//}
 
 		} else {
 			// Otherwise we need to launch a new activity to display
@@ -251,8 +252,9 @@ public class PlugsFragment extends BaseListFragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
+		menu.clear();
 		inflater.inflate(R.menu.plugs_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override

@@ -174,7 +174,11 @@ public class DatesFragment extends BaseFragment implements
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.detail_menu, menu);
+
+		MenuItem iStopPlug=menu.findItem(R.id.action_stop_plug);
+		if (iStopPlug == null) {
+			menu.add(Menu.NONE, R.id.action_stop_plug, Menu.NONE, R.string.action_stop).setIcon(R.drawable.ic_action_stop).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		}
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
