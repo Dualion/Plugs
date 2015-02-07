@@ -49,7 +49,7 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login);
 
         // Set up the login form.
         urlApiView = (EditText) findViewById(R.id.urlApi);

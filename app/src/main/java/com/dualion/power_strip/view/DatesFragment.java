@@ -82,7 +82,7 @@ public class DatesFragment extends BaseFragment implements
         }
 
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.activity_dates, container, false);
+		return inflater.inflate(R.layout.dates, container, false);
 	}
 
 	@Override

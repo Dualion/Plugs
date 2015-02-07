@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="pin">#666666</color>
+    <color name="pin">#666</color>
     <color name="dualion">#162A83</color>
-    <color name="dualion_light">#ff5d9cff</color>
-    <color name="background">#FBFBEE</color>
-	<color name="borde">#ffa1a2a3</color>
+	<color name="dualion_light">#99162a83</color>
+
+	<color name="background">#FBFBEE</color>
+	<color name="borde">#FFA1A2A3</color>
 	<color name="bg_listview">#323232</color>
-	<color name="light_grey">#cccccc</color>
+	<color name="light_grey">#CCC</color>
+
+	<color name="white">#FFF</color>
+	<color name="grey">#7A7A7A</color>
+	<color name="blue_light">#FF5D9CFF</color>
+	<color name="blue_dark">#2F6699</color>
+	<color name="green_light">#70C656</color>
+	<color name="green_dark">#53933F</color>
+	<color name="orange_light">#F3AE1B</color>
+	<color name="orange_dark">#BB6008</color>
+	<color name="black">#000</color>
+
 </resources>

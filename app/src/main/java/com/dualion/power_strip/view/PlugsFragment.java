@@ -66,7 +66,7 @@ public class PlugsFragment extends BaseListFragment {
 	                         Bundle savedInstanceState) {
 
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.activity_main, container, false);
+		return inflater.inflate(R.layout.fgm_plug_list, container, false);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class PlugsFragment extends BaseListFragment {
 		}
 
 		mainView = getListView();
-		mainView.setSelector(R.drawable.list_item_selector);
+		//mainView.setSelector(R.drawable.list_item_selector);
 		progressView = getActivity().findViewById(R.id.main_progress);
 		swipeRefreshWidget = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh_widget);
 		swipeRefreshWidget.setColorSchemeColors(R.color.dualion);
