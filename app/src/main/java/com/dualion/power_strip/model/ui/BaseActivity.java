@@ -6,12 +6,12 @@ import android.os.Bundle;
 import com.dualion.power_strip.PowerStripApp;
 
 public abstract class BaseActivity extends Activity implements Base {
- 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        ((PowerStripApp) getApplication()).getObjectGraph().inject(this);
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		((PowerStripApp) getApplication()).getObjectGraph().inject(this);
+	}
 
 }

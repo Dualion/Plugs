@@ -12,61 +12,60 @@ import retrofit.converter.GsonConverter;
 
 public class RestPlug {
 
-    private final PlugService service;
+	private final PlugService service;
 
-    public RestPlug(String url, String username, String password)
-    {
+	public RestPlug(String url, String username, String password) {
 
-        User user = new User(username, password);
+		User user = new User(username, password);
 
-        ApiRequestInterceptor requestInterceptor = new ApiRequestInterceptor();
-        requestInterceptor.setUser(user);
+		ApiRequestInterceptor requestInterceptor = new ApiRequestInterceptor();
+		requestInterceptor.setUser(user);
 
-        Gson gson = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .create();
+		Gson gson = new GsonBuilder()
+				.excludeFieldsWithoutExposeAnnotation()
+				.create();
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setRequestInterceptor(requestInterceptor)
-                .setEndpoint(url)
-                .setConverter(new GsonConverter(gson))
+		RestAdapter restAdapter = new RestAdapter.Builder()
+				.setLogLevel(RestAdapter.LogLevel.FULL)
+				.setRequestInterceptor(requestInterceptor)
+				.setEndpoint(url)
+				.setConverter(new GsonConverter(gson))
 
-                .build();
+				.build();
 
-        service = restAdapter.create(PlugService.class);
-    }
+		service = restAdapter.create(PlugService.class);
+	}
 
-    public PlugService getService() {
-        return service;
-    }
+	public PlugService getService() {
+		return service;
+	}
 
-    private class ApiRequestInterceptor implements RequestInterceptor {
+	private class ApiRequestInterceptor implements RequestInterceptor {
 
-        private User user;
+		private User user;
 
-        @Override
-        public void intercept(RequestFacade requestFacade) {
+		@Override
+		public void intercept(RequestFacade requestFacade) {
 
-            if (user != null) {
-                final String authorizationValue = encodeCredentialsForBasicAuthorization();
-                requestFacade.addHeader("Authorization", authorizationValue);
-            }
-        }
+			if (user != null) {
+				final String authorizationValue = encodeCredentialsForBasicAuthorization();
+				requestFacade.addHeader("Authorization", authorizationValue);
+			}
+		}
 
-        private String encodeCredentialsForBasicAuthorization() {
-            final String userAndPassword = user.getUsername() + ":" + user.getPassword();
-            return "Basic " + Base64.encodeToString(userAndPassword.getBytes(), Base64.NO_WRAP);
-        }
+		private String encodeCredentialsForBasicAuthorization() {
+			final String userAndPassword = user.getUsername() + ":" + user.getPassword();
+			return "Basic " + Base64.encodeToString(userAndPassword.getBytes(), Base64.NO_WRAP);
+		}
 
-        public User getUser() {
-            return user;
-        }
+		public User getUser() {
+			return user;
+		}
 
-        public void setUser(User user) {
-            this.user = user;
-        }
+		public void setUser(User user) {
+			this.user = user;
+		}
 
-    }
+	}
 
 }

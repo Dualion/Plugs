@@ -7,10 +7,10 @@ import com.dualion.power_strip.PowerStripApp;
 
 public abstract class BaseListActivity extends ListActivity implements Base {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        ((PowerStripApp) getApplication()).getObjectGraph().inject(this);
-    }
+		((PowerStripApp) getApplication()).getObjectGraph().inject(this);
+	}
 }

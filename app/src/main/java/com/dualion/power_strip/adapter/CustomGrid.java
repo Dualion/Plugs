@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.model.plug.Plug;
 import com.dualion.power_strip.model.plug.PlugsList;
 import com.dualion.power_strip.restapi.PlugService;
+
+import java.util.ArrayList;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -108,15 +108,15 @@ public class CustomGrid extends BaseAdapter {
 				viewHolder.state.setText("Scheduler: " + context.getResources().getString(R.string.activo));
 
 				//tipo de programación
-				switch (plug.getRepeatFrecuency()){
+				switch (plug.getRepeatFrecuency()) {
 					case DIARIO:
-						viewHolder.frequency.setText(context.getResources().getString(R.string.frequency)+ ": " + context.getResources().getString(R.string.diaria));
+						viewHolder.frequency.setText(context.getResources().getString(R.string.frequency) + ": " + context.getResources().getString(R.string.diaria));
 						break;
 					case SEMANAL:
 						viewHolder.frequency.setText(repeticionSemanal(plug));
 						break;
 					case NONE:
-						viewHolder.frequency.setText(context.getResources().getString(R.string.frequency)+ ": " + context.getResources().getString(R.string.unica));
+						viewHolder.frequency.setText(context.getResources().getString(R.string.frequency) + ": " + context.getResources().getString(R.string.unica));
 						break;
 				}
 
@@ -160,7 +160,7 @@ public class CustomGrid extends BaseAdapter {
 		// If the last position to be loaded is <= the current position, we want
 		// the views to start below their ending point (500f further down).
 		// Otherwise, we start above the ending point.
-	    /*float initialTranslation = (lastPosition <= position ? 500f : -500f);
+		/*float initialTranslation = (lastPosition <= position ? 500f : -500f);
 
         convertView.setTranslationY(initialTranslation);
         convertView.animate()
@@ -180,16 +180,23 @@ public class CustomGrid extends BaseAdapter {
 
 		String text;
 
-		text = context.getResources().getString(R.string.freq)+ ": " + context.getResources().getString(R.string.semanal) + "   ";
+		text = context.getResources().getString(R.string.freq) + ": " + context.getResources().getString(R.string.semanal) + "   ";
 
-		text += context.getResources().getString(R.string.dia)+ ": ";
-		if (plug.getRepeatOnDays().getMonday().equals("True")) text += " " + context.getResources().getString(R.string.Lun);
-		if (plug.getRepeatOnDays().getTuesday().equals("True")) text += " " + context.getResources().getString(R.string.Mar);
-		if (plug.getRepeatOnDays().getWednesday().equals("True")) text += " " + context.getResources().getString(R.string.Mir);
-		if (plug.getRepeatOnDays().getThursday().equals("True")) text += " " + context.getResources().getString(R.string.Jue);
-		if (plug.getRepeatOnDays().getFriday().equals("True")) text += " " + context.getResources().getString(R.string.Vie);
-		if (plug.getRepeatOnDays().getSaturday().equals("True")) text += " " + context.getResources().getString(R.string.Sab);
-		if (plug.getRepeatOnDays().getSunday().equals("True")) text += " " + context.getResources().getString(R.string.Dom);
+		text += context.getResources().getString(R.string.dia) + ": ";
+		if (plug.getRepeatOnDays().getMonday().equals("True"))
+			text += " " + context.getResources().getString(R.string.Lun);
+		if (plug.getRepeatOnDays().getTuesday().equals("True"))
+			text += " " + context.getResources().getString(R.string.Mar);
+		if (plug.getRepeatOnDays().getWednesday().equals("True"))
+			text += " " + context.getResources().getString(R.string.Mir);
+		if (plug.getRepeatOnDays().getThursday().equals("True"))
+			text += " " + context.getResources().getString(R.string.Jue);
+		if (plug.getRepeatOnDays().getFriday().equals("True"))
+			text += " " + context.getResources().getString(R.string.Vie);
+		if (plug.getRepeatOnDays().getSaturday().equals("True"))
+			text += " " + context.getResources().getString(R.string.Sab);
+		if (plug.getRepeatOnDays().getSunday().equals("True"))
+			text += " " + context.getResources().getString(R.string.Dom);
 
 		return text;
 	}

@@ -5,136 +5,136 @@ import com.google.gson.annotations.SerializedName;
 
 public class SchedulerSemanal {
 
-    @SerializedName("start_at")
-    @Expose
-    private String start;
+	@SerializedName("start_at")
+	@Expose
+	private String start;
 
-    @SerializedName("stop_at")
-    @Expose
-    private String stop;
+	@SerializedName("stop_at")
+	@Expose
+	private String stop;
 
-    @Expose
-    private String repeat = "Semanal";
+	@Expose
+	private String repeat = "Semanal";
 
-    @Expose
-    private DaysOfWeek repeatOnDays;
+	@Expose
+	private DaysOfWeek repeatOnDays;
 
-    public SchedulerSemanal() {
-    }
+	public SchedulerSemanal() {
+	}
 
-    public String getStart() {
-        return start;
-    }
+	public String getStart() {
+		return start;
+	}
 
-    public void setStart(String start) {
-        this.start = start;
-    }
+	public void setStart(String start) {
+		this.start = start;
+	}
 
-    public String getStop() {
-        return stop;
-    }
+	public String getStop() {
+		return stop;
+	}
 
-    public void setStop(String stop) {
-        this.stop = stop;
-    }
+	public void setStop(String stop) {
+		this.stop = stop;
+	}
 
-    public String getRepeat() {
-        return repeat;
-    }
+	public String getRepeat() {
+		return repeat;
+	}
 
-    public void setRepeat(String repeat) {
-        this.repeat = repeat;
-    }
+	public void setRepeat(String repeat) {
+		this.repeat = repeat;
+	}
 
-    public DaysOfWeek getRepeatOnDays() {
-        return repeatOnDays;
-    }
+	public DaysOfWeek getRepeatOnDays() {
+		return repeatOnDays;
+	}
 
-    public void setRepeatOnDays(DaysOfWeek repeatOnDays) {
-        this.repeatOnDays = repeatOnDays;
-    }
+	public void setRepeatOnDays(DaysOfWeek repeatOnDays) {
+		this.repeatOnDays = repeatOnDays;
+	}
 
-    public class DaysOfWeek {
+	public class DaysOfWeek {
 
-        @Expose
-        private boolean monday;
+		@Expose
+		private boolean monday;
 
-        @Expose
-        private boolean tuesday;
+		@Expose
+		private boolean tuesday;
 
-        @Expose
-        private boolean wednesday;
+		@Expose
+		private boolean wednesday;
 
-        @Expose
-        private boolean thursday;
+		@Expose
+		private boolean thursday;
 
-        @Expose
-        private boolean friday;
+		@Expose
+		private boolean friday;
 
-        @Expose
-        private boolean saturday;
+		@Expose
+		private boolean saturday;
 
-        @Expose
-        private boolean sunday;
+		@Expose
+		private boolean sunday;
 
-        public DaysOfWeek() {
-        }
+		public DaysOfWeek() {
+		}
 
-        public boolean getMonday() {
-            return monday;
-        }
+		public boolean getMonday() {
+			return monday;
+		}
 
-        public void setMonday(boolean monday) {
-            this.monday = monday;
-        }
+		public void setMonday(boolean monday) {
+			this.monday = monday;
+		}
 
-        public boolean getTuesday() {
-            return tuesday;
-        }
+		public boolean getTuesday() {
+			return tuesday;
+		}
 
-        public void setTuesday(boolean tuesday) {
-            this.tuesday = tuesday;
-        }
+		public void setTuesday(boolean tuesday) {
+			this.tuesday = tuesday;
+		}
 
-        public boolean getWednesday() {
-            return wednesday;
-        }
+		public boolean getWednesday() {
+			return wednesday;
+		}
 
-        public void setWednesday(boolean wednesday) {
-            this.wednesday = wednesday;
-        }
+		public void setWednesday(boolean wednesday) {
+			this.wednesday = wednesday;
+		}
 
-        public boolean getThursday() {
-            return thursday;
-        }
+		public boolean getThursday() {
+			return thursday;
+		}
 
-        public void setThursday(boolean thursday) {
-            this.thursday = thursday;
-        }
+		public void setThursday(boolean thursday) {
+			this.thursday = thursday;
+		}
 
-        public boolean getFriday() {
-            return friday;
-        }
+		public boolean getFriday() {
+			return friday;
+		}
 
-        public void setFriday(boolean friday) {
-            this.friday = friday;
-        }
+		public void setFriday(boolean friday) {
+			this.friday = friday;
+		}
 
-        public boolean getSaturday() {
-            return saturday;
-        }
+		public boolean getSaturday() {
+			return saturday;
+		}
 
-        public void setSaturday(boolean saturday) {
-            this.saturday = saturday;
-        }
+		public void setSaturday(boolean saturday) {
+			this.saturday = saturday;
+		}
 
-        public boolean getSunday() {
-            return sunday;
-        }
+		public boolean getSunday() {
+			return sunday;
+		}
 
-        public void setSunday(boolean sunday) {
-            this.sunday = sunday;
-        }
-    }
+		public void setSunday(boolean sunday) {
+			this.sunday = sunday;
+		}
+	}
 
 }

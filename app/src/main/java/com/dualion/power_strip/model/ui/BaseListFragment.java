@@ -7,10 +7,10 @@ import com.dualion.power_strip.PowerStripApp;
 
 public abstract class BaseListFragment extends ListFragment implements Base {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        ((PowerStripApp) getActivity().getApplication()).getObjectGraph().inject(this);
-    }
+		((PowerStripApp) getActivity().getApplication()).getObjectGraph().inject(this);
+	}
 }

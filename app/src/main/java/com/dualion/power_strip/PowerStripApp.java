@@ -11,20 +11,20 @@ import dagger.ObjectGraph;
 
 public class PowerStripApp extends Application {
 
-    private ObjectGraph objectGraph;
+	private ObjectGraph objectGraph;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+	@Override
+	public void onCreate() {
+		super.onCreate();
 
-        objectGraph = ObjectGraph.create(getModules().toArray());
-    }
+		objectGraph = ObjectGraph.create(getModules().toArray());
+	}
 
-    private List<Object> getModules() {
-        return Arrays.<Object>asList(new SharedDataModule(this));
-    }
+	private List<Object> getModules() {
+		return Arrays.<Object>asList(new SharedDataModule(this));
+	}
 
-    public ObjectGraph getObjectGraph() {
-        return objectGraph;
-    }
+	public ObjectGraph getObjectGraph() {
+		return objectGraph;
+	}
 }

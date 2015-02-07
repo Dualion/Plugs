@@ -70,16 +70,16 @@ public class DatesFragment extends BaseFragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 
-        if (container == null) {
-            // We have different layouts, and in one of them this
-            // fragment's containing frame doesn't exist.  The fragment
-            // may still be created from its saved state, but there is
-            // no reason to try to create its view hierarchy because it
-            // won't be displayed.  Note this is not needed -- we could
-            // just run the code below, where we would create and return
-            // the view hierarchy; it would just never be used.
-            return null;
-        }
+		if (container == null) {
+			// We have different layouts, and in one of them this
+			// fragment's containing frame doesn't exist.  The fragment
+			// may still be created from its saved state, but there is
+			// no reason to try to create its view hierarchy because it
+			// won't be displayed.  Note this is not needed -- we could
+			// just run the code below, where we would create and return
+			// the view hierarchy; it would just never be used.
+			return null;
+		}
 
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.dates, container, false);
@@ -89,7 +89,7 @@ public class DatesFragment extends BaseFragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		if (getView() == null){
+		if (getView() == null) {
 			return;
 		}
 
@@ -111,33 +111,33 @@ public class DatesFragment extends BaseFragment implements
 		checkBoxSemanal.setOnCheckedChangeListener(this);
 		checkBoxDiario.setOnCheckedChangeListener(this);
 
-        initDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectInitDate();
-            }
-        });
+		initDate.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectInitDate();
+			}
+		});
 
-        endDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectEndDate();
-            }
-        });
+		endDate.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectEndDate();
+			}
+		});
 
-        buttonInitDate.setOnClickListener(new View.OnClickListener() {
-	        @Override
-	        public void onClick(View v) {
-		        selectInitDate();
-	        }
-        });
+		buttonInitDate.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectInitDate();
+			}
+		});
 
-        buttonEndDate.setOnClickListener(new View.OnClickListener() {
-	        @Override
-	        public void onClick(View v) {
-		        selectEndDate();
-	        }
-        });
+		buttonEndDate.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectEndDate();
+			}
+		});
 
 		//init DateTimePicker
 		initDateTimePicker();
@@ -164,18 +164,18 @@ public class DatesFragment extends BaseFragment implements
 
 	}
 
-    public int getShownIndex() {
-        return getArguments().getInt(ARG_INDEX, 0);
-    }
+	public int getShownIndex() {
+		return getArguments().getInt(ARG_INDEX, 0);
+	}
 
-    public String getShownPid() {
-        return getArguments().getString(ARG_PID);
-    }
+	public String getShownPid() {
+		return getArguments().getString(ARG_PID);
+	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-		MenuItem iStopPlug=menu.findItem(R.id.action_stop_plug);
+		MenuItem iStopPlug = menu.findItem(R.id.action_stop_plug);
 		if (iStopPlug == null) {
 			menu.add(Menu.NONE, R.id.action_stop_plug, Menu.NONE, R.string.action_stop).setIcon(R.drawable.ic_action_stop).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		}
@@ -228,16 +228,16 @@ public class DatesFragment extends BaseFragment implements
 		Calendar calendar = Calendar.getInstance();
 		initTimePicker = SimpleTimePicker.make(
 				getString(R.string.prompt_initTime),
-				new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)+1),
+				new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE) + 1),
 				new TimePicker.OnTimeSetListener() {
 					@Override
 					public void TimeSet(Time timeSet) {
 						Time time = new Time(timeSet);
 						initDate.setText(time.getTimeString());
 						initMillis = time.getTimeMillis();
-						if( initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
+						if (initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
 							sendDates.setEnabled(true);
-						}else{
+						} else {
 							sendDates.setEnabled(false);
 						}
 					}
@@ -247,16 +247,16 @@ public class DatesFragment extends BaseFragment implements
 
 		endTimePicker = SimpleTimePicker.make(
 				getString(R.string.prompt_endTime),
-				new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)+2),
+				new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE) + 2),
 				new TimePicker.OnTimeSetListener() {
 					@Override
 					public void TimeSet(Time timeSet) {
 						Time time = new Time(timeSet);
 						endDate.setText(time.getTimeString());
 						endMillis = time.getTimeMillis();
-						if( initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
+						if (initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
 							sendDates.setEnabled(true);
-						}else{
+						} else {
 							sendDates.setEnabled(false);
 						}
 					}
@@ -270,16 +270,16 @@ public class DatesFragment extends BaseFragment implements
 		// Create a initDateTimePicker
 		initDateTimePicker = SimpleDateTimePicker.make(
 				getString(R.string.prompt_initDate),
-				new Date(System.currentTimeMillis()+60*1000),
+				new Date(System.currentTimeMillis() + 60 * 1000),
 				new DateTimePicker.OnDateTimeSetListener() {
 					@Override
 					public void DateTimeSet(Date date) {
 						DateTime dateTime = new DateTime(date);
 						initDate.setText(dateTime.getDateString());
 						initMillis = dateTime.getCalendar().getTimeInMillis();
-						if( initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
+						if (initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
 							sendDates.setEnabled(true);
-						}else{
+						} else {
 							sendDates.setEnabled(false);
 						}
 					}
@@ -289,16 +289,16 @@ public class DatesFragment extends BaseFragment implements
 
 		endDateTimePicker = SimpleDateTimePicker.make(
 				getString(R.string.prompt_endDate),
-				new Date(System.currentTimeMillis()+2*60*1000),
+				new Date(System.currentTimeMillis() + 2 * 60 * 1000),
 				new DateTimePicker.OnDateTimeSetListener() {
 					@Override
 					public void DateTimeSet(Date date) {
 						DateTime dateTime = new DateTime(date);
 						endDate.setText(dateTime.getDateString());
 						endMillis = dateTime.getCalendar().getTimeInMillis();
-						if( initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
+						if (initMillis != 0L && endMillis != 0L && (initMillis < endMillis)) {
 							sendDates.setEnabled(true);
-						}else{
+						} else {
 							sendDates.setEnabled(false);
 						}
 					}
@@ -308,14 +308,14 @@ public class DatesFragment extends BaseFragment implements
 	}
 
 	public void selectInitDate() {
-		if (!checkBoxDiario.isChecked() && !checkBoxSemanal.isChecked() )
+		if (!checkBoxDiario.isChecked() && !checkBoxSemanal.isChecked())
 			initDateTimePicker.show();
 		else
 			initTimePicker.show();
 	}
 
 	public void selectEndDate() {
-		if (!checkBoxDiario.isChecked() && !checkBoxSemanal.isChecked() )
+		if (!checkBoxDiario.isChecked() && !checkBoxSemanal.isChecked())
 			endDateTimePicker.show();
 		else
 			endTimePicker.show();
@@ -323,7 +323,7 @@ public class DatesFragment extends BaseFragment implements
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		switch (buttonView.getId()){
+		switch (buttonView.getId()) {
 			case R.id.checkBoxDiario:
 				if (isChecked) {
 					checkBoxSemanal.setChecked(false);
@@ -335,7 +335,7 @@ public class DatesFragment extends BaseFragment implements
 							getResources().getInteger(android.R.integer.config_shortAnimTime),
 							true);
 					checkBoxDiario.setChecked(false);
-				}else {
+				} else {
 					showView(tablaDiasSemana,
 							getResources().getInteger(android.R.integer.config_shortAnimTime),
 							false);

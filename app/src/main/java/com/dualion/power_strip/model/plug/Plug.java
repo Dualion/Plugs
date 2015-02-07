@@ -1,262 +1,262 @@
 package com.dualion.power_strip.model.plug;
 
 import com.google.gson.annotations.Expose;
- import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName;
 
 public class Plug {
 
-     @Expose
-     private String hour;
+	@Expose
+	private String hour;
 
-     @Expose
-     private String id;
-
-     @SerializedName("pin_id")
-     @Expose
-     private String pinId;
-
-     @SerializedName("pin_state")
-     @Expose
-     private String pinState;
-
-     @SerializedName("pin_name")
-     @Expose
-     private String component;
-
-     @SerializedName("repeat_frecuency")
-     @Expose
-     private Frequency repeatFrecuency;
-
-     @SerializedName("repeat_on_days")
-     @Expose
-     private DaysOfWeek repeatOnDays;
+	@Expose
+	private String id;
+
+	@SerializedName("pin_id")
+	@Expose
+	private String pinId;
+
+	@SerializedName("pin_state")
+	@Expose
+	private String pinState;
+
+	@SerializedName("pin_name")
+	@Expose
+	private String component;
+
+	@SerializedName("repeat_frecuency")
+	@Expose
+	private Frequency repeatFrecuency;
+
+	@SerializedName("repeat_on_days")
+	@Expose
+	private DaysOfWeek repeatOnDays;
 
-     @SerializedName("scheduler_state")
-     @Expose
-     private State schedulerState;
+	@SerializedName("scheduler_state")
+	@Expose
+	private State schedulerState;
 
-     @SerializedName("start_at")
-     @Expose
-     private String start;
+	@SerializedName("start_at")
+	@Expose
+	private String start;
 
-     @SerializedName("stop_at")
-     @Expose
-     private String stop;
+	@SerializedName("stop_at")
+	@Expose
+	private String stop;
 
-     Plug() {
-     }
+	Plug() {
+	}
 
-     public String getHour() {
-         return hour;
-     }
+	public String getHour() {
+		return hour;
+	}
 
-     public void setHour(String hour) {
-         this.hour = hour;
-     }
+	public void setHour(String hour) {
+		this.hour = hour;
+	}
 
-     public String getId() {
-         return id;
-     }
+	public String getId() {
+		return id;
+	}
 
-     public void setId(String id) {
-         this.id = id;
-     }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-     public String getPinId() {
-         return pinId;
-     }
+	public String getPinId() {
+		return pinId;
+	}
 
-     public void setPinId(String pinId) {
-         this.pinId = pinId;
-     }
+	public void setPinId(String pinId) {
+		this.pinId = pinId;
+	}
 
-     public String getPinState() {
-         return pinState;
-     }
+	public String getPinState() {
+		return pinState;
+	}
 
-     public void setPinState(String pinState) {
-         this.pinState = pinState;
-     }
+	public void setPinState(String pinState) {
+		this.pinState = pinState;
+	}
 
-     public String getComponent() {
-         return component;
-     }
+	public String getComponent() {
+		return component;
+	}
 
-     public void setComponent(String component) {
-         this.component = component;
-     }
+	public void setComponent(String component) {
+		this.component = component;
+	}
 
-     public Frequency getRepeatFrecuency() {
-         return repeatFrecuency;
-     }
+	public Frequency getRepeatFrecuency() {
+		return repeatFrecuency;
+	}
 
-     public void setRepeatFrecuency(Frequency repeatFrecuency) {
-         this.repeatFrecuency = repeatFrecuency;
-     }
+	public void setRepeatFrecuency(Frequency repeatFrecuency) {
+		this.repeatFrecuency = repeatFrecuency;
+	}
 
-     public DaysOfWeek getRepeatOnDays() {
-         return repeatOnDays;
-     }
+	public DaysOfWeek getRepeatOnDays() {
+		return repeatOnDays;
+	}
 
-     public void setRepeatOnDays(DaysOfWeek repeatOnDays) {
-         this.repeatOnDays = repeatOnDays;
-     }
+	public void setRepeatOnDays(DaysOfWeek repeatOnDays) {
+		this.repeatOnDays = repeatOnDays;
+	}
 
-    public State getSchedulerState() {
-	    if (schedulerState == null) return State.PARADO;
-        else return schedulerState;
-    }
+	public State getSchedulerState() {
+		if (schedulerState == null) return State.PARADO;
+		else return schedulerState;
+	}
 
-    public void setSchedulerState(State schedulerState) {
-        this.schedulerState = schedulerState;
-    }
+	public void setSchedulerState(State schedulerState) {
+		this.schedulerState = schedulerState;
+	}
 
-    public String getStart() {
-        return start;
-    }
+	public String getStart() {
+		return start;
+	}
 
-    public void setStart(String start) {
-        this.start = start;
-    }
+	public void setStart(String start) {
+		this.start = start;
+	}
 
-    public String getStop() {
-        return stop;
-    }
+	public String getStop() {
+		return stop;
+	}
 
-    public void setStop(String stop) {
-        this.stop = stop;
-    }
+	public void setStop(String stop) {
+		this.stop = stop;
+	}
 
-    public enum State {
+	public enum State {
 
-         @SerializedName("Activo")
-         ACTIVO(0),
+		@SerializedName("Activo")
+		ACTIVO(0),
 
-         @SerializedName("Parado")
-         PARADO(1);
+		@SerializedName("Parado")
+		PARADO(1);
 
-         private final int value;
+		private final int value;
 
-         public int getValue() {
-             return value;
-         }
+		public int getValue() {
+			return value;
+		}
 
-         private State(int value) {
-             this.value = value;
-         }
+		private State(int value) {
+			this.value = value;
+		}
 
 
-    }
+	}
 
-     public enum Frequency {
+	public enum Frequency {
 
-         @SerializedName("Diario")
-         DIARIO(0),
+		@SerializedName("Diario")
+		DIARIO(0),
 
-         @SerializedName("Semanal")
-         SEMANAL(1),
+		@SerializedName("Semanal")
+		SEMANAL(1),
 
-         @SerializedName("")
-         NONE(2);
+		@SerializedName("")
+		NONE(2);
 
-         private final int value;
+		private final int value;
 
-         public int getValue() {
-             return value;
-         }
+		public int getValue() {
+			return value;
+		}
 
-         private Frequency(int value) {
-             this.value = value;
-         }
-     }
+		private Frequency(int value) {
+			this.value = value;
+		}
+	}
 
-     public class DaysOfWeek {
+	public class DaysOfWeek {
 
-         @Expose
-         private String monday;
+		@Expose
+		private String monday;
 
-         @Expose
-         private String tuesday;
+		@Expose
+		private String tuesday;
 
-         @Expose
-         private String wednesday;
+		@Expose
+		private String wednesday;
 
-         @Expose
-         private String thursday;
+		@Expose
+		private String thursday;
 
-         @Expose
-         private String friday;
+		@Expose
+		private String friday;
 
-         @Expose
-         private String saturday;
+		@Expose
+		private String saturday;
 
-         @Expose
-         private String sunday;
+		@Expose
+		private String sunday;
 
-         public DaysOfWeek() {
-         }
+		public DaysOfWeek() {
+		}
 
-         public String getMonday() {
-             if (monday == null) return "False";
-	         else return monday;
-         }
+		public String getMonday() {
+			if (monday == null) return "False";
+			else return monday;
+		}
 
-         public void setMonday(String monday) {
-             this.monday = monday;
-         }
+		public void setMonday(String monday) {
+			this.monday = monday;
+		}
 
-         public String getTuesday() {
-	         if (tuesday == null) return "False";
-	         else return tuesday;
-         }
+		public String getTuesday() {
+			if (tuesday == null) return "False";
+			else return tuesday;
+		}
 
-         public void setTuesday(String tuesday) {
-             this.tuesday = tuesday;
-         }
+		public void setTuesday(String tuesday) {
+			this.tuesday = tuesday;
+		}
 
-         public String getWednesday() {
-	         if (wednesday == null) return "False";
-	         else return wednesday;
-         }
+		public String getWednesday() {
+			if (wednesday == null) return "False";
+			else return wednesday;
+		}
 
-         public void setWednesday(String wednesday) {
-             this.wednesday = wednesday;
-         }
+		public void setWednesday(String wednesday) {
+			this.wednesday = wednesday;
+		}
 
-         public String getThursday() {
-	         if (thursday == null) return "False";
-	         else return thursday;
-         }
+		public String getThursday() {
+			if (thursday == null) return "False";
+			else return thursday;
+		}
 
-         public void setThursday(String thursday) {
-             this.thursday = thursday;
-         }
+		public void setThursday(String thursday) {
+			this.thursday = thursday;
+		}
 
-         public String getFriday() {
-	         if (friday == null) return "False";
-	         else return friday;
-         }
+		public String getFriday() {
+			if (friday == null) return "False";
+			else return friday;
+		}
 
-         public void setFriday(String friday) {
-             this.friday = friday;
-         }
+		public void setFriday(String friday) {
+			this.friday = friday;
+		}
 
-         public String getSaturday() {
-	         if (saturday == null) return "False";
-	         else return saturday;
-         }
+		public String getSaturday() {
+			if (saturday == null) return "False";
+			else return saturday;
+		}
 
-         public void setSaturday(String saturday) {
-             this.saturday = saturday;
-         }
+		public void setSaturday(String saturday) {
+			this.saturday = saturday;
+		}
 
-         public String getSunday() {
-	         if (sunday == null) return "False";
-	         else return sunday;
-         }
+		public String getSunday() {
+			if (sunday == null) return "False";
+			else return sunday;
+		}
 
-         public void setSunday(String sunday) {
-             this.sunday = sunday;
-         }
-     }
- }
+		public void setSunday(String sunday) {
+			this.sunday = sunday;
+		}
+	}
+}

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabWidget;
-import android.widget.Toast;
 
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.model.ui.BaseFragment;
@@ -26,14 +25,14 @@ public class TabsPlugsFragment extends BaseFragment {
 
 	public final static String ARG_TAB = "tab";
 
-	public static TabsPlugsFragment newInstance(int index, String pid, String component ) {
+	public static TabsPlugsFragment newInstance(int index, String pid, String component) {
 		TabsPlugsFragment f = new TabsPlugsFragment();
 
 		// Supply index input as an argument.
 		Bundle args = new Bundle();
 		args.putInt(ARG_INDEX, index);
 		args.putString(ARG_PID, pid);
-		args.putString(ARG_COMP,component);
+		args.putString(ARG_COMP, component);
 		f.setArguments(args);
 
 		return f;
@@ -64,18 +63,15 @@ public class TabsPlugsFragment extends BaseFragment {
 
 		tabHost = (TabHost) getActivity().findViewById(android.R.id.tabhost);
 
-		if (tabHost == null){
+		if (tabHost == null) {
 			return;
 		}
 
 		tabHost.setup();
 
-		viewPager = (ViewPager)getActivity().findViewById(R.id.pager);
+		viewPager = (ViewPager) getActivity().findViewById(R.id.pager);
 
 		tabsAdapter = new TabsAdapter(getActivity(), tabHost, viewPager);
-
-		tabsAdapter.addTab(tabHost.newTabSpec("dates").setIndicator("Dates"),
-				DatesFragment.class, getArguments());
 
 		tabsAdapter.addTab(tabHost.newTabSpec("dates").setIndicator("Dates"),
 				DatesFragment.class, getArguments());

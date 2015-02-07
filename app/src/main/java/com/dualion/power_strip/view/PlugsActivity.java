@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.dualion.power_strip.R;
 import com.dualion.power_strip.model.ui.BaseFragmentActivity;
 
-public class PlugsActivity extends BaseFragmentActivity{
+public class PlugsActivity extends BaseFragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

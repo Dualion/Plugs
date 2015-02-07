@@ -227,15 +227,15 @@ public class PlugsFragment extends BaseListFragment {
 			//TabsPlugsFragment details = (TabsPlugsFragment)
 			//		getFragmentManager().findFragmentById(R.id.plug_details);
 			//if (details == null || details.getShownIndex() != index) {
-				// Make new fragment to show this selection.
-				TabsPlugsFragment details = TabsPlugsFragment.newInstance(index, pid, component);
+			// Make new fragment to show this selection.
+			TabsPlugsFragment details = TabsPlugsFragment.newInstance(index, pid, component);
 
-				// Execute a transaction, replacing any existing fragment
-				// with this one inside the frame.
-				getFragmentManager().beginTransaction()
-						.replace(R.id.plug_details, details)
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-						.commit();
+			// Execute a transaction, replacing any existing fragment
+			// with this one inside the frame.
+			getFragmentManager().beginTransaction()
+					.replace(R.id.plug_details, details)
+					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+					.commit();
 			//}
 
 		} else {
@@ -245,7 +245,7 @@ public class PlugsFragment extends BaseListFragment {
 			intent.setClass(getActivity(), DetailActivity.class);
 			intent.putExtra(ARG_INDEX, index);
 			intent.putExtra(ARG_PID, pid);
-			intent.putExtra(ARG_COMP,component);
+			intent.putExtra(ARG_COMP, component);
 			startActivity(intent);
 		}
 	}
