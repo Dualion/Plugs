@@ -12,7 +12,7 @@
 		android:layout_width="0dp"
 		android:layout_height="match_parent"
 		android:name="com.dualion.power_strip.view.PlugsFragment"
-		tools:layout="@layout/fgm_plug_list" />
+		tools:layout="@layout/fgm_plug_list"/>
 
 	<FrameLayout
 		android:id="@+id/plug_details"

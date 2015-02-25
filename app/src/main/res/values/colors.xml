@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="pin">#666</color>
+    <color name="pin">#ff8d8d8d</color>
     <color name="dualion">#162A83</color>
 	<color name="dualion_light">#99162a83</color>
 

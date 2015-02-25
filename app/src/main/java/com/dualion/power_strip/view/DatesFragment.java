@@ -63,6 +63,8 @@ public class DatesFragment extends BaseFragment implements
 	private Long initMillis;
 	private Long endMillis;
 
+	RestPlug restProduct;
+
 	@Inject
 	SharedData settings;
 
@@ -146,7 +148,7 @@ public class DatesFragment extends BaseFragment implements
 		initTimePicker();
 
 		// init Restapi
-		final RestPlug restProduct = new RestPlug(settings.getURI(), settings.getUser(), settings.getCurrentPass());
+		restProduct = new RestPlug(settings.getURI(), settings.getUser(), settings.getCurrentPass());
 
 		sendDates.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -186,7 +188,7 @@ public class DatesFragment extends BaseFragment implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.action_stop_plug:
-				Toast.makeText(getActivity(), "Stop", Toast.LENGTH_SHORT).show();
+				restProduct.getService().SetPlugCancel(Integer.parseInt(getShownPid()), this);
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

@@ -29,7 +29,8 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:longClickable="true"
-            android:background="@color/background" />
+            android:background="@color/background"
+             />
 
     </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
